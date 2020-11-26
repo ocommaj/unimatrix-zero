@@ -37,7 +37,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './src/index.html',
       filename: './index.html',
-      favicon: './src/assets/icons/favicon/fav.ico'
+      favicon: './src/assets/icons/favicon/fav.ico',
     }),
   ],
   mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
