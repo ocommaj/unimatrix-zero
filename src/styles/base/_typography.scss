@@ -1,0 +1,9 @@
+@import './sass-font-face';
+
+@include font-face('Chicago', 'Chicago', 'Chicago', 'sans-serif');
+/*@font-face {
+  font-family: 'Chicago';
+  font-style: normal;
+  font-weight: normal;
+  src: url('~/src/assets/fonts/Chicago/Chicago.ttf') format('ttf');
+}*/

@@ -1,0 +1,12 @@
+@import './base/typography';
+@import './thirdParty/includeMedia';
+@import './base/resets';
+
+body {
+  background-color: grey;
+  font-family: 'Chicago', monospace;
+}
+
+div {
+  font-family: 'Chicago', monospace;
+}
