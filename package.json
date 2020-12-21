@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "pretest": "eslint --ignore-path .gitignore .",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --coverage --passWithNoTests",
     "start": "webpack serve",
     "build": "NODE_ENV='production' webpack"
   },
