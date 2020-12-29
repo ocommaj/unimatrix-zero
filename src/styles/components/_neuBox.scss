@@ -1,0 +1,48 @@
+.neuBox {
+  width: 20vw;
+  height: 100%;
+  //flex-grow: 1;
+  background-color: blue;
+  //margin: auto;
+  transform: rotateX(30deg) rotateY(75deg) rotateZ(90deg);
+  border: solid 2px #f4f4f4;
+  transition-property: margin, transform;
+  transition-duration: 1.4s;
+  transition-timing-function: ease;
+
+  h1 {
+
+    //transform: skew(60deg, -30deg);
+    margin: auto;
+  }
+}
+.neuBox:before {
+  content: '';
+  position: absolute;
+  height: 24px;
+  left: 8px;
+  right: -9px;
+  bottom: -26px;
+  background-color: white;
+  transform: skewX(30deg);
+  border: solid 2px #f4f4f4;
+}
+.neuBox:after {
+  content: '';
+  position: absolute;
+  right: -16px;
+  top: 14px;
+  height: calc(100%);
+  width: 14px;
+  background-color: white;
+  transform: skewY(60deg);
+  border: solid 2px #f4f4f4;
+}
+
+.neuBox:hover {
+  transform: rotateZ(0deg);
+  transition-property: margin, transform;
+  transition-duration: 1.4s;
+  transition-timing-function: ease;
+  margin: 0 10vw;
+}

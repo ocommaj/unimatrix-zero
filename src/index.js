@@ -1,4 +1,4 @@
 import './styles/main.scss';
-import helloLogger from './scripts';
+import main from './scripts';
 
-helloLogger();
+main();
