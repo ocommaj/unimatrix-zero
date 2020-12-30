@@ -2,6 +2,7 @@ import { PointLight } from 'three';
 
 export default function GeneralLight(scene) {
   const light = new PointLight(0x0f62fe, 1, 50);
+  // const light = new PointLight(0x00bb00, 1, 50);
   light.position.set(-3, 2.5, 4.75);
   scene.add(light);
 

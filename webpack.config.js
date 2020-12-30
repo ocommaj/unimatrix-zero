@@ -8,7 +8,7 @@ module.exports = {
       {
         test: /\.(glb|bin)$/,
         loader: 'file-loader',
-        options: { esModule: false }
+        options: { esModule: false },
       },
       {
         test: /\.(png|svg|jpg|gif|ico)$/,

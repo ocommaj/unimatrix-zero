@@ -1,4 +1,3 @@
-import { meshAnimationProperties } from '../animate';
 export { makeUpperH, makeLowerI, notInLetters };
 
 function makeUpperH(boxArray) {
@@ -10,19 +9,11 @@ function makeUpperH(boxArray) {
     verts[1][Math.floor(side / 2)],
   ];
   const vertIndices = [ ...verts[0], ...verts[1] ];
-
   const boxes = vertIndices.map(i => boxArray[i]);
   const beamBoxes = boxArray.slice(beamSlice[0], beamSlice[1]);
   boxes.push(...beamBoxes);
 
-  return {
-    boxes,
-    ...meshAnimationProperties(boxes),
-    beam: {
-      boxes: beamBoxes,
-      ...meshAnimationProperties(beamBoxes),
-    },
-  };
+  return { boxes, beamBoxes };
 }
 
 function makeLowerI(boxArray, colPosition = 'last') {
@@ -34,7 +25,6 @@ function makeLowerI(boxArray, colPosition = 'last') {
   const boxes = indices.map(i => boxArray[i]);
   return {
     boxes,
-    ...meshAnimationProperties(boxes),
     dot: boxes[boxes.length - 1],
   };
 }
@@ -47,8 +37,5 @@ function notInLetters(face, letters = []) {
     return true;
   });
 
-  return {
-    boxes,
-    ...meshAnimationProperties(boxes),
-  };
+  return { boxes };
 }

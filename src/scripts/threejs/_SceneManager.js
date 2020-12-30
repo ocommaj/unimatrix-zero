@@ -42,14 +42,20 @@ export default function SceneManager(canvas) {
       fieldOfView, aspect, near, far
     );
 
-    setZoom(width);
-    camera.setZoom = (width) => setZoom(width);
+    camera.position.z = setZoom(width);
+    camera.setZoom = setZoom;
+    camera.maxZoom = maxZoom;
 
-    function setZoom(width) {
-      if (width <= 370) camera.position.z = 17;
-      if (width > 370 && width <= 800) camera.position.z = 15;
-      if (width > 800 && width <= 1000) camera.position.z = 13;
-      if (width > 1000) camera.position.z = 12;
+    function maxZoom(width) {
+      if (width <= 370) return 17;
+      if (width > 370 && width <= 800) return 15;
+      if (width > 800 && width <= 1000) return 13;
+      if (width > 1000) return 12;
+    }
+
+    function setZoom(width, zValue=null) {
+      const maxZ = maxZoom(width)
+      return (zValue && zValue <= maxZ) ? zValue : maxZ;
     }
 
     return camera;
@@ -92,8 +98,10 @@ export default function SceneManager(canvas) {
     mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
     mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
     raycaster.setFromCamera(mouse, camera);
-    const intersects = raycaster.intersectObjects(scene.children);
+    const intersects = raycaster.intersectObjects(scene.children, true);
+
     if (!intersects[0]) return clickCounter;
+    if (intersects[0].name) console.log(intersects[0].name)
 
     sceneSubjects.cube.onClick(clickCounter, intersects[0]);
     clickCounter++;

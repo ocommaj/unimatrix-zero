@@ -1,5 +1,6 @@
 import hiTimelines from './_Hi';
 import facingPlaneToBack from './_facingPlaneToBack';
+import shrinkCube from './_shrinkCube';
 import spinPlane from './_spinPlane';
 
 function meshAnimationProperties(meshArray) {
@@ -11,4 +12,10 @@ function meshAnimationProperties(meshArray) {
   }, { positions: [], rotations: [], scales: [] });
 }
 
-export { meshAnimationProperties, hiTimelines, facingPlaneToBack, spinPlane };
+export {
+  meshAnimationProperties,
+  hiTimelines,
+  facingPlaneToBack,
+  shrinkCube,
+  spinPlane,
+};

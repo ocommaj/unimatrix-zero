@@ -1,6 +1,7 @@
 import CubeCubes from './_CubeCubes';
 import SpellHi from './_Hi';
 import Comma from './_Comma';
+import { shrinkCube } from '../animate';
 
 export default function MessageCube({scene, configCubed}) {
   const Cube = new CubeCubes(configCubed);
@@ -34,23 +35,26 @@ export default function MessageCube({scene, configCubed}) {
       z: Cube.offsets[Cube.offsets.length - 1],
     };
 
-    Comma(position)
-      .then((mesh) => {
-        comma = mesh;
-        scene.add(comma);
-        messageLoop.progress(0.5);
-        messageLoop.progress(0);
-        message.showComma(comma);
-        messageLoop = message.loopAnimation(messageLoopCallback, comma);
-        messageLoop.progress(0.5);
-      }).catch((error) => console.error(error));
+    return new Promise((resolve) => {
+      Comma(position)
+        .then((mesh) => {
+          comma = mesh;
+          scene.add(comma);
+          messageLoop.progress(0.5);
+          messageLoop.progress(0);
+          message.showComma(comma);
+          messageLoop = message.loopAnimation(messageLoopCallback, comma);
+          messageLoop.progress(0.5);
+          resolve();
+        }).catch((error) => console.error(error));
+    });
   }
 
   function clickHandler(clickCounter, intersectedMesh = null) {
     messageLoop.pause();
 
     if (intersectedMesh.object === message.iDot) {
-      addComma();
+      addComma().then(() => shrinkCube(scene, Cube, [comma]));
       return;
     }
 

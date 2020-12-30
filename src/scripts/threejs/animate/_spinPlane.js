@@ -4,6 +4,7 @@ import { Group } from 'three';
 export default function spinPlane({ scene, slice, axis }) {
   const spinGroup = new Group();
   scene.add(spinGroup);
+  // spinGroup.updateMatrix()
 
   for (const box of slice) {
     const clone = box.clone();
@@ -22,7 +23,7 @@ export default function spinPlane({ scene, slice, axis }) {
       for (const box of slice) box.visible = true;
       scene.remove(spinGroup);
     },
-  }).to(spinGroup.rotation, { [axis]: 6.832 });
+  }).to(spinGroup.rotation, { [axis]: 6.28 });
 
   return tl;
 }

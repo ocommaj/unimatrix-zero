@@ -2,7 +2,6 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import modifiers from '../modifiers';
 import commaGltf from '../../../assets/three/comma.glb';
 
-
 export default function Comma(position = null) {
   return new Promise((res, rej) => loadComma(res, rej));
 
