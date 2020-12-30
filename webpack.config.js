@@ -6,6 +6,11 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.(glb|bin)$/,
+        loader: 'file-loader',
+        options: { esModule: false }
+      },
+      {
         test: /\.(png|svg|jpg|gif|ico)$/,
         type: 'asset/resource',
       },

@@ -1,6 +1,6 @@
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import modifiers from '../modifiers';
-const filePath = './src/assets/three/comma.glb';
+import commaGltf from '../../../assets/three/comma.glb';
 
 
 export default function Comma(position = null) {
@@ -8,7 +8,7 @@ export default function Comma(position = null) {
 
   function loadComma(resolve, reject) {
     const loader = new GLTFLoader();
-    loader.load(filePath, (gltf) => {
+    loader.load(commaGltf, (gltf) => {
       const mesh = gltf.scene.children[0];
       mesh.name = 'messageComma';
       mesh.scale.set(0, 0, 0);

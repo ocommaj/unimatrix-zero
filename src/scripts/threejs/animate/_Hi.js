@@ -78,6 +78,8 @@ export default function hiTimelines(upperH, lowerI, notLetters) {
   function beamToggler() {
     const first = upperH.beam.boxes[0];
     const last = upperH.beam.boxes[upperH.beam.boxes.length - 1];
+    const firstStartX = first.position.x;
+    const lastStartX = last.position.x;
     const dX = (upperH.beam.positions[1].x - upperH.beam.positions[0].x) / 8;
     return {
       expand() {
@@ -89,8 +91,8 @@ export default function hiTimelines(upperH, lowerI, notLetters) {
       reset() {
         return gsap.timeline({ delay: 0 })
           .to(upperH.beam.scales, { x: 1 }, '<')
-          .to(first.position, { x: `+=${dX}`}, '<')
-          .to(last.position, { x: `-=${dX}`}, '<');
+          .to(first.position, { x: firstStartX }, '<')
+          .to(last.position, { x: lastStartX }, '<');
       },
     };
   }
