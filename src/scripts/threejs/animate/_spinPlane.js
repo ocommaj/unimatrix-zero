@@ -1,29 +1,14 @@
 import { gsap } from 'gsap';
-import { Group } from 'three';
 
-export default function spinPlane({ scene, slice, axis }) {
-  const spinGroup = new Group();
-  scene.add(spinGroup);
-  // spinGroup.updateMatrix()
-
-  for (const box of slice) {
-    const clone = box.clone();
-    clone.scale.set(1, 1, 1);
-    spinGroup.add(clone);
-    box.visible = false;
-  }
-
+export default function spinPlane({scene, sliceClone, axis }) {
   const tl = gsap.timeline({
     paused: true,
     defaults: {
       duration: 0.8,
       ease: 'power1',
     },
-    onComplete: () => {
-      for (const box of slice) box.visible = true;
-      scene.remove(spinGroup);
-    },
-  }).to(spinGroup.rotation, { [axis]: 6.28 });
+    onComplete: () => scene.remove(sliceClone),
+  }).to(sliceClone.rotation, { [axis]: 6.28 });
 
   return tl;
 }

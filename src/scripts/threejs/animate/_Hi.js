@@ -7,7 +7,7 @@ const tlDefaults = {
   repeatDelay: 1.4,
   defaults: {
     duration: 1,
-    ease: 'bounce.out',
+    ease: 'elastic',
     stagger: {
       each: 0.1,
       from: 'random',
@@ -16,18 +16,12 @@ const tlDefaults = {
 };
 
 export default function hiTimelines(upperH, lowerI, notLetters) {
-  console.dir(upperH);
   const h = {
     ...meshAnimationProperties(upperH.boxes),
     beam: { ...meshAnimationProperties(upperH.beamBoxes) },
   };
-  const i = {
-    ...meshAnimationProperties(lowerI.boxes),
-    dot: lowerI.dot,
-  };
-  const blanks = {
-    ...meshAnimationProperties(notLetters.boxes),
-  };
+  const i = { ...meshAnimationProperties(lowerI.boxes), dot: lowerI.dot };
+  const blanks = { ...meshAnimationProperties(notLetters.boxes) };
 
   h.startPos = h.positions[0];
   i.startPos = i.positions[0];

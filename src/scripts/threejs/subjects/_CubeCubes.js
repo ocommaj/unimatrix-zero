@@ -1,3 +1,4 @@
+import { Group } from 'three';
 import Cube from './_Cube';
 import { facingPlaneToBack } from '../animate';
 import { spinPlane } from '../animate';
@@ -6,11 +7,13 @@ export default function CubeCubes({ count, spacing, cubeConfig }) {
   const { size, rotation, scale } = cubeConfig;
   const offsets = setOffsets(count, size, spacing);
   const boxes = makeCubes(size, offsets, rotation, scale);
-  const getFacingPlane = () => getPlane('z', count - 1);
-  let facingPlane = getFacingPlane();
+  const CubeCubes = new Group()
+  CubeCubes.add( ...boxes )
+
+  let facingPlane = CubeCubes.children.slice(-Math.pow(count,2));
 
   return {
-    boxes,
+    group: CubeCubes,
     offsets,
     facingPlane,
     getFacingPlane,
@@ -18,19 +21,38 @@ export default function CubeCubes({ count, spacing, cubeConfig }) {
     onClick,
   };
 
+  function getFacingPlane() {
+    return CubeCubes.children.slice(-Math.pow(count,2))
+  }
+
   function planeLoop(callback) {
-    facingPlane = getFacingPlane();
+    const toMoveBack = CubeCubes.children.splice(-Math.pow(count,2))
+    CubeCubes.children.unshift(...toMoveBack)
+    facingPlane = toMoveBack;
     return facingPlaneToBack({
       callback,
       facingPlane,
-      others: boxes.filter(box => !facingPlane.includes(box)),
+      others: CubeCubes.children.filter(box => !facingPlane.includes(box)),
       dBack: offsets[offsets.length - 1] - offsets[0],
       dForward: size * spacing,
     });
   }
 
-  function getPlane(axis, atSlice = 1) {
-    return boxes.filter(box => box.position[axis] === offsets[atSlice]);
+  function getPlane({axis, atPosition=null, fromBox=null}) {
+    const boxes = CubeCubes.children;
+    if (axis === 'z' && !atPosition && !fromBox) {
+      return boxes.filter(box => {
+        return box.position.z === offsets[offsets.length-1]
+      })
+    }
+    if (atPosition) {
+      console.log(`atPosition: ${atPosition}`)
+      return boxes.filter(box => box.position[axis] === atPosition);
+    }
+    if (fromBox) {
+      return boxes.filter(box => box.position[axis] === fromBox.position[axis])
+    }
+
   }
 
   function makeCubes(size, offsets, rotation, scale) {
@@ -52,8 +74,21 @@ export default function CubeCubes({ count, spacing, cubeConfig }) {
   }
 
   function onClick(scene, mesh, axis, callback) {
-    const sliceIdx = offsets.indexOf(mesh.position[axis]);
-    const slice = getPlane(axis, sliceIdx);
-    spinPlane({ scene, slice, axis }).play().then(() => callback());
+    const slice = getPlane({ axis, fromBox: mesh });
+    const sliceClone = new Group();
+    scene.add(sliceClone);
+
+    for (const box of slice) {
+      const clone = box.clone();
+      clone.scale.set(1, 1, 1);
+      sliceClone.add(clone);
+      box.visible = false;
+    }
+
+    spinPlane({scene, sliceClone, axis }).play()
+      .then(() => {
+        for (const box of slice) box.visible = true;
+        callback()
+      });
   }
 }

@@ -1,19 +1,19 @@
 import CubeCubes from './_CubeCubes';
 import SpellHi from './_Hi';
 import Comma from './_Comma';
-import { shrinkCube } from '../animate';
+import { cameraZoomOut } from '../animate';
 
 export default function MessageCube({scene, configCubed}) {
-  const Cube = new CubeCubes(configCubed);
+  const Cube = CubeCubes(configCubed);
 
   let comma = null;
   let message = SpellHi(Cube.facingPlane);
   let messageLoop = message.loopAnimation(() => messageLoopCallback());
 
-  for (const cube of Cube.boxes) scene.add(cube);
+  scene.add(Cube.group);
 
   const sayHi = () => messageLoop.play();
-  const onClick = (clickCounter, mesh) => clickHandler(clickCounter, mesh);
+  const onClick = clickHandler;
 
   return {
     sayHi,
@@ -22,13 +22,14 @@ export default function MessageCube({scene, configCubed}) {
 
   function messageLoopCallback(nextMessage = null) {
     Cube.planeLoop(() => {
-      message = nextMessage || SpellHi(Cube.getFacingPlane());
+      const facing = Cube.getFacingPlane();
+      message = SpellHi(facing);
       messageLoop = message.loopAnimation(messageLoopCallback, comma);
       messageLoop.play();
     }).play();
   }
 
-  async function addComma() {
+  function addComma() {
     const position = {
       x: Cube.offsets[Cube.offsets.length - 1] + configCubed.spacing,
       y: Cube.offsets[0] - configCubed.spacing / 4,
@@ -50,11 +51,12 @@ export default function MessageCube({scene, configCubed}) {
     });
   }
 
-  function clickHandler(clickCounter, intersectedMesh = null) {
+  function clickHandler(clickCounter, intersectedMesh, camera) {
     messageLoop.pause();
 
     if (intersectedMesh.object === message.iDot) {
-      addComma().then(() => shrinkCube(scene, Cube, [comma]));
+      addComma()
+        .then(() => cameraZoomOut(camera, { y: '-=1.5', z: '+=3' }));
       return;
     }
 

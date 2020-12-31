@@ -7,11 +7,12 @@ export default function spellHi(inFace) {
   const notLetters = notInLetters(inFace, [ upperH, lowerI ]);
   const animations = hiTimelines(upperH, lowerI, notLetters);
 
-  const { showComma, loopHi: loopAnimation } = animations;
+  const { showComma, hideHi, loopHi: loopAnimation } = animations;
 
   return {
     loopAnimation,
     showComma,
+    hideHi,
     iDot: lowerI.dot,
   };
 

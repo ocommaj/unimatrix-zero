@@ -18,7 +18,7 @@ function Cube({ size, position = null, rotation = null, scale = null }) {
   scale && meshModifiers.scale(cube, scale);
   cube.castShadow = true;
   cube.receiveShadow = true;
-
+  cube.userData.isClickable = true;
 
   return cube;
 }

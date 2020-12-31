@@ -14,6 +14,7 @@ export default function main() {
   function bindEventListeners() {
     let clickCounter = 0;
     window.addEventListener('resize', () => resizeCanvas());
+    window.addEventListener('mousemove', (e) => sceneManager.onMouseMove(e));
     window.addEventListener('click', (e) => {
       clickCounter = sceneManager.onClick(e, clickCounter);
     });

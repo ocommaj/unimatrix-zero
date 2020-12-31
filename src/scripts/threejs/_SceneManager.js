@@ -53,8 +53,8 @@ export default function SceneManager(canvas) {
       if (width > 1000) return 12;
     }
 
-    function setZoom(width, zValue=null) {
-      const maxZ = maxZoom(width)
+    function setZoom(width, zValue = null) {
+      const maxZ = maxZoom(width);
       return (zValue && zValue <= maxZ) ? zValue : maxZ;
     }
 
@@ -101,11 +101,24 @@ export default function SceneManager(canvas) {
     const intersects = raycaster.intersectObjects(scene.children, true);
 
     if (!intersects[0]) return clickCounter;
-    if (intersects[0].name) console.log(intersects[0].name)
 
-    sceneSubjects.cube.onClick(clickCounter, intersects[0]);
+    sceneSubjects.cube.onClick(clickCounter, intersects[0], camera);
     clickCounter++;
 
     return clickCounter;
+  };
+
+  this.onMouseMove = (event) => {
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    raycaster.setFromCamera(mouse, camera);
+    const intersects = raycaster.intersectObjects(scene.children, true);
+    if (intersects.length && intersects[0].object.userData.isClickable) {
+      document.body.style.cursor = 'pointer';
+      return;
+    }
+    if (document.body.style.cursor === 'pointer') {
+      document.body.style.cursor = 'auto';
+    }
   };
 }

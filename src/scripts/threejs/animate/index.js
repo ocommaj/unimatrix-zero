@@ -1,3 +1,4 @@
+import cameraZoomOut from './_cameraZoomout';
 import hiTimelines from './_Hi';
 import facingPlaneToBack from './_facingPlaneToBack';
 import shrinkCube from './_shrinkCube';
@@ -14,6 +15,7 @@ function meshAnimationProperties(meshArray) {
 
 export {
   meshAnimationProperties,
+  cameraZoomOut,
   hiTimelines,
   facingPlaneToBack,
   shrinkCube,
