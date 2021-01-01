@@ -27,7 +27,7 @@ export default function hiTimelines(upperH, lowerI, notLetters) {
   i.startPos = i.positions[0];
   blanks.startPos = blanks.positions[0];
 
-  const toggleBeam = beamToggler();
+  const toggleHBeam = beamToggler();
 
   return {
     loopHi,
@@ -36,10 +36,10 @@ export default function hiTimelines(upperH, lowerI, notLetters) {
     showComma,
   };
 
-  function loopHi(loopCallback, commaMesh = null) {
+  function loopHi(loopCallback) {
     return gsap.timeline({ ...tlDefaults })
       .add(showHi())
-      .add(hideHi(commaMesh))
+      .add(hideHi())
       .call(() => loopCallback());
   }
 
@@ -49,24 +49,23 @@ export default function hiTimelines(upperH, lowerI, notLetters) {
       .to(blanks.positions, { z: '-=.5'}, '<')
       .to(blanks.scales, { x: 0.75, y: 0.75 }, '<')
       .to(h.scales, { y: 1.5 }, '<')
-      .add(toggleBeam.expand(), '<')
+      .add(toggleHBeam.expand(), '<')
       .to(i.positions, { z: '+=.25' }, '<')
       .to(i.scales, { y: 1.5 }, '<')
       .to(i.dot.position, { y: '-=.25' }, '<')
       .add(dotI(), '-=.3');
   }
 
-  function hideHi(commaMesh) {
+  function hideHi() {
     const tl = gsap.timeline({ ...tlDefaults, paused: false })
       .to(h.positions, { z: h.startPos.z }, '<3')
       .to(blanks.positions, { z: blanks.startPos.z }, '<')
       .to(blanks.scales, { x: 1, y: 1 }, '<')
       .to(h.scales, { y: 1 }, '<')
-      .add(toggleBeam.reset(), '<')
+      .add(toggleHBeam.reset(), '<')
       .to(i.positions, { z: i.startPos.z }, '<')
       .to(i.scales, { y: 1 }, '<')
       .to(i.dot.position, { y: '+=.25' }, '<');
-    if (commaMesh) tl.add(hideComma(commaMesh), '<');
     return tl;
   }
 
@@ -116,12 +115,4 @@ export default function hiTimelines(upperH, lowerI, notLetters) {
       .to(commaMesh.rotation, { y: 6.28 }, '<');
   }
 
-  function hideComma(commaMesh) {
-    return gsap.timeline({
-      defaults: {
-        duration: 0.7,
-        ease: 'expo',
-      },
-    }).to(commaMesh.scale, { x: 0, y: 0, z: 0 });
-  }
 }

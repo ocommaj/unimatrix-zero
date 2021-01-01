@@ -25,7 +25,7 @@ export default function MessageCube({scene, configCubed}) {
     Cube.planeLoop(() => {
       const facing = Cube.getFacingPlane();
       message = SpellHi(facing);
-      messageLoop = message.loopAnimation(messageLoopCallback, comma);
+      messageLoop = message.loopAnimation(messageLoopCallback);
       messageLoop.play();
     }).play();
   }
@@ -45,7 +45,7 @@ export default function MessageCube({scene, configCubed}) {
           messageLoop.progress(0.5);
           messageLoop.progress(0);
           message.showComma(comma);
-          messageLoop = message.loopAnimation(messageLoopCallback, comma);
+          messageLoop = message.loopAnimation(messageLoopCallback);
           messageLoop.progress(0.5);
           resolve();
         }).catch((error) => console.error(error));
@@ -56,7 +56,13 @@ export default function MessageCube({scene, configCubed}) {
     messageLoop.pause();
 
     if (intersectedMesh.object === message.iDot) {
-      const callback = () => IntroBox({scene, camera, messageCube: Cube.group});
+      const callback = () => IntroBox({
+        scene,
+        camera,
+        comma,
+        Cube,
+      });
+
       addComma().then(() => shrinkCube(scene, Cube, comma, callback).play());
 
       return;
