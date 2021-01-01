@@ -1,6 +1,7 @@
 import { gsap } from 'gsap';
 
 export default function spinPlane({scene, sliceClone, axis }) {
+  // const rotateFunc = axis === 'x' ? () =>rotateX : rotateY
   const tl = gsap.timeline({
     paused: true,
     defaults: {
@@ -8,6 +9,9 @@ export default function spinPlane({scene, sliceClone, axis }) {
       ease: 'power1',
     },
     onComplete: () => scene.remove(sliceClone),
+  }).call(() => {
+    if (axis === 'x') sliceClone.rotateX(6.28);
+    else { sliceClone.rotateY(6.28); }
   }).to(sliceClone.rotation, { [axis]: 6.28 });
 
   return tl;

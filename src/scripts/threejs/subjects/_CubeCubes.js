@@ -7,10 +7,10 @@ export default function CubeCubes({ count, spacing, cubeConfig }) {
   const { size, rotation, scale } = cubeConfig;
   const offsets = setOffsets(count, size, spacing);
   const boxes = makeCubes(size, offsets, rotation, scale);
-  const CubeCubes = new Group()
-  CubeCubes.add( ...boxes )
+  const CubeCubes = new Group();
+  CubeCubes.add(...boxes);
 
-  let facingPlane = CubeCubes.children.slice(-Math.pow(count,2));
+  let facingPlane = CubeCubes.children.slice(-Math.pow(count, 2));
 
   return {
     group: CubeCubes,
@@ -22,12 +22,12 @@ export default function CubeCubes({ count, spacing, cubeConfig }) {
   };
 
   function getFacingPlane() {
-    return CubeCubes.children.slice(-Math.pow(count,2))
+    return CubeCubes.children.slice(-Math.pow(count, 2));
   }
 
   function planeLoop(callback) {
-    const toMoveBack = CubeCubes.children.splice(-Math.pow(count,2))
-    CubeCubes.children.unshift(...toMoveBack)
+    const toMoveBack = CubeCubes.children.splice(-Math.pow(count, 2));
+    CubeCubes.children.unshift(...toMoveBack);
     facingPlane = toMoveBack;
     return facingPlaneToBack({
       callback,
@@ -38,19 +38,18 @@ export default function CubeCubes({ count, spacing, cubeConfig }) {
     });
   }
 
-  function getPlane({axis, atPosition=null, fromBox=null}) {
+  function getPlane({axis, atPosition = null, fromBox = null}) {
     const boxes = CubeCubes.children;
     if (axis === 'z' && !atPosition && !fromBox) {
       return boxes.filter(box => {
-        return box.position.z === offsets[offsets.length-1]
-      })
+        return box.position.z === offsets[offsets.length - 1];
+      });
     }
     if (atPosition) {
-      console.log(`atPosition: ${atPosition}`)
       return boxes.filter(box => box.position[axis] === atPosition);
     }
     if (fromBox) {
-      return boxes.filter(box => box.position[axis] === fromBox.position[axis])
+      return boxes.filter(box => box.position[axis] === fromBox.position[axis]);
     }
 
   }
@@ -76,7 +75,9 @@ export default function CubeCubes({ count, spacing, cubeConfig }) {
   function onClick(scene, mesh, axis, callback) {
     const slice = getPlane({ axis, fromBox: mesh });
     const sliceClone = new Group();
-    scene.add(sliceClone);
+    CubeCubes.add(sliceClone);
+    console.dir(sliceClone);
+    sliceClone.updateWorldMatrix(true, true);
 
     for (const box of slice) {
       const clone = box.clone();
@@ -88,7 +89,8 @@ export default function CubeCubes({ count, spacing, cubeConfig }) {
     spinPlane({scene, sliceClone, axis }).play()
       .then(() => {
         for (const box of slice) box.visible = true;
-        callback()
+        CubeCubes.remove(sliceClone);
+        callback();
       });
   }
 }

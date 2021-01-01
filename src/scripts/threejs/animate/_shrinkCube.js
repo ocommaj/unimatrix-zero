@@ -1,50 +1,24 @@
 import { gsap } from 'gsap';
-import { Group } from 'three';
 
-export default function shrinkCube(scene, cube, callback, comma = null) {
+export default function shrinkCube(scene, cube, comma, callback) {
+  cube.group.add(comma);
 
-  const shrinkGroup = new Group();
-  shrinkGroup.name = 'shrunkenMessageCube';
-  scene.add(shrinkGroup);
-
-  for (const mesh of [...cube.group.children]) {
-    const clone = mesh.clone();
-    shrinkGroup.add(clone);
-    mesh.visible = false;
-    cube.group.remove(mesh);
-  }
-  shrinkGroup.add(comma);
-  // shrinkGroup.add(...[...cube.boxes, ...extras]);
-  // console.dir(shrinkGroup);
-  const tl = gsap.timeline({
+  return gsap.timeline({
     paused: true,
     delay: 0.8,
-    onComplete: () => {
-      const z = cube.group.children[cube.group.children.length - 2].position.z;
-      callback(z);
+    onComplete: () => callback(),
+    defaults: {
+      duration: 0.8,
+      ease: 'power1',
     },
-  });
-  // tl.to(shrinkGroup.scale, { y: 0.8, x: 0.8 })
-  tl.to(shrinkGroup.position, { y: '+=1.5' }, '<')
-    // .set(shrinkGroup.scale, { y: 1, x: 1 })
+  }).to(cube.group.position, { y: '+=1.25' }, '<')
+    .to(cube.group.scale, { x: 0.7, y: 0.7, z: 0.7 }, '<')
+    .to(cube.group.position, { x: '-=4'}, '<.2')
+    // .to(cube.group.rotation, { y: 0 }, '<')
+
     .call(() => {
-      for (const mesh of shrinkGroup.children) {
-        // mesh.matrixWorldNeedsUpdate = true
-        mesh.getWorldPosition(mesh.position);
-        // mesh.getWorldScale(mesh.scale)
-
-      }
-      scene.add(shrinkGroup.children.pop());
-      cube.group.add(...shrinkGroup.children);
-
-      scene.remove(shrinkGroup);
-      // console.dir(shrinkGroup.children[0])
-      // for (const mesh of shrinkGroup.children) {
-      // mesh.matrixWorldNeedsUpdate = true
-      // scene.add(mesh)
+      cube.group.updateWorldMatrix(true, true);
+      scene.attach(comma);
+      cube.group.remove(comma);
     });
-
-  return tl;
-
-
 }

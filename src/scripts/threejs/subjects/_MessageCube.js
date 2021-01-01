@@ -1,7 +1,8 @@
 import CubeCubes from './_CubeCubes';
 import SpellHi from './_Hi';
 import Comma from './_Comma';
-import { cameraZoomOut } from '../animate';
+import IntroBox from './_IntroBox';
+import { shrinkCube } from '../animate';
 
 export default function MessageCube({scene, configCubed}) {
   const Cube = CubeCubes(configCubed);
@@ -55,8 +56,9 @@ export default function MessageCube({scene, configCubed}) {
     messageLoop.pause();
 
     if (intersectedMesh.object === message.iDot) {
-      addComma()
-        .then(() => cameraZoomOut(camera, { y: '-=1.5', z: '+=3' }));
+      const callback = () => IntroBox({scene, camera, messageCube: Cube.group});
+      addComma().then(() => shrinkCube(scene, Cube, comma, callback).play());
+
       return;
     }
 

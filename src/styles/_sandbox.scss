@@ -3,3 +3,22 @@
   bottom: 2rem;
   margin: auto;
 }
+
+#iAmJames {
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+}
+
+#introBox {
+  width: 40vw;
+  height: 20vh;
+  background-color: green;
+  top: 0rem;
+  left: 0rem;
+}
+
+.overlayHtml {
+  position: absolute;
+  z-index: 1000;
+}

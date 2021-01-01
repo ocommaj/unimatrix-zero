@@ -7,7 +7,7 @@ const tlDefaults = {
   repeatDelay: 1.4,
   defaults: {
     duration: 1,
-    ease: 'elastic',
+    ease: 'bounce',
     stagger: {
       each: 0.1,
       from: 'random',

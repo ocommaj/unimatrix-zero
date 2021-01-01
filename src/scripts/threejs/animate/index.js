@@ -1,6 +1,7 @@
 import cameraZoomOut from './_cameraZoomout';
 import hiTimelines from './_Hi';
 import facingPlaneToBack from './_facingPlaneToBack';
+import showIntroBox from './_showIntroBox';
 import shrinkCube from './_shrinkCube';
 import spinPlane from './_spinPlane';
 
@@ -18,6 +19,7 @@ export {
   cameraZoomOut,
   hiTimelines,
   facingPlaneToBack,
+  showIntroBox,
   shrinkCube,
   spinPlane,
 };
