@@ -10,10 +10,12 @@ body {
   font-family: 'Chicago', monospace;
   color: #f4f4f4;
   margin: 0;
+  width: 100vw;
   height: 100vh;
-  display: flex;
-  justify-content: center;
+  //display: flex;
+  //justify-content: center;
   overflow: hidden;
+  //position: relative;
 }
 
 canvas {

@@ -14,8 +14,6 @@ export default function shrinkCube(scene, cube, comma, callback) {
   }).to(cube.group.position, { y: '+=1.25' }, '<')
     .to(cube.group.scale, { x: 0.7, y: 0.7, z: 0.7 }, '<')
     .to(cube.group.position, { x: '-=4'}, '<.2')
-    // .to(cube.group.rotation, { y: 0 }, '<')
-
     .call(() => {
       cube.group.updateWorldMatrix(true, true);
       scene.attach(comma);
