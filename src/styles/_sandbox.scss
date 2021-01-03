@@ -11,12 +11,22 @@
 }
 
 #introBox {
-  width: 40vw;
-  height: 20vh;
-  background-color: green;
+  //width: 40vw;
+  //height: 20vh;
+  padding: 1rem;
+  padding-top: 1.25rem;
+  //background-color: green;
+  color: lightgray;
   top: 0rem;
   left: 0rem;
+  transform: skew(0deg -3deg);
+
+  .wrappedContent {
+    transform: skew(0deg 3deg);
+  }
 }
+
+
 
 .overlayHtml {
   position: absolute;

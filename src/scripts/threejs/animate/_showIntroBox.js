@@ -15,7 +15,7 @@ export default function showIntroBox(boxGroup, comma, target, callback) {
   });
 
   let perimeter = filtered.map(box => {
-    return boxes.splice(boxes.indexOf(box), 1).pop()
+    return boxes.splice(boxes.indexOf(box), 1).pop();
   });
 
   let horizontal = perimeter.slice(0, sideLength);
