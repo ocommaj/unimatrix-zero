@@ -1,9 +1,12 @@
-import { PointLight } from 'three';
+import { PointLight, RectAreaLight, AmbientLight, HemisphereLight } from 'three';
+
 
 export default function GeneralLight(scene) {
-  const light = new PointLight(0x0f62fe, 1, 50);
+  const light = new RectAreaLight(0x0f62fe, 0.5, 10, 10);
+  // const light = new AmbientLight(0x0f62fe, .5);
+  // const light = new AmbientLight(0x0f62fe, .5)
   // const light = new PointLight(0x00bb00, 1, 50);
-  light.position.set(-3, 2.5, 4.75);
+  light.position.set(-3, 2.5, 12);
   scene.add(light);
 
   this.update = (time) => {

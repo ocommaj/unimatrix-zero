@@ -1,11 +1,10 @@
 import CubeCubes from './_CubeCubes';
 import SpellHi from './_Hi';
-import Comma from './_Comma';
-import IntroBox from './_IntroBox';
 import { shrinkCube } from '../animate';
 
 export default function MessageCube({scene, configCubed}) {
   const Cube = CubeCubes(configCubed);
+  Cube.group.name = 'mainMessageCube';
 
   let comma = null;
   let message = SpellHi(Cube.facingPlane);
@@ -31,37 +30,32 @@ export default function MessageCube({scene, configCubed}) {
   }
 
   function addComma() {
-    const position = {
+    const coordinates = {
       x: Cube.offsets[Cube.offsets.length - 1] + configCubed.spacing,
       y: Cube.offsets[0] - configCubed.spacing / 4,
       z: Cube.offsets[Cube.offsets.length - 1],
     };
 
     return new Promise((resolve) => {
-      Comma(position)
-        .then((mesh) => {
-          comma = mesh;
-          scene.add(comma);
-          messageLoop.progress(0.5);
-          messageLoop.progress(0);
-          message.showComma(comma);
-          messageLoop = message.loopAnimation(messageLoopCallback);
-          messageLoop.progress(0.5);
-          resolve();
-        }).catch((error) => console.error(error));
+      comma = scene.getObjectByName('messageComma');
+      comma.position.set(coordinates.x, coordinates.y, coordinates.z);
+      messageLoop.progress(0.5);
+      messageLoop.progress(0);
+      message.showComma(comma);
+      messageLoop = message.loopAnimation(messageLoopCallback);
+      messageLoop.progress(0.5);
+      resolve();
     });
   }
 
   function clickHandler(clickCounter, intersectedMesh, camera) {
     messageLoop.pause();
-
     if (intersectedMesh.object === message.iDot) {
-      const callback = () => IntroBox({
-        scene,
-        camera,
-        comma,
-        Cube,
-      });
+      const callback = () => {
+        const IntroBox = scene.getObjectByName('introBox');
+        IntroBox.userData.updatePositions()
+          .then(() => IntroBox.userData.animateReveal());
+      };
 
       addComma().then(() => shrinkCube(scene, Cube, comma, callback).play());
 

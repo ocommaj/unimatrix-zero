@@ -11,7 +11,7 @@ export default function shrinkCube(scene, cube, comma, callback) {
       duration: 0.8,
       ease: 'power1',
     },
-  }).to(cube.group.position, { y: '+=1.25' }, '<')
+  }).to(cube.group.position, { y: '+=1' }, '<')
     .to(cube.group.scale, { x: 0.7, y: 0.7, z: 0.7 }, '<')
     .to(cube.group.position, { x: '-=4'}, '<.2')
     .call(() => {

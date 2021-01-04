@@ -10,8 +10,9 @@ function meshAnimationProperties(meshArray) {
     properties.positions.push(mesh.position);
     properties.rotations.push(mesh.rotation);
     properties.scales.push(mesh.scale);
+    properties.materials.push(mesh.material);
     return properties;
-  }, { positions: [], rotations: [], scales: [] });
+  }, { positions: [], rotations: [], scales: [], materials: [] });
 }
 
 export {

@@ -6,10 +6,12 @@ export default Cube;
 function Cube({ size, position = null, rotation = null, scale = null }) {
   const geometry = new BoxGeometry(size, size, size);
   const material = new MeshPhysicalMaterial({
-    // color: 0x0f62fe,
+    color: 0x0f62fe,
+    // transparent: true,
+    // opacity: .5,
     // opacity: .1,
     // transmission: .4,
-    // clearcoat: .9,
+    clearcoat: 0.5,
     // clearcoat: .5
   });
   const cube = new Mesh(geometry, material);

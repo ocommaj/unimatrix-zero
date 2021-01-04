@@ -73,10 +73,10 @@ export default function CubeCubes({ count, spacing, cubeConfig }) {
   }
 
   function onClick(scene, mesh, axis, callback) {
+    if (!mesh.userData.isClickable) return;
     const slice = getPlane({ axis, fromBox: mesh });
     const sliceClone = new Group();
     CubeCubes.add(sliceClone);
-    console.dir(sliceClone);
     sliceClone.updateWorldMatrix(true, true);
 
     for (const box of slice) {

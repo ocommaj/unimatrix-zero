@@ -1,22 +1,13 @@
 import { gsap } from 'gsap';
 import { meshAnimationProperties } from './index';
 
-export default function showIntroBox(boxGroup, comma, target, callback) {
+export default showIntroBox;
+
+function showIntroBox(boxGroup, mainCube, comma, target, callback) {
   const sideLength = Math.sqrt(boxGroup.children.length);
-  let boxes = [ ...boxGroup.children ];
 
-  const filtered = boxes.filter((_, i) => {
-    return (
-      i <= sideLength
-      || i >= boxes.length - sideLength
-      || !(i % sideLength)
-      || !((i + 1) % sideLength)
-    );
-  });
-
-  let perimeter = filtered.map(box => {
-    return boxes.splice(boxes.indexOf(box), 1).pop();
-  });
+  let perimeter = boxGroup.userData.sortedBoxes.perimeter;
+  let innerBoxes = boxGroup.userData.sortedBoxes.innerBoxes;
 
   let horizontal = perimeter.slice(0, sideLength);
   horizontal.push(...perimeter.slice(perimeter.length - sideLength));
@@ -27,7 +18,7 @@ export default function showIntroBox(boxGroup, comma, target, callback) {
   let left = vertical.filter((_, i) => !(i % 2));
   let right = vertical.filter((_, i) => (i % 2));
 
-  boxes = { ...meshAnimationProperties(boxes) };
+  innerBoxes = { ...meshAnimationProperties(innerBoxes) };
   perimeter = { ...meshAnimationProperties(perimeter) };
   horizontal = { ...meshAnimationProperties(horizontal) };
   top = { ...meshAnimationProperties(top) };
@@ -40,25 +31,30 @@ export default function showIntroBox(boxGroup, comma, target, callback) {
     onComplete: () => callback(),
     defaults: {
       duration: 1,
-      ease: 'power2',
+      ease: 'power4',
       stagger: {
-        each: 0.05,
+        each: 0.1,
         from: 'random',
       },
     },
   })
-    .to(boxes.positions, { ...target.positions })
-    .to(boxes.scales, { ...target.scales}, '<')
-    .to(perimeter.scales, { ...target.perimeter.interScales}, '<')
-    .to(perimeter.positions, { ...target.positions }, '<')
+    .to(innerBoxes.positions, { ...target.positions })
+    .to(top.positions, { ...target.horizontal.topPos }, '<')
+    .to(bottom.positions, { ...target.horizontal.bottomPos }, '<')
+    .to(left.positions, { ...target.vertical.leftPos }, '<')
+    .to(right.positions, { ...target.vertical.rightPos}, '<')
     .to(comma.position, { ...target.commaPos }, '<')
-    .to(comma.rotation, { y: -0.4 }, '<')
-    .to(boxGroup.rotation, { y: -0.2 }, '<')
-    .to(vertical.scales, { ...target.vertical.scales }, '-=.2')
+    .to(comma.rotation, { y: -0.2 }, '<')
+    .to(boxGroup.rotation, { y: -0.1 }, '<')
+    .to(mainCube.rotation, { y: 0.1 }, '<')
+    .to(innerBoxes.scales, { ...target.scales}, '<.4')
+    .to(vertical.scales, { ...target.vertical.scales }, '<')
     .to(horizontal.scales, { ...target.horizontal.scales }, '<')
-    .to(perimeter.positions, { z: '+=.25' }, '<')
-    .to(top.positions, { y: '+=.25' }, '<')
-    .to(bottom.positions, { y: '-=.25' }, '<')
-    .to(left.positions, { ...target.vertical.left }, '<')
-    .to(right.positions, { ...target.vertical.right }, '<');
+    .to(mainCube.rotation, { y: 0.1 }, '<')
+    .to(innerBoxes.materials, {
+      opacity: 0.25,
+      metalness: 1,
+      stagger: 0,
+    }, '-=.2');
+
 }

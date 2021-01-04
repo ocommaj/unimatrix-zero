@@ -70,6 +70,8 @@ export default function SceneManager(canvas) {
 
     return {
       cube: messageCube,
+      comma: Subjects.comma({ parent: scene }),
+      introBox: Subjects.introBox({ scene, camera }),
       light: Subjects.generalLight(scene),
     };
   }
@@ -79,7 +81,6 @@ export default function SceneManager(canvas) {
     for (const subject of Object.values(sceneSubjects)) {
       if (subject.update) subject.update(elapsedTime);
     }
-
 
     renderer.render(scene, camera);
   };
@@ -91,6 +92,12 @@ export default function SceneManager(canvas) {
     camera.aspect = width / height;
     camera.setZoom(width);
     camera.updateProjectionMatrix();
+    sceneSubjects.introBox.onResize();
+    // console.dir(sceneSubjects.introBox)
+    /* if (sceneSubjects.introBox.visible) {
+      console.log('hi')
+      sceneSubjects.introBox.onResize()
+    }*/
     renderer.setSize(width, height);
   };
 
@@ -102,10 +109,12 @@ export default function SceneManager(canvas) {
 
     if (!intersects[0]) return clickCounter;
 
+    console.dir(intersects[0].object);
     sceneSubjects.cube.onClick(clickCounter, intersects[0], camera);
     clickCounter++;
 
     return clickCounter;
+
   };
 
   this.onMouseMove = (event) => {
