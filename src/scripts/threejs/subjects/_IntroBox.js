@@ -10,9 +10,7 @@ export default function IntroBox({ scene, camera }) {
 
   initialize().then(loaded => scene.add(loaded));
 
-  this.onResize = () => {
-    if (IntroBox.visible) { positionDomElement(); }
-  };
+  this.onResize = () => IntroBox.visible ? positionDOMElement() : null;
 
   function initialize(resolve) {
     return new Promise(resolve => {
@@ -22,13 +20,16 @@ export default function IntroBox({ scene, camera }) {
         copy.copy(cube);
         copy.userData.isClickable = false;
         copy.material = cube.material.clone();
-
         IntroBox.attach(copy);
       }
+
       IntroBox.visible = false;
-      IntroBox.userData.sortedBoxes = sortBoxes();
-      IntroBox.userData.updatePositions = updatePositions;
-      IntroBox.userData.animateReveal = animateReveal;
+      IntroBox.userData = {
+        ...sortBoxes(),
+        updatePositions,
+        animateReveal,
+      };
+
       resolve(IntroBox);
     });
   }
@@ -94,45 +95,26 @@ export default function IntroBox({ scene, camera }) {
       perimeter: { interScales: { x: 1.5, y: 1, z: 0.5 } },
     };
 
-    const callback = () => {
-      positionDomElement();
-      // mergeGeometry();
-    };
+    const callback = () => mergeGeometry().then(() => positionDOMElement());
+
     updatePositions();
     showIntroBox(IntroBox, mainCube, comma, animationTarget, callback);
   }
 
-  function positionDomElement() {
+  function positionDOMElement() {
     const canvas = document.getElementById('canvas');
     const element = document.getElementById('introBox');
+    const target = IntroBox.getObjectByName('introBoxBG');
+    target.updateWorldMatrix();
+    target.geometry.computeBoundingBox();
+    const boundingBox = target.geometry.boundingBox;
+    boundingBox.max.project(camera);
+    boundingBox.min.project(camera);
 
-    const corners = {
-      topRight: IntroBox.children[sliceLength - 2],
-      topLeft: IntroBox.children[sliceLength - 2],
-      bottomLeft: IntroBox.children[sideLength],
-      bottomRight: IntroBox.children[sideLength * 2 - 2],
-    };
-
-    for (const corner of Object.values(corners)) {
-      corner.updateWorldMatrix();
-      corner.geometry.computeBoundingBox();
-      corner.userData.tempWorldBounds = corner.geometry.boundingBox;
-
-      for (const bounds of Object.values(corner.userData.tempWorldBounds)) {
-        bounds.applyMatrix4(corner.matrixWorld);
-        bounds.project(camera);
-      }
-    }
-
-    const maxX = corners.bottomRight.userData.tempWorldBounds.max.x;
-    const minX = corners.bottomLeft.userData.tempWorldBounds.max.x;
-    const maxY = corners.topRight.userData.tempWorldBounds.min.y;
-    const minY = corners.bottomRight.userData.tempWorldBounds.min.y;
-
-    const left = (minX * 0.5 + 0.5) * canvas.clientWidth;
-    const right = (maxX * 0.5 + 0.5) * canvas.clientWidth;
-    const bottom = (minY * -0.5 + 0.5) * canvas.clientHeight - 8;
-    const top = (maxY * -0.5 + 0.5) * canvas.clientHeight - 8;
+    const left = (boundingBox.min.x * 0.5 + 0.5) * canvas.clientWidth - 8;
+    const right = (boundingBox.max.x * 0.5 + 0.5) * canvas.clientWidth - 8;
+    const bottom = (boundingBox.min.y * -0.5 + 0.5) * canvas.clientHeight;
+    const top = (boundingBox.max.y * -0.5 + 0.5) * canvas.clientHeight;
     const width = right - left;
     const height = bottom - top;
 
@@ -143,22 +125,22 @@ export default function IntroBox({ scene, camera }) {
     `;
     element.children[0].style.opacity = 1;
   }
-}
 
-
-/* function mergeGeometry() {
-    //return new Promise(resolve => {
-      const material = IntroBox.userData.innerBoxes[0].material;
+  function mergeGeometry() {
+    return new Promise(resolve => {
+      const objectArray = IntroBox.userData.innerBoxes;
+      const material = objectArray[0].material;
       const mergedGeometry = new THREE.Geometry();
-      for (const box of IntroBox.userData.innerBoxes) {
+      for (const box of objectArray) {
         mergedGeometry.merge(box.geometry, box.matrix);
       }
       const mesh = new THREE.Mesh(mergedGeometry, material);
-      mergedGeometry.computeBoundingBox();
-      //IntroBox.clear();
-      //IntroBox.add( IntroBox.userData.perimenter )
+      mesh.name = 'introBoxBG';
+      IntroBox.clear();
+      IntroBox.userData.innerBoxes = [mesh];
+      IntroBox.add(...IntroBox.userData.perimeter);
       IntroBox.add(mesh);
-      //resolve(mesh);
-    //});
-  }*/
-// }
+      resolve();
+    });
+  }
+}

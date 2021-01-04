@@ -6,8 +6,8 @@ export default showIntroBox;
 function showIntroBox(boxGroup, mainCube, comma, target, callback) {
   const sideLength = Math.sqrt(boxGroup.children.length);
 
-  let perimeter = boxGroup.userData.sortedBoxes.perimeter;
-  let innerBoxes = boxGroup.userData.sortedBoxes.innerBoxes;
+  let perimeter = boxGroup.userData.perimeter;
+  let innerBoxes = boxGroup.userData.innerBoxes;
 
   let horizontal = perimeter.slice(0, sideLength);
   horizontal.push(...perimeter.slice(perimeter.length - sideLength));
@@ -54,6 +54,7 @@ function showIntroBox(boxGroup, mainCube, comma, target, callback) {
     .to(innerBoxes.materials, {
       opacity: 0.25,
       metalness: 1,
+      // transparent: true,
       stagger: 0,
     }, '-=.2');
 

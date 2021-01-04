@@ -109,7 +109,6 @@ export default function SceneManager(canvas) {
 
     if (!intersects[0]) return clickCounter;
 
-    console.dir(intersects[0].object);
     sceneSubjects.cube.onClick(clickCounter, intersects[0], camera);
     clickCounter++;
 
