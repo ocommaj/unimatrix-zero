@@ -27,6 +27,7 @@ function showIntroBox(boxGroup, mainCube, comma, target, callback) {
   left = { ...meshAnimationProperties(left) };
   right = { ...meshAnimationProperties(right) };
 
+
   return gsap.timeline({
     onComplete: () => callback(),
     defaults: {
@@ -43,19 +44,22 @@ function showIntroBox(boxGroup, mainCube, comma, target, callback) {
     .to(bottom.positions, { ...target.horizontal.bottomPos }, '<')
     .to(left.positions, { ...target.vertical.leftPos }, '<')
     .to(right.positions, { ...target.vertical.rightPos}, '<')
-    .to(comma.position, { ...target.commaPos }, '<')
-    .to(comma.rotation, { y: -0.2 }, '<')
-    .to(boxGroup.rotation, { y: -0.1 }, '<')
-    .to(mainCube.rotation, { y: 0.1 }, '<')
+    .to(comma.position, { ...target.comma.pos }, '<')
+    .to(comma.rotation, { y: -0.1 }, '<')
+    .to(boxGroup.rotation, { y: -0.15 }, '<')
+    .to(mainCube.rotation, { y: 0.2 }, '<')
     .to(innerBoxes.scales, { ...target.scales}, '<.4')
     .to(vertical.scales, { ...target.vertical.scales }, '<')
     .to(horizontal.scales, { ...target.horizontal.scales }, '<')
-    .to(mainCube.rotation, { y: 0.1 }, '<')
+    .to(comma.material, { emissiveIntensity: 0.3 }, '-=.2')
+    .to(comma.scale, { z: 0.5 }, '<')
+    .to(comma.position, { z: '-=.1' }, '<')
+
     .to(innerBoxes.materials, {
-      opacity: 0.25,
-      metalness: 1,
-      // transparent: true,
+      opacity: 0.5,
+      emissive: 0x525252,
+      emissiveIntensity: 0.5,
       stagger: 0,
-    }, '-=.2');
+    }, '<');
 
 }

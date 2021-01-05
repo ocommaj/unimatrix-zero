@@ -12,17 +12,20 @@
 
 #introBox {
   padding: 1rem;
-  padding-top: 1.25rem;
+  padding-top: 1.5rem;
   color: lightgray;
   top: 0rem;
   left: 0rem;
   transform: skew(0deg -3deg);
 
+
   .wrappedContent {
+    //background-color: green;
     transform: skew(0deg 3deg);
     color: gray;
     opacity: 0;
     transition: opacity .7s ease;
+    overflow: hidden;
   }
 }
 

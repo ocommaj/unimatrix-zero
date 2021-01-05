@@ -93,11 +93,6 @@ export default function SceneManager(canvas) {
     camera.setZoom(width);
     camera.updateProjectionMatrix();
     sceneSubjects.introBox.onResize();
-    // console.dir(sceneSubjects.introBox)
-    /* if (sceneSubjects.introBox.visible) {
-      console.log('hi')
-      sceneSubjects.introBox.onResize()
-    }*/
     renderer.setSize(width, height);
   };
 

@@ -1,4 +1,4 @@
-import Comma, { OldComma } from './_Comma';
+import Comma from './_Comma';
 import Cube from './_Cube';
 import CubeCubes from './_CubeCubes';
 import GeneralLight from './_GeneralLight';
@@ -10,7 +10,6 @@ import * as letters from './_Letters';
 
 export default {
   letters,
-  oldComma: (scene) => new OldComma(scene),
   comma: (config) => new Comma(config),
   cube: (config) => Cube(config),
   cubeCubes: (config) => CubeCubes(config),

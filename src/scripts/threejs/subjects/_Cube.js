@@ -1,18 +1,13 @@
-import { BoxGeometry, MeshPhysicalMaterial, Mesh } from 'three';
+import { BoxGeometry, MeshLambertMaterial, Mesh } from 'three';
 import meshModifiers from '../modifiers';
 
 export default Cube;
 
 function Cube({ size, position = null, rotation = null, scale = null }) {
   const geometry = new BoxGeometry(size, size, size);
-  const material = new MeshPhysicalMaterial({
+  const material = new MeshLambertMaterial({
     color: 0x0f62fe,
-    // transparent: true,
-    // opacity: .5,
-    // opacity: .1,
-    // transmission: .4,
-    clearcoat: 0.5,
-    // clearcoat: .5
+    reflectivity: 0.5,
   });
   const cube = new Mesh(geometry, material);
   position && meshModifiers.position(cube, position);

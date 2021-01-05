@@ -63,7 +63,6 @@ export default function CubeCubes({ count, spacing, cubeConfig }) {
   }
 
   function setOffsets(count, size, spacing) {
-    // const offset = size * spacing;
     const offset = spacing >= size ? size * spacing : size * (spacing + size);
     const midpoint = Math.floor(count / 2);
     return Array.from({length: count}, (v, i) => {
