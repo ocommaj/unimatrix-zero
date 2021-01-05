@@ -16,16 +16,22 @@
   color: lightgray;
   top: 0rem;
   left: 0rem;
-  transform: skew(0deg -3deg);
+  //transform: skew(0deg -3deg);
 
 
   .wrappedContent {
     //background-color: green;
-    transform: skew(0deg 3deg);
+    transform: skew(0deg -3deg);
     color: gray;
     opacity: 0;
     transition: opacity .7s ease;
     overflow: hidden;
+
+    h2 {
+      background: -webkit-linear-gradient(40deg, #be95ff, #c6c6c6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
   }
 }
 
