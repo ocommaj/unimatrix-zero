@@ -26,11 +26,112 @@
     opacity: 0;
     transition: opacity .7s ease;
     overflow: hidden;
+    ul {
+      padding-left: 0;
+    }
+    li {
+      //line-height: 24px;
+      font-size: 24px;
+      margin: 18px 12px;
+      list-style: none;
+      list-style-position: outside;
+      background: -webkit-linear-gradient(40deg, #be95ff, #c6c6c6, #ff8389);
+      -webkit-background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+      animation: bg_gradient_slide 3s ease;
+      animation-iteration-count: infinite;
+      animation-fill-mode: forwards;
+    }
 
-    h2 {
-      background: -webkit-linear-gradient(40deg, #be95ff, #c6c6c6);
+    li .gradient_1 {
+      background: -webkit-linear-gradient(40deg, #be95ff, #c6c6c6, #ff8389);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+    }
+
+    li .gradient_2 {
+      background: -webkit-linear-gradient(40deg, #ff8389, #c6c6c6, #be95ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    li:nth-child(1) {
+      animation-duration: 4.5s;
+    }
+
+    li:nth-child(2) {
+      animation-duration: 4.6s;
+    }
+    li:nth-child(3) {
+      animation-duration: 4.7s;
+    }
+    li:nth-child(4) {
+      animation-duration: 4.8s;
+    }
+    li:nth-child(5) {
+      animation-duration: 4.9s;
+    }
+    li:nth-child(6) {
+      animation-duration: 4.8s;
+    }
+    li:nth-child(7) {
+      animation-duration: 4.7s;
+    }
+    li:nth-child(8) {
+      animation-duration: 4.6s;
+    }
+    li:nth-child(9) {
+      animation-duration: 4.5s;
+    }
+    li:nth-child(10) {
+      animation-duration: 4.6s;
+    }
+
+    @keyframes bg_gradient_slide {
+      0% {
+        background-position: 0 1600px;
+      }
+      100% {
+        background-position: 1600px 0;
+      }
+    }
+
+    @keyframes shuffle_Gradient {
+      from {
+        background: -webkit-linear-gradient(40deg, #be95ff, #c6c6c6, #ff8389);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      15% {
+        background: -webkit-linear-gradient(20deg, #be95ff, #c6c6c6, #ff8389);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      30% {
+        background: -webkit-linear-gradient(20deg, #ff8389, #c6c6c6, #be95ff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      45% {
+        background: -webkit-linear-gradient(40deg, #ff8389, #c6c6c6, #be95ff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      60% {
+        background: -webkit-linear-gradient(20deg, #ff8389, #c6c6c6, #be95ff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      75% {
+        background: -webkit-linear-gradient(20deg, #be95ff, #c6c6c6, #ff8389);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      to {
+        background: -webkit-linear-gradient(40deg, #be95ff, #c6c6c6, #ff8389);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
     }
   }
 }

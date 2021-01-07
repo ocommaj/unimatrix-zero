@@ -11,6 +11,7 @@ export default function CubeCubes({ count, spacing, cubeConfig }) {
   CubeCubes.add(...boxes);
 
   let facingPlane = CubeCubes.children.slice(-Math.pow(count, 2));
+  facingPlane.forEach(cube => illuminate(cube));
 
   return {
     group: CubeCubes,
@@ -23,6 +24,10 @@ export default function CubeCubes({ count, spacing, cubeConfig }) {
 
   function getFacingPlane() {
     return CubeCubes.children.slice(-Math.pow(count, 2));
+  }
+
+  function illuminate(cube) {
+    cube.userData.innerLight.intensity = 0.7;
   }
 
   function planeLoop(callback) {

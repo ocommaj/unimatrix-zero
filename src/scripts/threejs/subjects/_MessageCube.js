@@ -11,6 +11,7 @@ export default function MessageCube({scene, configCubed}) {
   let messageLoop = message.loopAnimation(() => messageLoopCallback());
 
   scene.add(Cube.group);
+  // console.dir(Cube.group.children[0])
 
   const sayHi = () => messageLoop.play();
   const onClick = clickHandler;

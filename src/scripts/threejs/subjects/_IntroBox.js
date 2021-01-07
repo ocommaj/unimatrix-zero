@@ -19,7 +19,13 @@ export default function IntroBox({ scene, camera }) {
         const copy = new THREE.Mesh();
         copy.copy(cube);
         copy.userData.isClickable = false;
-        copy.material = cube.material.clone();
+        // copy.material = cube.material.clone();
+        // copy.material = cube.material[4].clone();
+        copy.material = cube.material.map(material => {
+          const clone = material.clone();
+          clone.transparent = false;
+          return clone;
+        });
         IntroBox.attach(copy);
       }
 
@@ -91,7 +97,7 @@ export default function IntroBox({ scene, camera }) {
       horizontal: {
         topPos: { x: '+=7', y: '+=.75', z: '+=2.25' },
         bottomPos: { x: '+=7', y: '-=1.5', z: '+=2.25'},
-        scales: { x: 1.2, y: 0.75 },
+        scales: { x: 5.4, y: 0.75 },
       },
       perimeter: { interScales: { x: 1.5, y: 1, z: 0.5 } },
     };
@@ -130,17 +136,42 @@ export default function IntroBox({ scene, camera }) {
 
   function mergeGeometry() {
     return new Promise(resolve => {
+      const rad = 4.8;
+      const height = 6;
+      const radialSeg = 64;
+      const heightSeg = 6;
+      const openEnd = true;
+      const thetaStart = 5.75;
+      const thetaLength = 1;
       const tempPosVector = new THREE.Vector3();
-      const mesh = new THREE.Mesh();
+      const geometry = new THREE.CylinderGeometry(
+        rad, rad, height, radialSeg, heightSeg, openEnd, thetaStart, thetaLength
+      );
+
       const objectArray = IntroBox.userData.innerBoxes;
       const midpoint = objectArray[Math.floor(objectArray.length / 2)];
+      midpoint.getWorldPosition(tempPosVector);
+      const material = midpoint.material[4].clone();
+      const mesh = new THREE.Mesh();
       mesh.copy(midpoint);
-      IntroBox.userData.innerBoxes = [mesh];
+      mesh.scale.set(4.5, 6, 0.1);
+      mesh.position.set(
+        tempPosVector.x + 0.25,
+        tempPosVector.y,
+        tempPosVector.z);
+      const cylinderMesh = new THREE.Mesh(geometry, material);
+      cylinderMesh.position.set(
+        tempPosVector.x + 0.6,
+        tempPosVector.y,
+        tempPosVector.z - 4.7);
+      IntroBox.userData.innerBoxes = [mesh, cylinderMesh];
       mesh.name = 'introBoxBG';
-      mesh.scale.set(4.5, 6, 0.5);
       mesh.updateMatrix();
       mesh.material.transparent = true;
-      mesh.material.opacity = 0.4;
+      mesh.material.opacity = 0;
+      mesh.visible = false;
+      cylinderMesh.material.transparent = true;
+      cylinderMesh.material.opacity = 0.6;
 
       const light = new THREE.RectAreaLight({ color: 0x78a9ff });
 
