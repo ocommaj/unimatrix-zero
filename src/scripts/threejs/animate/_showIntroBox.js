@@ -4,19 +4,22 @@ import { meshAnimationProperties } from './index';
 export default showIntroBox;
 
 function showIntroBox(boxGroup, mainCube, comma, target, callback) {
-  const { userData } = boxGroup;
+  const { userData: { sides, midpoints } } = boxGroup;
 
-  const innerBoxes = { ...meshAnimationProperties(userData.innerBoxes) };
-  const top = { ...meshAnimationProperties(userData.sides.top) };
-  const bottom = { ...meshAnimationProperties(userData.sides.bottom) };
-  const left = { ...meshAnimationProperties(userData.sides.left) };
-  const right = { ...meshAnimationProperties(userData.sides.right) };
   const {
+    inner: midInner,
     top: midTop,
     bottom: midBottom,
     left: midLeft,
     right: midRight,
-  } = userData.midpoints;
+  } = midpoints;
+
+  const boxes = () => Object.keys(sides).reduce((boxes, key) => {
+    boxes[key] = { ...meshAnimationProperties(sides[key]) }
+    return boxes
+  }, {})
+
+  const { inner, top, bottom, left, right } = boxes()
 
   return gsap.timeline({
     paused: true,
@@ -30,7 +33,8 @@ function showIntroBox(boxGroup, mainCube, comma, target, callback) {
       },
     },
   })
-    .to(innerBoxes.positions, { ...target.positions })
+    .to(inner.positions, { ...target.positions })
+    .to(midInner.position, { ...target.positions }, '<')
     .to(top.positions, { ...target.horizontal.topPos }, '<')
     .to(midTop.position, { ...target.horizontal.topPos }, '<')
     .to(bottom.positions, { ...target.horizontal.bottomPos }, '<')
@@ -43,7 +47,8 @@ function showIntroBox(boxGroup, mainCube, comma, target, callback) {
     .to(comma.rotation, { y: -0.1 }, '<')
     .to(boxGroup.rotation, { y: -0.15 }, '<')
     .to(mainCube.rotation, { y: 0.2 }, '<')
-    .to(innerBoxes.scales, { ...target.scales}, '<.4')
+    .to(inner.scales, { ...target.scales}, '<.4')
+    .to(midInner.scale, { ...target.scales}, '<.4')
     .to(left.scales, { x: 0, y: 0, z: 0 }, '<')
     .to(midLeft.scale, { x: 0.5, y: 5.85 }, '<')
     .to(right.scales, { x: 0, y: 0, z: 0 }, '<')
@@ -56,11 +61,16 @@ function showIntroBox(boxGroup, mainCube, comma, target, callback) {
     .to(comma.scale, { z: 0.5 }, '<')
     .to(comma.position, { z: '-=.1' }, '<')
 
-    .to(innerBoxes.materials, {
+    .to(inner.materials, {
+      opacity: 0.5,
+      emissive: 0x525252,
+      emissiveIntensity: 0.5,
+      stagger: 0,
+    }, '<')
+    .to(midInner.material, {
       opacity: 0.5,
       emissive: 0x525252,
       emissiveIntensity: 0.5,
       stagger: 0,
     }, '<');
-
 }

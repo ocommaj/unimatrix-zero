@@ -57,7 +57,7 @@ export default function IntroBox({ scene, camera }) {
     const vertical = perimeter.filter(box => !horizontal.includes(box));
 
     const sides = {
-      //inner: boxes,
+      inner: boxes,
       bottom: horizontal.slice(0, sideLength),
       top: horizontal.slice(horizontal.length - sideLength),
       left: vertical.filter((_, i) => !(i % 2)),
@@ -73,7 +73,7 @@ export default function IntroBox({ scene, camera }) {
       return sides;
     }, { ...sides });
 
-    return { sides, midpoints, innerBoxes: boxes };
+    return { sides, midpoints };
   }
 
   function updatePositions() {
@@ -161,15 +161,14 @@ export default function IntroBox({ scene, camera }) {
       const geometry = new THREE.CylinderGeometry(
         rad, rad, height, radialSeg, heightSeg, openEnd, thetaStart, thetaLength
       );
-      //console.dir(IntroBox.userData.midpoints)
-      const objectArray = IntroBox.userData.innerBoxes;
-      const midpoint = objectArray[Math.floor(objectArray.length / 2)];
-      //const midpoint = IntroBox.userData.midpoints.inner;
-      console.dir(midpoint)
-      midpoint.getWorldPosition(tempPosVector);
-      const material = midpoint.material[4].clone();
+
       const mesh = new THREE.Mesh();
+      const midpoint = IntroBox.userData.midpoints.inner;
+      const material = midpoint.material[4].clone();
+      midpoint.getWorldPosition(tempPosVector);
       mesh.copy(midpoint);
+      IntroBox.userData.midpoints.inner = null;
+      IntroBox.remove(midpoint)
       mesh.clear();
       mesh.scale.set(4.5, 6, 0.1);
       mesh.position.set(
@@ -182,7 +181,7 @@ export default function IntroBox({ scene, camera }) {
         tempPosVector.x + 0.6,
         tempPosVector.y,
         tempPosVector.z - 4.7);
-      IntroBox.userData.innerBoxes = [mesh, cylinderMesh];
+
       mesh.name = 'introBoxBG';
       mesh.updateMatrix();
       mesh.material.transparent = true;
@@ -190,11 +189,11 @@ export default function IntroBox({ scene, camera }) {
       mesh.visible = false;
       cylinderMesh.material.transparent = true;
       cylinderMesh.material.opacity = 0.6;
+      IntroBox.userData.midpoints.inner = mesh;
 
       IntroBox.clear();
-      IntroBox.add(...Object.values(IntroBox.userData.midpoints));
-      IntroBox.add(...IntroBox.userData.innerBoxes);
-      //IntroBox.add(...IntroBox.userData.sides.inner);
+      IntroBox.add(cylinderMesh);
+      IntroBox.add( ...Object.values(IntroBox.userData.midpoints) );
       resolve();
     });
   }
