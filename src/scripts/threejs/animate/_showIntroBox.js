@@ -4,34 +4,22 @@ import { meshAnimationProperties } from './index';
 export default showIntroBox;
 
 function showIntroBox(boxGroup, mainCube, comma, target, callback) {
-  const sideLength = Math.sqrt(boxGroup.children.length);
+  const { userData } = boxGroup;
 
-  let perimeter = boxGroup.userData.perimeter;
-  let innerBoxes = boxGroup.userData.innerBoxes;
-
-  let horizontal = perimeter.slice(0, sideLength);
-  horizontal.push(...perimeter.slice(perimeter.length - sideLength));
-  let bottom = horizontal.slice(0, sideLength);
-  let top = horizontal.slice(horizontal.length - sideLength);
-  const midTop = top.splice(Math.floor(top.length / 2), 1)[0];
-  const midBottom = bottom.splice(Math.floor(bottom.length / 2), 1)[0];
-
-  let vertical = perimeter.filter(box => !horizontal.includes(box));
-  let left = vertical.filter((_, i) => !(i % 2));
-  let right = vertical.filter((_, i) => (i % 2));
-  const midLeft = left.splice(Math.floor(left.length / 2), 1)[0];
-  const midRight = right.splice(Math.floor(left.length / 2), 1)[0];
-
-  innerBoxes = { ...meshAnimationProperties(innerBoxes) };
-  perimeter = { ...meshAnimationProperties(perimeter) };
-  horizontal = { ...meshAnimationProperties(horizontal) };
-  top = { ...meshAnimationProperties(top) };
-  bottom = { ...meshAnimationProperties(bottom) };
-  vertical = { ...meshAnimationProperties(vertical) };
-  left = { ...meshAnimationProperties(left) };
-  right = { ...meshAnimationProperties(right) };
+  const innerBoxes = { ...meshAnimationProperties(userData.innerBoxes) };
+  const top = { ...meshAnimationProperties(userData.sides.top) };
+  const bottom = { ...meshAnimationProperties(userData.sides.bottom) };
+  const left = { ...meshAnimationProperties(userData.sides.left) };
+  const right = { ...meshAnimationProperties(userData.sides.right) };
+  const {
+    top: midTop,
+    bottom: midBottom,
+    left: midLeft,
+    right: midRight,
+  } = userData.midpoints;
 
   return gsap.timeline({
+    paused: true,
     onComplete: () => callback(),
     defaults: {
       duration: 1,
@@ -56,17 +44,15 @@ function showIntroBox(boxGroup, mainCube, comma, target, callback) {
     .to(boxGroup.rotation, { y: -0.15 }, '<')
     .to(mainCube.rotation, { y: 0.2 }, '<')
     .to(innerBoxes.scales, { ...target.scales}, '<.4')
-    // .to(vertical.scales, { ...target.vertical.scales }, '<')
     .to(left.scales, { x: 0, y: 0, z: 0 }, '<')
     .to(midLeft.scale, { x: 0.5, y: 5.85 }, '<')
     .to(right.scales, { x: 0, y: 0, z: 0 }, '<')
     .to(midRight.scale, { x: 0.5, y: 5.85 }, '<')
-    // .to(horizontal.scales, { ...target.horizontal.scales }, '<')
     .to(top.scales, { x: 0, y: 0, z: 0 }, '<')
     .to(midTop.scale, { ...target.horizontal.scales }, '<')
     .to(bottom.scales, { x: 0, y: 0, z: 0 }, '<')
     .to(midBottom.scale, { ...target.horizontal.scales }, '<')
-    .to(comma.material, { emissiveIntensity: 0.3 }, '-=.2')
+    .to(comma.material, { emissiveIntensity: 0.5 }, '-=.2')
     .to(comma.scale, { z: 0.5 }, '<')
     .to(comma.position, { z: '-=.1' }, '<')
 

@@ -1,6 +1,7 @@
 import Comma from './_Comma';
 import Cube from './_Cube';
 import CubeCubes from './_CubeCubes';
+import Floor from './_Floor';
 import GeneralLight from './_GeneralLight';
 import IntroBox from './_IntroBox';
 import MessageCube from './_MessageCube';
@@ -14,6 +15,7 @@ export default {
   cube: (config) => Cube(config),
   cubeCubes: (config) => CubeCubes(config),
   introBox: (config) => new IntroBox(config),
+  floor: (scene) => new Floor(scene),
   spellHi: (face) => SpellHi(face),
   generalLight: (scene) => new GeneralLight(scene),
   messageCube: (config) => new MessageCube(config),

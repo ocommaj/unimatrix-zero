@@ -9,7 +9,7 @@ export default function MessageCube({scene, configCubed}) {
   let comma = null;
   let message = SpellHi(Cube.facingPlane);
   let messageLoop = message.loopAnimation(() => messageLoopCallback());
-
+  // Cube.group.visible = false;
   scene.add(Cube.group);
 
   const sayHi = () => messageLoop.play();

@@ -19,8 +19,6 @@ export default function IntroBox({ scene, camera }) {
         const copy = new THREE.Mesh();
         copy.copy(cube);
         copy.userData.isClickable = false;
-        // copy.material = cube.material.clone();
-        // copy.material = cube.material[4].clone();
         copy.material = cube.material.map(material => {
           const clone = material.clone();
           clone.transparent = false;
@@ -54,11 +52,28 @@ export default function IntroBox({ scene, camera }) {
     const perimeter = filtered.map(box => {
       return boxes.splice(boxes.indexOf(box), 1).pop();
     });
+    const horizontal = perimeter.slice(0, sideLength);
+    horizontal.push(...perimeter.slice(perimeter.length - sideLength));
+    const vertical = perimeter.filter(box => !horizontal.includes(box));
 
-    return {
-      perimeter,
-      innerBoxes: boxes,
+    const sides = {
+      //inner: boxes,
+      bottom: horizontal.slice(0, sideLength),
+      top: horizontal.slice(horizontal.length - sideLength),
+      left: vertical.filter((_, i) => !(i % 2)),
+      right: vertical.filter((_, i) => (i % 2)),
     };
+
+    const midpoints = Object.keys(sides).reduce((sides, key) => {
+      const mesh = sides[key].splice(Math.floor(sides[key].length / 2), 1)[0];
+      mesh.name = `perimeter mid${key.toUpperCase()}`;
+      mesh.children[0].visible = true;
+      mesh.children[0].intensity = 1;
+      sides[key] = mesh;
+      return sides;
+    }, { ...sides });
+
+    return { sides, midpoints, innerBoxes: boxes };
   }
 
   function updatePositions() {
@@ -83,7 +98,7 @@ export default function IntroBox({ scene, camera }) {
   }
 
   function animateReveal() {
-    const animationTarget = {
+    const target = {
       positions: { x: '+=7', y: '-=.25', z: '+=2' },
       scales: { x: 2.75, y: 4, z: 0.5 },
       comma: {
@@ -99,14 +114,13 @@ export default function IntroBox({ scene, camera }) {
         bottomPos: { x: '+=7', y: '-=1.5', z: '+=2.25'},
         scales: { x: 5.4, y: 0.75 },
       },
-      perimeter: { interScales: { x: 1.5, y: 1, z: 0.5 } },
     };
 
     const comma = scene.getObjectByName('messageComma');
     const callback = () => mergeGeometry().then(() => positionDOMElement());
+    const animate = showIntroBox(IntroBox, mainCube, comma, target, callback);
 
-    updatePositions().then(() =>
-      showIntroBox(IntroBox, mainCube, comma, animationTarget, callback));
+    updatePositions().then(() => animate.play());
   }
 
   function positionDOMElement() {
@@ -147,19 +161,23 @@ export default function IntroBox({ scene, camera }) {
       const geometry = new THREE.CylinderGeometry(
         rad, rad, height, radialSeg, heightSeg, openEnd, thetaStart, thetaLength
       );
-
+      //console.dir(IntroBox.userData.midpoints)
       const objectArray = IntroBox.userData.innerBoxes;
       const midpoint = objectArray[Math.floor(objectArray.length / 2)];
+      //const midpoint = IntroBox.userData.midpoints.inner;
+      console.dir(midpoint)
       midpoint.getWorldPosition(tempPosVector);
       const material = midpoint.material[4].clone();
       const mesh = new THREE.Mesh();
       mesh.copy(midpoint);
+      mesh.clear();
       mesh.scale.set(4.5, 6, 0.1);
       mesh.position.set(
         tempPosVector.x + 0.25,
         tempPosVector.y,
         tempPosVector.z);
       const cylinderMesh = new THREE.Mesh(geometry, material);
+      cylinderMesh.name = 'introBoxDrum';
       cylinderMesh.position.set(
         tempPosVector.x + 0.6,
         tempPosVector.y,
@@ -173,15 +191,10 @@ export default function IntroBox({ scene, camera }) {
       cylinderMesh.material.transparent = true;
       cylinderMesh.material.opacity = 0.6;
 
-      const light = new THREE.RectAreaLight({ color: 0x78a9ff });
-
-      camera.getWorldPosition(tempPosVector);
-      light.lookAt(tempPosVector);
-      mesh.add(light);
-
       IntroBox.clear();
-      IntroBox.add(...IntroBox.userData.perimeter);
+      IntroBox.add(...Object.values(IntroBox.userData.midpoints));
       IntroBox.add(...IntroBox.userData.innerBoxes);
+      //IntroBox.add(...IntroBox.userData.sides.inner);
       resolve();
     });
   }

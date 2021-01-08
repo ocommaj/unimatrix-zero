@@ -27,7 +27,7 @@ export default function SceneManager(canvas) {
       alpha: true });
     const DPR = (window.devicePixelRatio) ? window.devicePixelRatio : 1;
     renderer.setPixelRatio(DPR);
-    renderer.setClearColor('#525252');
+    renderer.setClearColor('#262626');
     renderer.setSize(width, height);
 
     return renderer;
@@ -71,6 +71,7 @@ export default function SceneManager(canvas) {
     return {
       cube: messageCube,
       comma: Subjects.comma({ parent: scene }),
+      floor: Subjects.floor(scene),
       introBox: Subjects.introBox({ scene, camera }),
       light: Subjects.generalLight(scene),
     };
@@ -105,6 +106,7 @@ export default function SceneManager(canvas) {
     if (!intersects[0]) return clickCounter;
 
     sceneSubjects.cube.onClick(clickCounter, intersects[0], camera);
+    document.body.style.cursor = 'auto';
     clickCounter++;
 
     return clickCounter;

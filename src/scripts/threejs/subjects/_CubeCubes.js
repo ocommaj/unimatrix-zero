@@ -27,7 +27,11 @@ export default function CubeCubes({ count, spacing, cubeConfig }) {
   }
 
   function illuminate(cube) {
-    cube.userData.innerLight.intensity = 0.7;
+    const innerLight = cube.children[0];
+    if (innerLight.visible === false) {
+      innerLight.visible = true;
+      innerLight.intensity = 0.7;
+    }
   }
 
   function planeLoop(callback) {
@@ -81,7 +85,7 @@ export default function CubeCubes({ count, spacing, cubeConfig }) {
     const slice = getPlane({ axis, fromBox: mesh });
     const sliceClone = new Group();
     CubeCubes.add(sliceClone);
-    sliceClone.updateWorldMatrix(true, true);
+    sliceClone.updateWorldMatrix(true, false);
 
     for (const box of slice) {
       const clone = box.clone();

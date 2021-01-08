@@ -8,7 +8,9 @@ export default function Comma({ parent, position = null }) {
       const commaGltf = imported.default;
       const mesh = new Mesh();
       const material = new MeshLambertMaterial({
-        color: 0x0f62fe,
+        // color: 0x0f62fe,
+        color: 0xda1e28,
+        reflectivity: 0.5,
         emissive: 0x0f62fe,
         emissiveIntensity: 0,
       });

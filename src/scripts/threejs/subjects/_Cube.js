@@ -27,12 +27,10 @@ function Cube({ size, position = null, rotation = null, scale = null }) {
   const geometry = new BoxGeometry(size, size, size);
   const cube = new Mesh(geometry, materials);
   cube.add(cubeLight);
-  cube.userData.innerLight = cubeLight;
+  cubeLight.visible = false;
   position && meshModifiers.position(cube, position);
   rotation && meshModifiers.rotate(cube, rotation, false);
   scale && meshModifiers.scale(cube, scale);
-  cube.castShadow = true;
-  cube.receiveShadow = true;
   cube.userData.isClickable = true;
 
   return cube;
