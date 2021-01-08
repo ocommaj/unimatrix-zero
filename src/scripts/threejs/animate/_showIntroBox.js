@@ -15,11 +15,11 @@ function showIntroBox(boxGroup, mainCube, comma, target, callback) {
   } = midpoints;
 
   const boxes = () => Object.keys(sides).reduce((boxes, key) => {
-    boxes[key] = { ...meshAnimationProperties(sides[key]) }
-    return boxes
-  }, {})
+    boxes[key] = { ...meshAnimationProperties(sides[key]) };
+    return boxes;
+  }, {});
 
-  const { inner, top, bottom, left, right } = boxes()
+  const { inner, top, bottom, left, right } = boxes();
 
   return gsap.timeline({
     paused: true,
@@ -61,13 +61,7 @@ function showIntroBox(boxGroup, mainCube, comma, target, callback) {
     .to(comma.scale, { z: 0.5 }, '<')
     .to(comma.position, { z: '-=.1' }, '<')
 
-    .to(inner.materials, {
-      opacity: 0.5,
-      emissive: 0x525252,
-      emissiveIntensity: 0.5,
-      stagger: 0,
-    }, '<')
-    .to(midInner.material, {
+    .to([inner.materials, midInner.material], {
       opacity: 0.5,
       emissive: 0x525252,
       emissiveIntensity: 0.5,

@@ -168,7 +168,7 @@ export default function IntroBox({ scene, camera }) {
       midpoint.getWorldPosition(tempPosVector);
       mesh.copy(midpoint);
       IntroBox.userData.midpoints.inner = null;
-      IntroBox.remove(midpoint)
+      IntroBox.remove(midpoint);
       mesh.clear();
       mesh.scale.set(4.5, 6, 0.1);
       mesh.position.set(
@@ -193,7 +193,7 @@ export default function IntroBox({ scene, camera }) {
 
       IntroBox.clear();
       IntroBox.add(cylinderMesh);
-      IntroBox.add( ...Object.values(IntroBox.userData.midpoints) );
+      IntroBox.add(...Object.values(IntroBox.userData.midpoints));
       resolve();
     });
   }
