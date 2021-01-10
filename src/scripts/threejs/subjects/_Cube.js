@@ -1,5 +1,5 @@
 import {
-  BoxBufferGeometry, MeshLambertMaterial, Mesh, PointLight
+  BoxBufferGeometry, MeshLambertMaterial, Mesh, PointLight,
 } from 'three';
 import meshModifiers from '../modifiers';
 

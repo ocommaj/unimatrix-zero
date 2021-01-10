@@ -6,6 +6,6 @@ export default function GeneralLight(scene) {
   scene.add(light);
 
   this.update = (time) => {
-    light.intensity = Math.max(0.75, (Math.sin(time) + 1.5) / 1.5 + 0.5);
+    light.intensity = (Math.sin(time) + 1.5) / 1.5 + 0.5;
   };
 }
