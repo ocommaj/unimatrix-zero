@@ -30,7 +30,7 @@ export default function CubeCubes({ count, spacing, cubeConfig }) {
     const innerLight = cube.children[0];
     if (innerLight.visible === false) {
       innerLight.visible = true;
-      innerLight.intensity = 0.7;
+      innerLight.intensity = 0.5;
     }
   }
 
@@ -60,7 +60,6 @@ export default function CubeCubes({ count, spacing, cubeConfig }) {
     if (fromBox) {
       return boxes.filter(box => box.position[axis] === fromBox.position[axis]);
     }
-
   }
 
   function makeCubes(size, offsets, rotation, scale) {

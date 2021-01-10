@@ -15,7 +15,7 @@ export default {
   cube: (config) => Cube(config),
   cubeCubes: (config) => CubeCubes(config),
   introBox: (config) => new IntroBox(config),
-  floor: (scene) => new Floor(scene),
+  floor: (scene, camera) => new Floor(scene, camera),
   spellHi: (face) => SpellHi(face),
   generalLight: (scene) => new GeneralLight(scene),
   messageCube: (config) => new MessageCube(config),

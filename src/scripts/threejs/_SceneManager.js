@@ -43,6 +43,7 @@ export default function SceneManager(canvas) {
     );
 
     camera.position.z = setZoom(width);
+    // camera.position.x = 12
     camera.setZoom = setZoom;
     camera.maxZoom = maxZoom;
 
@@ -71,7 +72,7 @@ export default function SceneManager(canvas) {
     return {
       cube: messageCube,
       comma: Subjects.comma({ parent: scene }),
-      floor: Subjects.floor(scene),
+      floor: Subjects.floor(scene, camera),
       introBox: Subjects.introBox({ scene, camera }),
       light: Subjects.generalLight(scene),
     };

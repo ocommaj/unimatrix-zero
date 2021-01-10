@@ -3,7 +3,7 @@ import { meshAnimationProperties } from './index';
 
 const tlDefaults = {
   paused: true,
-  delay: 0.7,
+  delay: 0.2,
   repeatDelay: 1.4,
   defaults: {
     duration: 1,

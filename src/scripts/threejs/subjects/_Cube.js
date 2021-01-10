@@ -1,11 +1,13 @@
-import { BoxGeometry, MeshLambertMaterial, Mesh, PointLight } from 'three';
+import {
+  BoxBufferGeometry, MeshLambertMaterial, Mesh, PointLight
+} from 'three';
 import meshModifiers from '../modifiers';
 
 export default Cube;
 
 function Cube({ size, position = null, rotation = null, scale = null }) {
   const material_one = new MeshLambertMaterial({
-    color: 0xda1e28,
+    color: 0xba1b23,
     reflectivity: 1,
   });
   const material_two = new MeshLambertMaterial({
@@ -24,7 +26,7 @@ function Cube({ size, position = null, rotation = null, scale = null }) {
     material_one,
     material_two,
   ];
-  const geometry = new BoxGeometry(size, size, size);
+  const geometry = new BoxBufferGeometry(size, size, size);
   const cube = new Mesh(geometry, materials);
   cube.add(cubeLight);
   cubeLight.visible = false;

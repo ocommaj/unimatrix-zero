@@ -16,7 +16,7 @@ export default function facingToBack({
     defaults: {
       duration: 1,
       stagger: {
-        each: 0.02,
+        each: 0.05,
         from: 'random',
         ease: 'back',
       },
@@ -27,10 +27,10 @@ export default function facingToBack({
   tl.set(incomingLights, { visible: true })
     .to(outgoingProps.positions, { z: `-=${dBack}` })
     .to(outgoingLights, {intensity: 0 }, '<')
-    .to(othersProps.positions, { z: `+=${dForward}` }, '<')
-    .to(incomingLights, { intensity: 0.7 }, '<')
+    .to(othersProps.positions, { z: `+=${dForward}`, stagger: 0 }, '<')
+    .to(incomingLights, { intensity: 0.5 }, '<')
     .set(outgoingLights, { visible: false })
-    .then(() => callback());
+    .call(() => callback());
 
   return tl;
 }

@@ -32,8 +32,7 @@ function showIntroBox(boxGroup, mainCube, comma, target, callback) {
         from: 'random',
       },
     },
-  })
-    .to(inner.positions, { ...target.positions })
+  }).to(inner.positions, { ...target.positions })
     .to(midInner.position, { ...target.positions }, '<')
     .to(top.positions, { ...target.horizontal.topPos }, '<')
     .to(midTop.position, { ...target.horizontal.topPos }, '<')
@@ -41,14 +40,14 @@ function showIntroBox(boxGroup, mainCube, comma, target, callback) {
     .to(midBottom.position, { ...target.horizontal.bottomPos }, '<')
     .to(left.positions, { ...target.vertical.leftPos }, '<')
     .to(midLeft.position, { ...target.vertical.leftPos }, '<')
-    .to(right.positions, { ...target.vertical.rightPos}, '<')
+    .to(right.positions, { ...target.vertical.rightPos }, '<')
     .to(midRight.position, { ...target.vertical.rightPos }, '<')
     .to(comma.position, { ...target.comma.pos }, '<')
     .to(comma.rotation, { y: -0.1 }, '<')
     .to(boxGroup.rotation, { y: -0.15 }, '<')
     .to(mainCube.rotation, { y: 0.2 }, '<')
-    .to(inner.scales, { ...target.scales}, '<.4')
-    .to(midInner.scale, { ...target.scales}, '<.4')
+    .to(inner.scales, { ...target.scales }, '<.4')
+    .to(midInner.scale, { ...target.scales }, '<.4')
     .to(left.scales, { x: 0, y: 0, z: 0 }, '<')
     .to(midLeft.scale, { x: 0.5, y: 5.85 }, '<')
     .to(right.scales, { x: 0, y: 0, z: 0 }, '<')
@@ -60,7 +59,6 @@ function showIntroBox(boxGroup, mainCube, comma, target, callback) {
     .to(comma.material, { emissiveIntensity: 0.5 }, '-=.2')
     .to(comma.scale, { z: 0.5 }, '<')
     .to(comma.position, { z: '-=.1' }, '<')
-
     .to([inner.materials, midInner.material], {
       opacity: 0.5,
       emissive: 0x525252,
