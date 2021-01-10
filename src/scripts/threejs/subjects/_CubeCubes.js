@@ -10,6 +10,7 @@ export default function CubeCubes({ count, spacing, cubeConfig }) {
   const CubeCubes = new Group();
   CubeCubes.add(...boxes);
 
+  let spinCount = 0;
   let facingPlane = CubeCubes.children.slice(-Math.pow(count, 2));
   facingPlane.forEach(cube => illuminate(cube));
 
@@ -79,8 +80,9 @@ export default function CubeCubes({ count, spacing, cubeConfig }) {
     });
   }
 
-  function onClick(scene, mesh, axis, callback) {
+  function onClick(scene, mesh, /* axis,*/ callback) {
     if (!mesh.userData.isClickable) return;
+    const axis = spinCount % 2 === 0 ? 'y' : 'x';
     const slice = getPlane({ axis, fromBox: mesh });
     const sliceClone = new Group();
     CubeCubes.add(sliceClone);
@@ -97,6 +99,7 @@ export default function CubeCubes({ count, spacing, cubeConfig }) {
       .then(() => {
         for (const box of slice) box.visible = true;
         CubeCubes.remove(sliceClone);
+        spinCount++;
         callback();
       });
   }

@@ -5,8 +5,7 @@ import Floor from './_Floor';
 import GeneralLight from './_GeneralLight';
 import IntroBox from './_IntroBox';
 import MessageCube from './_MessageCube';
-import TestSphere from './_TestSphere';
-import SpellHi from './_Hi';
+import ImageBubble from './_imageBubble';
 import * as letters from './_Letters';
 
 export default {
@@ -14,10 +13,9 @@ export default {
   comma: (config) => new Comma(config),
   cube: (config) => Cube(config),
   cubeCubes: (config) => CubeCubes(config),
+  generalLight: (scene) => new GeneralLight(scene),
+  imageBubble: (scene) => new ImageBubble(scene),
   introBox: (config) => new IntroBox(config),
   floor: (scene, camera) => new Floor(scene, camera),
-  spellHi: (face) => SpellHi(face),
-  generalLight: (scene) => new GeneralLight(scene),
   messageCube: (config) => new MessageCube(config),
-  testSphere: (scene) => new TestSphere(scene),
 };

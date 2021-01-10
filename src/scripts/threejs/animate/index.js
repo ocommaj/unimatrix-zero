@@ -1,3 +1,4 @@
+import bubbleToTop from './_bubbleToTop';
 import cameraZoomOut from './_cameraZoomout';
 import hiTimelines from './_Hi';
 import facingPlaneToBack from './_facingPlaneToBack';
@@ -17,6 +18,7 @@ function meshAnimationProperties(meshArray) {
 
 export {
   meshAnimationProperties,
+  bubbleToTop,
   cameraZoomOut,
   hiTimelines,
   facingPlaneToBack,

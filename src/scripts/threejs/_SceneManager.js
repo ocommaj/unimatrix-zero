@@ -13,7 +13,7 @@ export default function SceneManager(canvas) {
   const scene = buildScene();
   const renderer = buildRender(screenDimensions);
   const camera = buildCamera(screenDimensions);
-  const sceneSubjects = initSceneSubjects(scene);
+  const subjects = initSceneSubjects(scene);
 
   function buildScene() {
     const scene = new THREE.Scene();
@@ -75,12 +75,19 @@ export default function SceneManager(canvas) {
       floor: Subjects.floor(scene, camera),
       introBox: Subjects.introBox({ scene, camera }),
       light: Subjects.generalLight(scene),
+      imageBubble: Subjects.imageBubble(scene),
     };
   }
 
+  this.imageBubble = {
+    padi: {
+      display: () => subjects.imageBubble.display(),
+    },
+  };
+
   this.update = () => {
     const elapsedTime = clock.getElapsedTime();
-    for (const subject of Object.values(sceneSubjects)) {
+    for (const subject of Object.values(subjects)) {
       if (subject.update) subject.update(elapsedTime);
     }
 
@@ -94,24 +101,21 @@ export default function SceneManager(canvas) {
     camera.aspect = width / height;
     camera.setZoom(width);
     camera.updateProjectionMatrix();
-    sceneSubjects.introBox.onResize();
+    subjects.introBox.onResize();
     renderer.setSize(width, height);
   };
 
-  this.onClick = (event, clickCounter) => {
+  this.onClick = (event) => {
     mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
     mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
     raycaster.setFromCamera(mouse, camera);
     const intersects = raycaster.intersectObjects(scene.children, true);
 
-    if (!intersects[0]) return clickCounter;
+    if (!intersects[0]) return;
 
-    sceneSubjects.cube.onClick(clickCounter, intersects[0], camera);
+    subjects.cube.onClick(intersects[0], camera);
     document.body.style.cursor = 'auto';
-    clickCounter++;
-
-    return clickCounter;
-
+    return;
   };
 
   this.onMouseMove = (event) => {

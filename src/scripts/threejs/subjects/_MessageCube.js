@@ -48,7 +48,7 @@ export default function MessageCube({scene, configCubed}) {
     });
   }
 
-  function clickHandler(clickCounter, intersectedMesh, camera) {
+  function clickHandler(intersectedMesh, camera) {
     messageLoop.pause();
     if (intersectedMesh.object === message.iDot) {
       const callback = () => {
@@ -62,9 +62,8 @@ export default function MessageCube({scene, configCubed}) {
       return;
     }
 
-    const axis = clickCounter % 2 === 0 ? 'y' : 'x';
     const callback = () => messageLoop.resume();
-    Cube.onClick(scene, intersectedMesh.object, axis, callback);
+    Cube.onClick(scene, intersectedMesh.object, callback);
   }
 
 }

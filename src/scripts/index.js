@@ -2,21 +2,24 @@ import SceneManager from './threejs';
 
 export default function main() {
   const canvas = document.getElementById('canvas');
+  const introList = {
+    padi: document.getElementById('introListItem_padi'),
+  };
 
   canvas.width = canvas.offsetWidth;
   canvas.height = canvas.offsetHeight;
 
-  const sceneManager = new SceneManager(canvas);
+  const scene = new SceneManager(canvas);
 
   bindEventListeners();
   render();
 
   function bindEventListeners() {
-    let clickCounter = 0;
     window.addEventListener('resize', () => resizeCanvas());
-    window.addEventListener('mousemove', (e) => sceneManager.onMouseMove(e));
-    window.addEventListener('click', (e) => {
-      clickCounter = sceneManager.onClick(e, clickCounter);
+    window.addEventListener('mousemove', (e) => scene.onMouseMove(e));
+    window.addEventListener('click', (e) => scene.onClick(e));
+    introList.padi.addEventListener('click', () => {
+      scene.imageBubble.padi.display();
     });
   }
 
@@ -25,11 +28,11 @@ export default function main() {
     canvas.style.height = '100%';
     canvas.width = canvas.offsetWidth;
     canvas.height = canvas.offsetHeight;
-    sceneManager.onWindowResize();
+    scene.onWindowResize();
   }
 
   function render() {
     requestAnimationFrame(render);
-    sceneManager.update();
+    scene.update();
   }
 }

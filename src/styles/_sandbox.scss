@@ -1,14 +1,3 @@
-#helperMessage {
-  position: absolute;
-  bottom: 2rem;
-  margin: auto;
-}
-
-#iAmJames {
-  position: absolute;
-  top: 2rem;
-  left: 2rem;
-}
 
 #introBox {
   padding: 1rem;
@@ -17,7 +6,6 @@
   top: 0rem;
   left: 0rem;
   //transform: skew(0deg -3deg);
-
 
   .wrappedContent {
     //background-color: green;
@@ -41,6 +29,7 @@
       animation: bg_gradient_slide 3s ease;
       animation-iteration-count: infinite;
       animation-fill-mode: forwards;
+      cursor: pointer;
     }
 
     li .gradient_1 {
