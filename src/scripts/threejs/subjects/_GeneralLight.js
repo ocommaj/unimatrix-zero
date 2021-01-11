@@ -5,7 +5,7 @@ export default function GeneralLight(scene) {
   light.position.set(-2, 2.5, 16);
   scene.add(light);
 
-  this.update = (time) => {
-    light.intensity = (Math.sin(time) + 1.5) / 1.5 + 0.5;
+  this.update = ({ elapsedTime }) => {
+    light.intensity = (Math.sin(elapsedTime) + 1.5) / 1.5 + 0.5;
   };
 }

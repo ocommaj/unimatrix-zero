@@ -1,0 +1,125 @@
+export default function runLife(geometryArray, rowCount, cellsPerRow) {
+  const ALIVE = 1;
+  const cells = [ ...geometryArray ];
+  const cellMap = cells.map(({ materialIndex }, i) => {
+    return initCellModel(materialIndex, i);
+  });
+  const rowMap = cellMap.reduce(mapRows, []);
+
+  return {
+    initialSpawn,
+    evolve,
+  };
+
+  function initialSpawn() {
+    setAlive(spawnRandom(0.66)).then(() => evolve());
+  }
+
+  function evolve() {
+    updateLivingModel().then((updatedMap) => updateRender(updatedMap));
+  }
+
+  function updateRender(updatedMap) {
+    updatedMap.forEach(cellModel => {
+      cells[cellModel.idx].materialIndex = cellModel.materialIdx;
+      geometryArray[cellModel.idx] = cells[cellModel.idx];
+    });
+  }
+
+  function updateLivingModel() {
+    return new Promise(resolve => {
+      const updated = cellMap.map(cellModel => {
+        cellModel.updateLivingState();
+        return cellModel;
+      });
+      resolve(updated);
+    });
+  }
+
+  function initCellModel(materialIndex, idx) {
+    const originalMaterial = materialIndex;
+    const rowIdx = Math.floor(idx / cellsPerRow);
+    const cellIdx = idx - (rowIdx * cellsPerRow);
+    const neighborRows = [rowIdx, rowIdx + 1, rowIdx - 1];
+    const neighbors = [
+      [cellIdx - 1, cellIdx + 1],
+      [cellIdx, cellIdx - 1],
+      [cellIdx, cellIdx + 1],
+    ];
+
+    if (rowIdx === 0) neighborRows.pop();
+    if (rowIdx === rowCount - 1) neighborRows.splice(1, 1);
+    if (neighborRows.length === 2) neighbors.pop();
+
+    return {
+      idx,
+      rowIdx,
+      neighbors,
+      originalMaterial,
+      updateLivingState,
+      getNeighborCount,
+      setMaterialIdx,
+    };
+
+    async function updateLivingState() {
+      await this.getNeighborCount();
+      switch (this.aliveNeighborCount) {
+        case 2:
+          this.isAlive = this.isAlive;
+          break;
+        case 3:
+          this.isAlive = 1;
+          break;
+          /* case 4:
+              this.isAlive = this.isAlive;
+              break;*/
+        default:
+          this.isAlive = 0;
+          break;
+      }
+      this.setMaterialIdx();
+    }
+
+    function getNeighborCount() {
+      const aliveNeighbors = this.neighbors.reduce(
+        (accumulator, adjCells, row) => {
+          const filtered = rowMap[neighborRows[row]]
+            .slice(adjCells[0], adjCells[1] + 1).filter(cell => cell.isAlive);
+
+          accumulator.push(...filtered);
+          return accumulator;
+        }, []);
+      this.aliveNeighborCount = aliveNeighbors.length;
+    }
+
+    function setMaterialIdx() {
+      this.materialIdx = this.isAlive ? 3 : this.originalMaterial;
+    }
+  }
+
+  function mapRows(accumulator, cell) {
+    const rowIdx = cell.rowIdx;
+    if (!accumulator[rowIdx]) {
+      accumulator[rowIdx] = [];
+    }
+    accumulator[rowIdx].push(cell);
+    return accumulator;
+  }
+
+  function setAlive(atIndices) {
+    return new Promise(resolve => {
+      atIndices.forEach(idx => { cellMap[idx].isAlive = ALIVE; });
+      resolve();
+    });
+  }
+
+  function spawnRandom(percentage) {
+    const randomSrc = new Set();
+    const spawnCount = Math.floor(cellMap.length * percentage);
+    while (randomSrc.size < spawnCount) {
+      let randInt = Math.floor(Math.random() * cellMap.length);
+      randomSrc.add(randInt);
+    }
+    return randomSrc;
+  }
+}

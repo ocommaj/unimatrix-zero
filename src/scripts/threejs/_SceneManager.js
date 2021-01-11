@@ -43,7 +43,7 @@ export default function SceneManager(canvas) {
     );
 
     camera.position.z = setZoom(width);
-    // camera.position.x = 12
+    // camera.position.x = -12
     camera.setZoom = setZoom;
     camera.maxZoom = maxZoom;
 
@@ -66,13 +66,16 @@ export default function SceneManager(canvas) {
     const cubeConfig = { size: 1, rotation: { x: 0, y: 0, z: 0 } };
     const configCubed = { cubeConfig, count: 5, spacing: 1.5 };
 
+    const hexLayer = Subjects.hexLayer(scene, camera);
+    hexLayer.playLife();
+
     const messageCube = Subjects.messageCube({ scene, configCubed });
     messageCube.sayHi();
 
     return {
-      cube: messageCube,
+      hexLayer,
+      messageCube,
       comma: Subjects.comma({ parent: scene }),
-      floor: Subjects.floor(scene, camera),
       introBox: Subjects.introBox({ scene, camera }),
       light: Subjects.generalLight(scene),
       imageBubble: Subjects.imageBubble(scene),
@@ -87,8 +90,10 @@ export default function SceneManager(canvas) {
 
   this.update = () => {
     const elapsedTime = clock.getElapsedTime();
+    const nowSecond = Math.round(elapsedTime);
+
     for (const subject of Object.values(subjects)) {
-      if (subject.update) subject.update(elapsedTime);
+      if (subject.update) subject.update({ elapsedTime, nowSecond });
     }
 
     renderer.render(scene, camera);
@@ -113,7 +118,7 @@ export default function SceneManager(canvas) {
 
     if (!intersects[0]) return;
 
-    subjects.cube.onClick(intersects[0], camera);
+    subjects.messageCube.onClick(intersects[0], camera);
     document.body.style.cursor = 'auto';
     return;
   };

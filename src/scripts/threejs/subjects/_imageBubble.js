@@ -19,6 +19,7 @@ export default function imageBubble(scene) {
   mesh.rotateY(-0.5);
   mesh.rotateZ(-0.6);
   mesh.scale.set(0, 0, 0);
+  mesh.castShadow = true;
   mesh.visible = false;
   scene.add(mesh);
 

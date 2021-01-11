@@ -1,4 +1,6 @@
-const mesh = {
+import LifeGame from './_lifeGame';
+
+const meshModifiers = {
   position(mesh, position) {
     for (const [key, value] of Object.entries(position)) {
       if (mesh.position.hasOwnProperty(key)) {
@@ -18,4 +20,4 @@ const mesh = {
   },
 };
 
-export default mesh;
+export { meshModifiers, LifeGame };

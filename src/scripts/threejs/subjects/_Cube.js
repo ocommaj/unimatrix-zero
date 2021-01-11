@@ -1,18 +1,14 @@
 import {
   BoxBufferGeometry, MeshLambertMaterial, Mesh, PointLight,
 } from 'three';
-import meshModifiers from '../modifiers';
+import { meshModifiers } from '../modifiers';
 
 export default Cube;
 
 function Cube({ size, position = null, rotation = null, scale = null }) {
-  const material_one = new MeshLambertMaterial({
-    color: 0xba1b23,
-    reflectivity: 1,
-  });
+  const material_one = new MeshLambertMaterial({ color: 0xba1b23 });
   const material_two = new MeshLambertMaterial({
     color: 0xa6c8ff,
-    reflectivity: 1,
     transparent: true,
     opacity: 0.5,
   });

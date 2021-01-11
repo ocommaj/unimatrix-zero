@@ -1,6 +1,5 @@
 import { Mesh, MeshLambertMaterial } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import modifiers from '../modifiers';
 
 export default function Comma({ parent, position = null }) {
   import('../../../assets/three/comma.glb')
@@ -30,8 +29,6 @@ export default function Comma({ parent, position = null }) {
             mesh.scale.set(0, 0, 0);
             mesh.castShadow = true;
             mesh.receiveShadow = true;
-
-            if (position) modifiers.position(mesh, position);
             resolve(mesh);
           });
         });

@@ -128,6 +128,7 @@ export default function IntroBox({ scene, camera }) {
     const element = document.getElementById('introBox');
     const target = IntroBox.getObjectByName('introBoxBG');
     target.geometry.computeBoundingBox();
+    console.dir(element);
 
     const boundingBox = target.geometry.boundingBox;
     boundingBox.max.project(camera);

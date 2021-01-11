@@ -2,8 +2,9 @@ import * as THREE from 'three';
 import {
   BufferGeometryUtils,
 } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
+import { LifeGame } from '../modifiers';
 
-export default function Floor(scene, camera) {
+export default function HexLayer(scene, camera) {
   const camPosVector = new THREE.Vector3();
   const mat_one = new THREE.MeshLambertMaterial({
     color: 0xFFF,
@@ -18,6 +19,10 @@ export default function Floor(scene, camera) {
 
   const mat_three = mat_one.clone();
   mat_three.opacity = 0.3;
+  const mat_four = mat_one.clone();
+  mat_four.emissive = 0xFFF;
+  mat_four.transparent = false;
+  mat_four.emissiveIntensity = 0.25;
 
   const hexGeometry = new THREE.CylinderBufferGeometry(0.5, 0.5, 0.25, 6, 1);
   // const wireframe = new THREE.WireframeGeometry(hexGeometry);
@@ -42,37 +47,44 @@ export default function Floor(scene, camera) {
 
   const COUNT = 40;
   const ROW_COUNT = 24;
+  const X_OFFSET = 1.025;
+  const Y_OFFSET = 0.75;
   const hexBuffer = bigBufferGeometry();
-  // console.dir(hexBuffer)
   hexBuffer.groups.forEach((group, i) => { group.materialIndex = i % 3; });
-  const mesh = new THREE.Mesh(hexBuffer, [mat_one, mat_two, mat_three]);
+  const mesh = new THREE.Mesh(
+    hexBuffer,
+    [mat_one, mat_two, mat_three, mat_four]);
+  mesh.position.set(0, -Y_OFFSET * (ROW_COUNT / 2), 0);
   scene.add(mesh);
-  // console.dir(hexBuffer)
+
+  const life = new LifeGame(hexBuffer.groups, ROW_COUNT, COUNT);
+  this.playLife = () => life.initialSpawn();
+  this.update = ({ nowSecond }) => {
+    if (nowSecond && !(nowSecond % 3) && life.lastUpdate !== nowSecond) {
+      life.lastUpdate = nowSecond;
+      life.evolve();
+    }
+  };
 
   function bigBufferGeometry() {
     const positions = positionsArray();
     const hexGeos = positions.map((pos, i) => hexBufferGeometry(pos, i));
     const useGroups = true;
-    // console.dir(hexGeos)
     return BufferGeometryUtils.mergeBufferGeometries(hexGeos, useGroups);
 
     function positionsArray() {
-      const positionsArray = [];
-      for (let yInt = 0; yInt < ROW_COUNT / 2; yInt++) {
-        if (yInt) positionsArray.push(...row(-yInt));
-        positionsArray.push(...row(yInt));
-      }
-
-      return positionsArray;
+      return [ ...Array(ROW_COUNT).keys() ].reduce((arr, yInt) => {
+        arr.push(...row(yInt));
+        return arr;
+      }, []);
 
       function row(yInt) {
         const tempPosVector = new THREE.Vector3();
         const isOdd = yInt % 2 !== 0;
-        const xOffset = 1.025;
-        const yPos = yInt * 0.75;
-        const startX = isOdd ? -19.5 * xOffset : -20 * xOffset;
+        const yPos = yInt * Y_OFFSET;
+        const startX = isOdd ? -19.5 * X_OFFSET : -20 * X_OFFSET;
         return [ ...Array(COUNT).keys() ].map(cellInt => {
-          const xPos = startX + cellInt * xOffset;
+          const xPos = startX + cellInt * X_OFFSET;
           tempPosVector.set(xPos, yPos, 0);
           return tempPosVector.clone();
         });
@@ -81,7 +93,6 @@ export default function Floor(scene, camera) {
 
     function hexBufferGeometry(position, i) {
       const geo = hexGeometry.clone();
-      // if (!i) console.dir(geo)
       const initMatrix = new THREE.Matrix4();
       const scale = new THREE.Vector3(1, 1, 1);
       const quaternion = new THREE.Quaternion();
