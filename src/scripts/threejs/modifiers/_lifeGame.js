@@ -9,7 +9,7 @@ export default function runLife(geometryArray, rowCount, cellsPerRow) {
   return { initialSpawn, evolve };
 
   function initialSpawn() {
-    setAlive(spawnRandom(0.66)).then(() => evolve());
+    setAlive(spawnRandom(0.5)).then(() => evolve());
   }
 
   function evolve() {
@@ -70,9 +70,9 @@ export default function runLife(geometryArray, rowCount, cellsPerRow) {
         case 3:
           this.isAlive = 1;
           break;
-        /*case 4:
+        case 4:
           this.isAlive = 1;
-          break;*/
+          break;
         default:
           this.isAlive = 0;
           break;

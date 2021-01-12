@@ -6,17 +6,22 @@ export default function Comma({ parent, position = null }) {
     .then(imported => {
       const commaGltf = imported.default;
       const mesh = new Mesh();
-      const material = new MeshLambertMaterial({
+      const mat_one = new MeshLambertMaterial({
         // color: 0x0f62fe,
         color: 0xda1e28,
         reflectivity: 0.5,
         emissive: 0x0f62fe,
         emissiveIntensity: 0,
       });
+      /*const mat_two = new MeshLambertMaterial({
+        color: 0xa6c8ff,
+        transparent: true,
+        opacity: 0.5,
+      });*/
 
       loadComma().then(loaded => {
         mesh.copy(loaded);
-        mesh.material = material;
+        mesh.material = mat_one;
         parent.add(mesh);
       });
 

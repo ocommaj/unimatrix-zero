@@ -141,6 +141,7 @@ export default function IntroBox({ scene, camera }) {
     const width = right - left;
     const height = bottom - top;
 
+    element.style.visibility = 'visible';
     element.style.width = `${width}px`;
     element.style.height = `${height}px`;
     element.style.transform = `
