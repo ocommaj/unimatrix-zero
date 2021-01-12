@@ -2,14 +2,11 @@ export default function runLife(geometryArray, rowCount, cellsPerRow) {
   const ALIVE = 1;
   const cells = [ ...geometryArray ];
   const cellMap = cells.map(({ materialIndex }, i) => {
-    return initCellModel(materialIndex, i);
+    return cellModel(materialIndex, i);
   });
   const rowMap = cellMap.reduce(mapRows, []);
 
-  return {
-    initialSpawn,
-    evolve,
-  };
+  return { initialSpawn, evolve };
 
   function initialSpawn() {
     setAlive(spawnRandom(0.66)).then(() => evolve());
@@ -36,15 +33,17 @@ export default function runLife(geometryArray, rowCount, cellsPerRow) {
     });
   }
 
-  function initCellModel(materialIndex, idx) {
+  function cellModel(materialIndex, idx) {
     const originalMaterial = materialIndex;
     const rowIdx = Math.floor(idx / cellsPerRow);
     const cellIdx = idx - (rowIdx * cellsPerRow);
+    const oddRow = rowIdx % 2;
+    const nextCell = oddRow ? cellIdx + 1 : cellIdx - 1;
     const neighborRows = [rowIdx, rowIdx + 1, rowIdx - 1];
     const neighbors = [
       [cellIdx - 1, cellIdx + 1],
-      [cellIdx, cellIdx - 1],
-      [cellIdx, cellIdx + 1],
+      [cellIdx, nextCell],
+      [cellIdx, nextCell],
     ];
 
     if (rowIdx === 0) neighborRows.pop();
@@ -63,6 +62,7 @@ export default function runLife(geometryArray, rowCount, cellsPerRow) {
 
     async function updateLivingState() {
       await this.getNeighborCount();
+      const prevState = this.isAlive;
       switch (this.aliveNeighborCount) {
         case 2:
           this.isAlive = this.isAlive;
@@ -70,13 +70,14 @@ export default function runLife(geometryArray, rowCount, cellsPerRow) {
         case 3:
           this.isAlive = 1;
           break;
-          /* case 4:
-              this.isAlive = this.isAlive;
-              break;*/
+        /*case 4:
+          this.isAlive = 1;
+          break;*/
         default:
           this.isAlive = 0;
           break;
       }
+      this.shouldUpdate = prevState !== this.isAlive;
       this.setMaterialIdx();
     }
 
