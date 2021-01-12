@@ -1,11 +1,11 @@
-import * as THREE from 'three';
+import { Group, Mesh, Vector3, CylinderGeometry }from 'three';
 import { showIntroBox } from '../animate';
 
 export default function IntroBox({ scene, camera }) {
   const mainCube = scene.getObjectByName('mainMessageCube');
   const sideLength = Math.cbrt(mainCube.children.length);
   const sliceLength = Math.pow(sideLength, 2);
-  const IntroBox = new THREE.Group();
+  const IntroBox = new Group();
   IntroBox.name = 'introBox';
 
   initialize().then(loaded => scene.add(loaded));
@@ -16,7 +16,7 @@ export default function IntroBox({ scene, camera }) {
     return new Promise(resolve => {
       const toCopy = mainCube.children.slice(-sliceLength * 2, -sliceLength);
       for (const cube of toCopy) {
-        const copy = new THREE.Mesh();
+        const copy = new Mesh();
         copy.copy(cube);
         copy.userData.isClickable = false;
         copy.material = cube.material.map(material => {
@@ -78,8 +78,8 @@ export default function IntroBox({ scene, camera }) {
 
   function updatePositions() {
     return new Promise(resolve => {
-      const tempPosVector = new THREE.Vector3();
-      const tempScaleVector = new THREE.Vector3();
+      const tempPosVector = new Vector3();
+      const tempScaleVector = new Vector3();
       const toMatch = mainCube.children.slice(-sliceLength * 2, -sliceLength);
 
       for (let i = 0; i < toMatch.length; i++) {
@@ -159,12 +159,12 @@ export default function IntroBox({ scene, camera }) {
       const openEnd = true;
       const thetaStart = 5.75;
       const thetaLength = 1;
-      const tempPosVector = new THREE.Vector3();
-      const geometry = new THREE.CylinderGeometry(
+      const tempPosVector = new Vector3();
+      const geometry = new CylinderGeometry(
         rad, rad, height, radialSeg, heightSeg, openEnd, thetaStart, thetaLength
       );
 
-      const mesh = new THREE.Mesh();
+      const mesh = new Mesh();
       const midpoint = IntroBox.userData.midpoints.inner;
       const material = midpoint.material[4].clone();
       midpoint.getWorldPosition(tempPosVector);
@@ -177,7 +177,7 @@ export default function IntroBox({ scene, camera }) {
         tempPosVector.x + 0.25,
         tempPosVector.y,
         tempPosVector.z);
-      const cylinderMesh = new THREE.Mesh(geometry, material);
+      const cylinderMesh = new Mesh(geometry, material);
       cylinderMesh.name = 'introBoxDrum';
       cylinderMesh.position.set(
         tempPosVector.x + 0.6,

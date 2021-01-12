@@ -1,17 +1,21 @@
-import * as THREE from 'three';
+import {
+  CylinderBufferGeometry,
+  Vector3, Matrix4, Quaternion,
+  Mesh, MeshLambertMaterial
+} from 'three';
 import {
   BufferGeometryUtils,
 } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
 import { LifeGame } from '../modifiers';
 
 export default function HexLayer(scene, camera) {
-  const camPosVector = new THREE.Vector3();
-  const mat_one = new THREE.MeshLambertMaterial({
+  const camPosVector = new Vector3();
+  const mat_one = new MeshLambertMaterial({
     color: 0xFFF,
     transparent: true,
     opacity: 0.2,
   });
-  const mat_two = new THREE.MeshLambertMaterial({
+  const mat_two = new MeshLambertMaterial({
     color: 0xFFF,
     transparent: true,
     opacity: 0.5,
@@ -24,7 +28,7 @@ export default function HexLayer(scene, camera) {
   mat_four.transparent = false;
   mat_four.emissiveIntensity = 0.25;
 
-  const hexGeometry = new THREE.CylinderBufferGeometry(0.5, 0.5, 0.25, 6, 1);
+  const hexGeometry = new CylinderBufferGeometry(0.5, 0.5, 0.25, 6, 1);
 
   camera.getWorldPosition(camPosVector);
 
@@ -34,7 +38,7 @@ export default function HexLayer(scene, camera) {
   const Y_OFFSET = 0.75;
   const hexBuffer = bigBufferGeometry();
   hexBuffer.groups.forEach((group, i) => { group.materialIndex = i % 3; });
-  const mesh = new THREE.Mesh(
+  const mesh = new Mesh(
     hexBuffer,
     [mat_one, mat_two, mat_three, mat_four]);
   mesh.position.set(0, -Y_OFFSET * (ROW_COUNT / 2), 0);
@@ -62,7 +66,7 @@ export default function HexLayer(scene, camera) {
       }, []);
 
       function row(yInt) {
-        const tempPosVector = new THREE.Vector3();
+        const tempPosVector = new Vector3();
         const isOdd = yInt % 2 !== 0;
         const yPos = yInt * Y_OFFSET;
         const startX = isOdd ? -19.5 * X_OFFSET : -20 * X_OFFSET;
@@ -76,11 +80,11 @@ export default function HexLayer(scene, camera) {
 
     function hexBufferGeometry(position, i) {
       const geo = hexGeometry.clone();
-      const initMatrix = new THREE.Matrix4();
-      const scale = new THREE.Vector3(1, 1, 1);
-      const quaternion = new THREE.Quaternion();
+      const initMatrix = new Matrix4();
+      const scale = new Vector3(1, 1, 1);
+      const quaternion = new Quaternion();
       quaternion.setFromAxisAngle(
-        new THREE.Vector3(1, 0, 0), Math.PI / 2);
+        new Vector3(1, 0, 0), Math.PI / 2);
       initMatrix.compose(position, quaternion, scale);
       geo.applyMatrix4(initMatrix);
 

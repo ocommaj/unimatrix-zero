@@ -1,10 +1,12 @@
-import * as THREE from 'three';
+import  {
+  Clock, PerspectiveCamera, Raycaster, Scene, Vector2, WebGLRenderer
+} from 'three';
 import Subjects from './subjects';
 
 export default function SceneManager(canvas) {
-  const clock = new THREE.Clock();
-  const raycaster = new THREE.Raycaster();
-  const mouse = new THREE.Vector2();
+  const clock = new Clock();
+  const raycaster = new Raycaster();
+  const mouse = new Vector2();
   const screenDimensions = {
     width: canvas.width,
     height: canvas.height,
@@ -16,12 +18,12 @@ export default function SceneManager(canvas) {
   const subjects = initSceneSubjects(scene);
 
   function buildScene() {
-    const scene = new THREE.Scene();
+    const scene = new Scene();
     return scene;
   }
 
   function buildRender({ width, height }) {
-    const renderer = new THREE.WebGLRenderer({
+    const renderer = new WebGLRenderer({
       canvas: canvas,
       antialias: true,
       alpha: true });
@@ -38,7 +40,7 @@ export default function SceneManager(canvas) {
     const fieldOfView = 60;
     const near = 1;
     const far = 100;
-    const camera = new THREE.PerspectiveCamera(
+    const camera = new PerspectiveCamera(
       fieldOfView, aspect, near, far
     );
 
