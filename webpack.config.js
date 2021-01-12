@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
 module.exports = {
   entry: './src/index.js',
@@ -8,11 +9,17 @@ module.exports = {
       {
         test: /\.(glb|bin)$/,
         loader: 'file-loader',
-        options: { esModule: false },
+        options: { esModule: true },
       },
       {
         test: /\.(png|svg|jpg|gif|ico)$/,
         type: 'asset/resource',
+        use: [
+          'file-loader',
+          {
+            loader: 'image-webpack-loader',
+          },
+        ],
       },
       {
         test: /\.ttf$/,
@@ -24,7 +31,6 @@ module.exports = {
           'style-loader',
           'css-loader',
           'sass-loader',
-
         ],
       },
       {
@@ -39,6 +45,11 @@ module.exports = {
     filename: '[name].bundle.js',
   },
   optimization: {
+    minimize: true,
+    minimizer: [
+      `...`,
+      new CssMinimizerPlugin(),
+    ],
     splitChunks: {
       chunks: 'all',
     },
