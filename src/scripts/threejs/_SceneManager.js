@@ -1,6 +1,7 @@
 import {
   Clock, PerspectiveCamera, Raycaster, Scene, Vector2, WebGLRenderer,
 } from 'three';
+import { Interaction } from 'three.interaction';
 import Subjects from './subjects';
 
 export default function SceneManager(canvas) {
@@ -16,6 +17,7 @@ export default function SceneManager(canvas) {
   const renderer = buildRender(screenDimensions);
   const camera = buildCamera(screenDimensions);
   const subjects = initSceneSubjects(scene);
+  const interaction = new Interaction(renderer, scene, camera);
 
   function buildScene() {
     const scene = new Scene();

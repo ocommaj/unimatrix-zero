@@ -18,6 +18,7 @@ export default function main() {
 
   function bindEventListeners() {
     canvas.addEventListener('touchstart', (e) => {
+      console.log('firing from touch')
       scene.onClick(e)
       //canvas.addEventListener('touchend', (e) => {
         //scene.onClick(e);
