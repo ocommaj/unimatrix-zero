@@ -17,17 +17,10 @@ export default function main() {
   render();
 
   function bindEventListeners() {
-    canvas.addEventListener('touchstart', (e) => {
-      console.log('firing from touch')
-      scene.onClick(e)
-      //canvas.addEventListener('touchend', (e) => {
-        //scene.onClick(e);
-        //window.removeEventListener('touchend', this);
-      //});
-    });
     window.addEventListener('resize', () => resizeCanvas());
-    window.addEventListener('mousemove', (e) => scene.onMouseMove(e));
-    window.addEventListener('click', (e) => scene.onClick(e));
+    canvas.addEventListener('touchstart', (e) => scene.onClick(e));
+    canvas.addEventListener('mousemove', (e) => scene.onMouseMove(e));
+    canvas.addEventListener('click', (e) => scene.onClick(e));
     introList.padi.addEventListener('click', () => {
       scene.imageBubble.padi.display();
     });
