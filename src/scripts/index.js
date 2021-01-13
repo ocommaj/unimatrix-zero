@@ -17,10 +17,10 @@ export default function main() {
   render();
 
   function bindEventListeners() {
-    window.addEventListener('touchstart', (e) => {
-      window.addEventListener('touchend', (e) => {
+    canvas.addEventListener('touchstart', (e) => {
+      canvas.addEventListener('touchend', (e) => {
         scene.onClick(e);
-        window.removeEventListener('touchend', this);
+        //window.removeEventListener('touchend', this);
       });
     });
     window.addEventListener('resize', () => resizeCanvas());
