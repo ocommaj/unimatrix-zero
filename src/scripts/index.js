@@ -18,10 +18,11 @@ export default function main() {
 
   function bindEventListeners() {
     canvas.addEventListener('touchstart', (e) => {
-      canvas.addEventListener('touchend', (e) => {
-        scene.onClick(e);
+      scene.onClick(e)
+      //canvas.addEventListener('touchend', (e) => {
+        //scene.onClick(e);
         //window.removeEventListener('touchend', this);
-      });
+      //});
     });
     window.addEventListener('resize', () => resizeCanvas());
     window.addEventListener('mousemove', (e) => scene.onMouseMove(e));
