@@ -17,7 +17,7 @@ export default function main() {
   render();
 
   function bindEventListeners() {
-    window.addEventListener('touchstart', () => {
+    window.addEventListener('touchstart', (e) => {
       window.addEventListener('touchend', (e) => {
         scene.onClick(e);
         window.removeEventListener('touchend', this);

@@ -113,8 +113,8 @@ export default function SceneManager(canvas) {
   };
 
   this.onClick = (event) => {
-    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    mouse.x = (event.clientX / canvas.offsetWidth) * 2 - 1;
+    mouse.y = -(event.clientY / canvas.offsetHeight) * 2 + 1;
     raycaster.setFromCamera(mouse, camera);
     const intersects = raycaster.intersectObjects(scene.children, true);
 
@@ -126,8 +126,8 @@ export default function SceneManager(canvas) {
   };
 
   this.onMouseMove = (event) => {
-    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    mouse.x = (event.clientX / canvas.offsetWidth) * 2 - 1;
+    mouse.y = -(event.clientY / canvas.offsetHeight) * 2 + 1;
     raycaster.setFromCamera(mouse, camera);
     const intersects = raycaster.intersectObjects(scene.children, true);
     if (intersects.length && intersects[0].object.userData.isClickable) {
