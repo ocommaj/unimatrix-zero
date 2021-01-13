@@ -1,4 +1,4 @@
-import { Group, Mesh, Vector3, CylinderGeometry }from 'three';
+import { Group, Mesh, Vector3, CylinderGeometry } from 'three';
 import { showIntroBox } from '../animate';
 
 export default function IntroBox({ scene, camera }) {

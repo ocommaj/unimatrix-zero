@@ -13,7 +13,7 @@ export default function Comma({ parent, position = null }) {
         emissive: 0x0f62fe,
         emissiveIntensity: 0,
       });
-      /*const mat_two = new MeshLambertMaterial({
+      /* const mat_two = new MeshLambertMaterial({
         color: 0xa6c8ff,
         transparent: true,
         opacity: 0.5,

@@ -4,9 +4,12 @@ import {
 import { meshModifiers } from '../modifiers';
 
 export default Cube;
-
+// ba1b23
 function Cube({ size, position = null, rotation = null, scale = null }) {
-  const material_one = new MeshLambertMaterial({ color: 0xba1b23 });
+  const material_one = new MeshLambertMaterial({
+    color: 0x353535,
+    opacity: 0.9,
+  });
   const material_two = new MeshLambertMaterial({
     color: 0xa6c8ff,
     transparent: true,

@@ -1,5 +1,5 @@
-import  {
-  Clock, PerspectiveCamera, Raycaster, Scene, Vector2, WebGLRenderer
+import {
+  Clock, PerspectiveCamera, Raycaster, Scene, Vector2, WebGLRenderer,
 } from 'three';
 import Subjects from './subjects';
 
@@ -45,7 +45,7 @@ export default function SceneManager(canvas) {
     );
 
     camera.position.z = setZoom(width);
-    //camera.position.x = -12
+    // camera.position.x = -12
     camera.setZoom = setZoom;
     camera.maxZoom = maxZoom;
 

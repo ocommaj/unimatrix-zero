@@ -70,9 +70,9 @@ export default function runLife(geometryArray, rowCount, cellsPerRow) {
         case 3:
           this.isAlive = 1;
           break;
-        case 4:
+        /* case 4:
           this.isAlive = 1;
-          break;
+          break;*/
         default:
           this.isAlive = 0;
           break;

@@ -1,7 +1,7 @@
 import {
   CylinderBufferGeometry,
   Vector3, Matrix4, Quaternion,
-  Mesh, MeshLambertMaterial
+  Mesh, MeshLambertMaterial,
 } from 'three';
 import {
   BufferGeometryUtils,
@@ -24,9 +24,9 @@ export default function HexLayer(scene, camera) {
   const mat_three = mat_one.clone();
   mat_three.opacity = 0.3;
   const mat_four = mat_one.clone();
-  mat_four.emissive = 0xFFF;
+  mat_four.emissive = 0xfff;
   mat_four.transparent = false;
-  mat_four.emissiveIntensity = 0.25;
+  // mat_four.emissiveIntensity = 1;
 
   const hexGeometry = new CylinderBufferGeometry(0.5, 0.5, 0.25, 6, 1);
 

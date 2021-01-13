@@ -14,7 +14,7 @@ module.exports = {
       {
         test: /\.(png|svg|jpg|gif|ico)$/,
         type: 'asset/resource',
-        /*use: [
+        /* use: [
           'file-loader',
           {
             loader: 'image-webpack-loader',
@@ -47,7 +47,7 @@ module.exports = {
   optimization: {
     minimize: true,
     minimizer: [
-      `...`,
+      '...',
       new CssMinimizerPlugin(),
     ],
     splitChunks: {
