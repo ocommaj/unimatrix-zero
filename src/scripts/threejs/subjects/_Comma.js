@@ -1,10 +1,12 @@
-import { Mesh, MeshLambertMaterial } from 'three';
+import { Group, Mesh, MeshLambertMaterial } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 export default function Comma({ parent, position = null }) {
+  // import('../../../assets/three/comma_tag.glb')
   import('../../../assets/three/comma.glb')
     .then(imported => {
       const commaGltf = imported.default;
+      const group = new Group();
       const mesh = new Mesh();
       const mat_one = new MeshLambertMaterial({
         // color: 0x0f62fe,
@@ -13,28 +15,35 @@ export default function Comma({ parent, position = null }) {
         emissive: 0x0f62fe,
         emissiveIntensity: 0,
       });
-      /* const mat_two = new MeshLambertMaterial({
+      const mat_two = new MeshLambertMaterial({
         color: 0xa6c8ff,
-        transparent: true,
+        // transparent: true,
         opacity: 0.5,
-      });*/
+      });
 
       loadComma().then(loaded => {
+        /* group.add( ...loaded );
+        group.children[0].material = mat_one.clone();
+        group.children[1].material = mat_two.clone();
+        group.name = 'messageComma';
+        group.scale.set(0, 0, 0);
+        //parent.add(group)*/
+
         mesh.copy(loaded);
+        mesh.scale.set(0, 0, 0);
         mesh.material = mat_one;
+        mesh.name = 'messageComma';
         parent.add(mesh);
+
+
       });
 
       function loadComma(position, resolve) {
         return new Promise(resolve => {
           const loader = new GLTFLoader();
           loader.load(commaGltf, (gltf) => {
-            const mesh = gltf.scene.children[0];
-            mesh.name = 'messageComma';
-            mesh.scale.set(0, 0, 0);
-            mesh.castShadow = true;
-            mesh.receiveShadow = true;
-            resolve(mesh);
+            // resolve(gltf.scene.children);
+            resolve(gltf.scene.children[0]);
           });
         });
       }

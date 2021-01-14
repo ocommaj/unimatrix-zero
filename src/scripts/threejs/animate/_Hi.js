@@ -112,6 +112,7 @@ export default function hiTimelines(upperH, lowerI, notLetters) {
         ease: 'elastic',
       },
     }).to(commaMesh.scale, { x: 0.5, y: 0.5, z: 0.5 })
+      // .to(commaMesh.scale, { x: 1, y: 1, z: 2 })
       .to(commaMesh.rotation, { y: 6.28 }, '<');
   }
 

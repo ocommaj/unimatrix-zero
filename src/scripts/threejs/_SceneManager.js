@@ -52,9 +52,9 @@ export default function SceneManager(canvas) {
     camera.maxZoom = maxZoom;
 
     function maxZoom(width) {
-      if (width <= 370) return 17;
-      if (width > 370 && width <= 800) return 15;
-      if (width > 800 && width <= 1000) return 13;
+      if (width <= 370) return 18;
+      if (width > 370 && width <= 800) return 16;
+      if (width > 800 && width <= 1000) return 12;
       if (width > 1000) return 12;
     }
 
