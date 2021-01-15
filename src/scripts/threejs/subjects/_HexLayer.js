@@ -2,7 +2,7 @@ import {
   Color,
   CylinderBufferGeometry,
   Vector3, Matrix4, Quaternion,
-  Mesh, MeshLambertMaterial
+  Mesh, MeshLambertMaterial,
 } from 'three';
 import {
   BufferGeometryUtils,
@@ -11,36 +11,36 @@ import { LifeGame } from '../modifiers';
 
 export default function HexLayer(scene, camera) {
   const camPosVector = new Vector3();
-  //const WHITE = new Color( 0xfff );
-  const YELLOW = new Color( 0xf1c21b );
-  const BLUE_60 = new Color( 0x0f62fe );
-  const BLUE_40 = new Color( 0x78a9ff );
-  const GRAY_30 = new Color( 0xc6c6c6 );
-  const GRAY_10 = new Color( 0xf4f4f4 );
-  const GRAY_20 = new Color( 0xe0e0e0 );
-  const RED_50 = new Color( 0xfa4d56 );
-  const GREEN_50 = new Color( 0x24a148 );
+  // const WHITE = new Color( 0xfff );
+  const YELLOW = new Color(0xf1c21b);
+  const BLUE_60 = new Color(0x0f62fe);
+  const BLUE_40 = new Color(0x78a9ff);
+  const GRAY_30 = new Color(0xc6c6c6);
+  const GRAY_10 = new Color(0xf4f4f4);
+  const GRAY_20 = new Color(0xe0e0e0);
+  const RED_50 = new Color(0xfa4d56);
+  const GREEN_50 = new Color(0x24a148);
 
   const mat_one = new MeshLambertMaterial({
-      color: GRAY_10,
-      transparent: true,
-      opacity: 0.2,
-    });
-    const mat_two = new MeshLambertMaterial({
-      color: BLUE_40,
-      transparent: true,
-      opacity: 0.5,
-    });
+    color: GRAY_10,
+    transparent: true,
+    opacity: 0.2,
+  });
+  const mat_two = new MeshLambertMaterial({
+    color: BLUE_40,
+    transparent: true,
+    opacity: 0.5,
+  });
 
-    const mat_three = mat_one.clone();
-    mat_three.opacity = 0.3;
-    mat_three.transparent = true;
-    const mat_four = mat_one.clone();
-    mat_four.emissive = 0xfff;
-    mat_four.transparent = false;
-    const mat_five = mat_one.clone();
-    mat_five.opacity = 0;
-    // mat_four.emissiveIntensity = 1;
+  const mat_three = mat_one.clone();
+  mat_three.opacity = 0.3;
+  mat_three.transparent = true;
+  const mat_four = mat_one.clone();
+  mat_four.emissive = 0xfff;
+  mat_four.transparent = false;
+  const mat_five = mat_one.clone();
+  mat_five.opacity = 0;
+  // mat_four.emissiveIntensity = 1;
 
   const hexGeometry = new CylinderBufferGeometry(0.5, 0.5, 0.25, 6, 1);
 

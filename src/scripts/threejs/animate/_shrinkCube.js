@@ -15,7 +15,7 @@ export default function shrinkCube(scene, cube, comma, callback) {
     // .to(comma.position, { y: '+=1' }, '<')
     .to(cube.group.scale, { x: 0.7, y: 0.7, z: 0.7 }, '<')
     // .to(comma.scale, { x: 0.7, y: 0.7, z: 0.7 }, '<')
-    .to(cube.group.position, { x: '-=4'}, '<.2')
+    .to(cube.group.position, { x: '-=4.25'}, '<.2')
     // .to(comma.position, { x: '-=4' }, '<')
     .call(() => {
       cube.group.updateWorldMatrix(true, true);

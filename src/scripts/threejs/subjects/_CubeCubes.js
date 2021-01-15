@@ -31,6 +31,10 @@ export default function CubeCubes({ count, spacing, cubeConfig }) {
     const { hiddenIndices } = bgGeometry.userData;
     const cubedCubesBounds = getPlaneBoundingBox();
     const indicesToHide = filterGeosToHide();
+    if (hiddenIndices.length) {
+      const indicesToShow = filterGeosToShow(indicesToHide);
+      showGeos(indicesToShow);
+    }
     hideGeos(indicesToHide);
     hiddenIndices.push(...indicesToHide);
 
@@ -40,9 +44,9 @@ export default function CubeCubes({ count, spacing, cubeConfig }) {
       const copiedPlane = BufferGeometryUtils.mergeBufferGeometries(copiedGeos);
       copiedPlane.computeBoundingBox();
       const boundingBox = copiedPlane.boundingBox;
-      offset.set(0, 0.75 * 12, 0);
+      offset.set(-0.5, 0.75 * 12, 0);
       boundingBox.translate(offset);
-      boundingBox.expandByScalar(1.1);
+      boundingBox.expandByScalar(1.0125);
       copiedPlane.dispose();
       return boundingBox;
 
@@ -62,6 +66,13 @@ export default function CubeCubes({ count, spacing, cubeConfig }) {
       }
     }
 
+    function filterGeosToShow(indicesToHide) {
+      const indicesToShow = hiddenIndices.map(value => {
+        if (!indicesToHide.includes(value)) return value;
+      });
+      return indicesToShow;
+    }
+
     function filterGeosToHide() {
       const indicesToHide = [];
       const bgGeoBounds = bgGeometry.userData.mergedUserData;
@@ -69,6 +80,18 @@ export default function CubeCubes({ count, spacing, cubeConfig }) {
         if (cubedCubesBounds.containsBox(bounds)) indicesToHide.push(i);
       });
       return indicesToHide;
+    }
+
+    function showGeos(indicesToShow) {
+      const geos = bgGeometry.groups;
+      indicesToShow.forEach(value => {
+        console.log(value);
+        if (value) {
+          const spliceIdx = hiddenIndices.indexOf(value);
+          hiddenIndices.splice(spliceIdx, 1);
+          geos[value].materialIndex = value % 3;
+        }
+      });
     }
 
     function hideGeos(indicesToHide) {

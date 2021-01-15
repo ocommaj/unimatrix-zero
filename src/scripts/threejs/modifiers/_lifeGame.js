@@ -80,7 +80,7 @@ export default function runLife(geometryArray, userData) {
         case 3:
           this.isAlive = 1;
           break;
-        /*case 4:
+        /* case 4:
           this.isAlive = 1;
           break;*/
         default:
