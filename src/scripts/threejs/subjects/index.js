@@ -3,7 +3,7 @@ import Cube from './_Cube';
 import CubeCubes from './_CubeCubes';
 import HexLayer from './_HexLayer';
 import GeneralLight from './_GeneralLight';
-import IntroBox from './_IntroBox';
+import IntroBox from './IntroBox';
 import MessageCube from './_MessageCube';
 import ImageBubble from './_imageBubble';
 import * as letters from './_Letters';

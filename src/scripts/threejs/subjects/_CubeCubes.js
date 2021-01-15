@@ -125,19 +125,18 @@ export default function CubeCubes({ count, spacing, cubeConfig }) {
     });
   }
 
-  function getPlane({axis, atPosition = null, fromBox = null}) {
+  function getPlane(axis, atPosition) {
     const boxes = CubeCubes.children;
-    if (axis === 'z' && atPosition === null && !fromBox) {
+    if (axis === 'z') {
       return boxes.filter(box => {
         return box.position.z === offsets[offsets.length - 1];
       });
     }
-    if (atPosition) {
-      return boxes.filter(box => box.position[axis] === atPosition);
-    }
-    if (fromBox) {
-      return boxes.filter(box => box.position[axis] === fromBox.position[axis]);
-    }
+
+    const round = (float) => (Math.ceil(float * 2 - 0.5) / 2);
+    const rounded = round(atPosition);
+    return boxes.filter(box => round(box.position[axis]) === rounded);
+
   }
 
   function makeCubes(size, offsets, rotation, scale) {
@@ -157,10 +156,11 @@ export default function CubeCubes({ count, spacing, cubeConfig }) {
     });
   }
 
-  function onClick(scene, mesh, /* axis,*/ callback) {
+  function onClick(scene, mesh, callback) {
     if (!mesh.userData.isClickable) return;
     const axis = spinCount % 2 === 0 ? 'y' : 'x';
-    const slice = getPlane({ axis, fromBox: mesh });
+    const atPosition = mesh.position[axis];
+    const slice = getPlane(axis, atPosition);
     const sliceClone = new Group();
     CubeCubes.add(sliceClone);
     sliceClone.updateWorldMatrix(true, false);
@@ -172,7 +172,7 @@ export default function CubeCubes({ count, spacing, cubeConfig }) {
       box.visible = false;
     }
 
-    spinPlane({scene, sliceClone, axis }).play()
+    spinPlane({ scene, sliceClone, axis }).play()
       .then(() => {
         for (const box of slice) box.visible = true;
         CubeCubes.remove(sliceClone);

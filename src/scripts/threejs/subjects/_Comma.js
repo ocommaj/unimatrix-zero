@@ -34,8 +34,6 @@ export default function Comma({ parent, position = null }) {
         mesh.material = mat_one;
         mesh.name = 'messageComma';
         parent.add(mesh);
-
-
       });
 
       function loadComma(position, resolve) {

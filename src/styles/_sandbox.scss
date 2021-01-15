@@ -23,13 +23,14 @@
   color: lightgray;
   top: 0rem;
   left: 0rem;
+  opacity: 0;
+  transition: opacity .7s ease;
 
   .wrappedContent {
     //background-color: green;
     transform: skew(0deg -3deg);
     color: gray;
-    opacity: 0;
-    transition: opacity .7s ease;
+
     ul {
       padding-left: 0;
     }
