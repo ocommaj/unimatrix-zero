@@ -1,17 +1,19 @@
 import {
-  BoxBufferGeometry, MeshLambertMaterial, Mesh, PointLight,
+  BoxBufferGeometry, Color, MeshLambertMaterial, Mesh, PointLight,
 } from 'three';
 import { meshModifiers } from '../modifiers';
 
 export default Cube;
 // ba1b23
 function Cube({ size, position = null, rotation = null, scale = null }) {
+  const BLUE_40 = new Color(0x78a9ff);
   const material_one = new MeshLambertMaterial({
     color: 0x353535,
     opacity: 0.9,
   });
   const material_two = new MeshLambertMaterial({
-    color: 0xa6c8ff,
+    // color: 0xa6c8ff,
+    color: 0xfff,
     transparent: true,
     opacity: 0.5,
   });

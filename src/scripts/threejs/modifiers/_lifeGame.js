@@ -1,5 +1,15 @@
-export default function runLife(geometryArray, rowCount, cellsPerRow) {
+import { Color } from 'three';
+
+export default function runLife(geometryArray, userData) {
   const ALIVE = 1;
+  const HIDDEN = 4;
+  const {
+    cellsPerRow,
+    hiddenIndices,
+    rowCount,
+    aliveMaterialIdx,
+    hiddenMaterialIdx,
+  } = userData;
   const cells = [ ...geometryArray ];
   const cellMap = cells.map(({ materialIndex }, i) => {
     return cellModel(materialIndex, i);
@@ -70,7 +80,7 @@ export default function runLife(geometryArray, rowCount, cellsPerRow) {
         case 3:
           this.isAlive = 1;
           break;
-        /* case 4:
+        /*case 4:
           this.isAlive = 1;
           break;*/
         default:
@@ -94,7 +104,15 @@ export default function runLife(geometryArray, rowCount, cellsPerRow) {
     }
 
     function setMaterialIdx() {
-      this.materialIdx = this.isAlive ? 3 : this.originalMaterial;
+      const isHidden = hiddenIndices.includes(this.idx);
+      if (isHidden) {
+        this.materialIdx = hiddenMaterialIdx;
+        return;
+      }
+
+      this.materialIdx = this.isAlive
+        ? aliveMaterialIdx
+        : this.originalMaterial;
     }
   }
 

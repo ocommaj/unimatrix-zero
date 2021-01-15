@@ -9,15 +9,14 @@ export default function MessageCube({scene, configCubed}) {
   let comma = null;
   let message = SpellHi(Cube.facingPlane);
   let messageLoop = message.loopAnimation(() => messageLoopCallback());
-  // Cube.group.visible = false;
   scene.add(Cube.group);
+  // Cube.group.visible = false;
 
-  const sayHi = () => messageLoop.play();
-  const onClick = clickHandler;
-
-  return {
-    sayHi,
-    onClick,
+  this.sayHi = () => messageLoop.play();
+  this.onClick = clickHandler;
+  this.punchThroughBG = (bgGeometry) => {
+    this.bgGeometry = bgGeometry;
+    Cube.wrapBackgroundGeometry(bgGeometry);
   };
 
   function messageLoopCallback(nextMessage = null) {
@@ -51,7 +50,11 @@ export default function MessageCube({scene, configCubed}) {
   function clickHandler(intersectedMesh, camera) {
     messageLoop.pause();
     if (intersectedMesh.object === message.iDot) {
+      const bgGeometry = this.bgGeometry;
+      let update = () => Cube.wrapBackgroundGeometry(bgGeometry);
+      this.update = update;
       const callback = () => {
+        update = null;
         const IntroBox = scene.getObjectByName('introBox');
         IntroBox.userData.updatePositions()
           .then(() => IntroBox.userData.animateReveal());

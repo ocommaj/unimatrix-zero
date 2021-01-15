@@ -75,6 +75,7 @@ export default function SceneManager(canvas) {
 
     const messageCube = Subjects.messageCube({ scene, configCubed });
     messageCube.sayHi();
+    messageCube.punchThroughBG(hexLayer.mesh.geometry);
 
     return {
       hexLayer,

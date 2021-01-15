@@ -1,4 +1,7 @@
-import { Group } from 'three';
+import { Group, BufferGeometry, Vector3 } from 'three';
+import {
+  BufferGeometryUtils,
+} from 'three/examples/jsm/utils/BufferGeometryUtils.js';
 import Cube from './_Cube';
 import { facingPlaneToBack } from '../animate';
 import { spinPlane } from '../animate';
@@ -16,12 +19,67 @@ export default function CubeCubes({ count, spacing, cubeConfig }) {
 
   return {
     group: CubeCubes,
-    offsets,
     facingPlane,
     getFacingPlane,
-    planeLoop,
+    offsets,
     onClick,
+    planeLoop,
+    wrapBackgroundGeometry,
   };
+
+  function wrapBackgroundGeometry(bgGeometry) {
+    const { hiddenIndices } = bgGeometry.userData;
+    const cubedCubesBounds = getPlaneBoundingBox();
+    const indicesToHide = filterGeosToHide();
+    hideGeos(indicesToHide);
+    hiddenIndices.push(...indicesToHide);
+
+    function getPlaneBoundingBox() {
+      const offset = new Vector3();
+      const copiedGeos = copyCubeGeos();
+      const copiedPlane = BufferGeometryUtils.mergeBufferGeometries(copiedGeos);
+      copiedPlane.computeBoundingBox();
+      const boundingBox = copiedPlane.boundingBox;
+      offset.set(0, 0.75 * 12, 0);
+      boundingBox.translate(offset);
+      boundingBox.expandByScalar(1.1);
+      copiedPlane.dispose();
+      return boundingBox;
+
+      function copyCubeGeos() {
+        const planeSlice = CubeCubes.children.filter(cube => {
+          return cube.position.z === 0;
+        });
+
+        return planeSlice.map(cube => {
+          const copy = new BufferGeometry();
+          cube.updateMatrixWorld();
+          copy.copy(cube.geometry);
+          copy.applyMatrix4(cube.matrixWorld);
+          copy.computeBoundingBox();
+          return copy;
+        });
+      }
+    }
+
+    function filterGeosToHide() {
+      const indicesToHide = [];
+      const bgGeoBounds = bgGeometry.userData.mergedUserData;
+      bgGeoBounds.forEach((bounds, i) => {
+        if (cubedCubesBounds.containsBox(bounds)) indicesToHide.push(i);
+      });
+      return indicesToHide;
+    }
+
+    function hideGeos(indicesToHide) {
+      const { hiddenMaterialIdx } = bgGeometry.userData;
+      const geos = bgGeometry.groups;
+      indicesToHide.forEach(value => {
+        geos[value].materialIndex = hiddenMaterialIdx;
+      });
+    }
+
+  }
 
   function getFacingPlane() {
     return CubeCubes.children.slice(-Math.pow(count, 2));
@@ -50,7 +108,7 @@ export default function CubeCubes({ count, spacing, cubeConfig }) {
 
   function getPlane({axis, atPosition = null, fromBox = null}) {
     const boxes = CubeCubes.children;
-    if (axis === 'z' && !atPosition && !fromBox) {
+    if (axis === 'z' && atPosition === null && !fromBox) {
       return boxes.filter(box => {
         return box.position.z === offsets[offsets.length - 1];
       });
