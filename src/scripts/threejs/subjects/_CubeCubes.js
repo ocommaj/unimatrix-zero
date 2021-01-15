@@ -67,10 +67,7 @@ export default function CubeCubes({ count, spacing, cubeConfig }) {
     }
 
     function filterGeosToShow(indicesToHide) {
-      const indicesToShow = hiddenIndices.map(value => {
-        if (!indicesToHide.includes(value)) return value;
-      });
-      return indicesToShow;
+      return hiddenIndices.filter(value => !indicesToHide.includes(value));
     }
 
     function filterGeosToHide() {
@@ -85,7 +82,6 @@ export default function CubeCubes({ count, spacing, cubeConfig }) {
     function showGeos(indicesToShow) {
       const geos = bgGeometry.groups;
       indicesToShow.forEach(value => {
-        console.log(value);
         if (value) {
           const spliceIdx = hiddenIndices.indexOf(value);
           hiddenIndices.splice(spliceIdx, 1);

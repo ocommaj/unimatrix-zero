@@ -12,6 +12,7 @@ export default function MessageCube({scene, configCubed}) {
   scene.add(Cube.group);
   // Cube.group.visible = false;
 
+  this.meshGroup = Cube.group;
   this.sayHi = () => messageLoop.play();
   this.onClick = clickHandler;
   this.punchThroughBG = (bgGeometry) => {
@@ -55,9 +56,8 @@ export default function MessageCube({scene, configCubed}) {
       this.update = update;
       const callback = () => {
         update = null;
-        const IntroBox = scene.getObjectByName('introBox');
-        IntroBox.userData.updatePositions()
-          .then(() => IntroBox.userData.animateReveal());
+        const IntroBox = scene.userData.subjects.introBox;
+        IntroBox.updatePositions().then(() => IntroBox.animateReveal());
       };
 
       addComma().then(() => shrinkCube(scene, Cube, comma, callback).play());

@@ -11,7 +11,7 @@ export default function main() {
   canvas.width = canvas.offsetWidth;
   canvas.height = canvas.offsetHeight;
 
-  const scene = new SceneManager(canvas);
+  const scene = new SceneManager({ canvas, device: device.type });
 
   bindEventListeners();
   render();
@@ -22,7 +22,7 @@ export default function main() {
     canvas.addEventListener('mousemove', (e) => scene.onMouseMove(e));
     canvas.addEventListener('click', (e) => scene.onClick(e));
     introList.padi.addEventListener('click', () => {
-      scene.imageBubble.padi.display();
+      scene.imageBubble.animateReveal('padi');
     });
   }
 

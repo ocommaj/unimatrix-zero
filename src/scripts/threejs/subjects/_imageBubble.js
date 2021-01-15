@@ -23,5 +23,5 @@ export default function imageBubble(scene) {
   mesh.visible = false;
   scene.add(mesh);
 
-  this.display = () => bubbleToTop(mesh).play();
+  this.animateReveal = (key) => bubbleToTop(mesh).play();
 }

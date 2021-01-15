@@ -11,6 +11,8 @@ export default function IntroBox({ scene, camera }) {
   initialize().then(loaded => scene.add(loaded));
 
   this.onResize = () => IntroBox.visible ? positionDOMElement() : null;
+  this.updatePositions = updatePositions;
+  this.animateReveal = animateReveal;
 
   function initialize(resolve) {
     return new Promise(resolve => {
@@ -28,11 +30,7 @@ export default function IntroBox({ scene, camera }) {
       }
 
       IntroBox.visible = false;
-      IntroBox.userData = {
-        ...sortBoxes(),
-        updatePositions,
-        animateReveal,
-      };
+      IntroBox.userData = { ...sortBoxes() };
 
       resolve(IntroBox);
     });

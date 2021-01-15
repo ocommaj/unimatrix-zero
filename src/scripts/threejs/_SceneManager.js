@@ -4,7 +4,7 @@ import {
 import { Interaction } from 'three.interaction';
 import Subjects from './subjects';
 
-export default function SceneManager(canvas) {
+export default function SceneManager({ canvas, device }) {
   const clock = new Clock();
   const raycaster = new Raycaster();
   const mouse = new Vector2();
@@ -18,6 +18,9 @@ export default function SceneManager(canvas) {
   const camera = buildCamera(screenDimensions);
   const subjects = initSceneSubjects(scene);
   const interaction = new Interaction(renderer, scene, camera);
+  scene.userData.subjects = subjects;
+  scene.userData.deviceType = device;
+  // console.dir(scene)
 
   function buildScene() {
     const scene = new Scene();
@@ -47,7 +50,6 @@ export default function SceneManager(canvas) {
     );
 
     camera.position.z = setZoom(width);
-    // camera.position.x = -12
     camera.setZoom = setZoom;
     camera.maxZoom = maxZoom;
 
@@ -67,7 +69,7 @@ export default function SceneManager(canvas) {
   }
 
   function initSceneSubjects(scene) {
-    const cubeConfig = { size: 1, rotation: { x: 0, y: 0, z: 0 } };
+    const cubeConfig = { size: 1 };
     const configCubed = { cubeConfig, count: 5, spacing: 1.5 };
 
     const hexLayer = Subjects.hexLayer(scene, camera);
@@ -77,20 +79,20 @@ export default function SceneManager(canvas) {
     messageCube.sayHi();
     messageCube.punchThroughBG(hexLayer.mesh.geometry);
 
+    const introBox = Subjects.introBox({ scene, camera });
+
     return {
       hexLayer,
       messageCube,
+      introBox,
       comma: Subjects.comma({ parent: scene }),
-      introBox: Subjects.introBox({ scene, camera }),
       light: Subjects.generalLight(scene),
       imageBubble: Subjects.imageBubble(scene),
     };
   }
 
   this.imageBubble = {
-    padi: {
-      display: () => subjects.imageBubble.display(),
-    },
+    animateReveal: (key) => subjects.imageBubble.animateReveal(key),
   };
 
   this.update = () => {
