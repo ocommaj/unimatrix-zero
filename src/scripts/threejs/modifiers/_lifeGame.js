@@ -10,13 +10,12 @@ export default function runLife(geometryArray, userData) {
     aliveMaterialIdx,
     hiddenMaterialIdx,
   } = userData;
-  let cellMap = mapCells(geometryArray);
-  let rowMap = cellMap.reduce(mapRows, []);
+  const cellMap = mapCells(geometryArray);
+  const rowMap = cellMap.reduce(mapRows, []);
 
-  return {
-    initialSpawn,
-    evolve,
-  };
+  this.initialSpawn = initialSpawn;
+  this.evolve = (lastUpdate) => evolve(lastUpdate);
+  this.lastUpdate = 0;
 
   function mapCells(geometryArray) {
     return geometryArray.map(({ materialIndex }, i) => {
@@ -25,27 +24,31 @@ export default function runLife(geometryArray, userData) {
   }
 
   function initialSpawn() {
-    setAlive(spawnRandom(SPAWN_RATE)).then(() => evolve(cellMap));
+    setAlive(spawnRandom(SPAWN_RATE)).then(() => evolve());
   }
 
-  function evolve() {
-    updateLivingModel().then((updatedMap) => updateRender(updatedMap));
+  function evolve(lastUpdate=0) {
+    updateLivingModel().then(() => updateRender(lastUpdate));
   }
 
-  function updateRender(updatedMap) {
-    rowMap = updatedMap.reduce(mapRows, []);
-    updatedMap.forEach((cellModel, i) => {
-      geometryArray[i].materialIndex = cellModel.materialIdx;
+  function updateRender(lastUpdate) {
+    if (lastUpdate) {
+      const filtered = cellMap.filter(cellModel => cellModel.shouldUpdate);
+      filtered.forEach(cellModel => {
+        geometryArray[cellModel.idx].materialIndex = cellModel.materialIndex;
+      })
+      return
+    }
+
+    cellMap.forEach((cellModel, i) => {
+      geometryArray[i].materialIndex = cellModel.materialIndex;
     });
   }
 
   function updateLivingModel() {
     return new Promise(resolve => {
-      cellMap = cellMap.map((cellModel) => {
-        cellModel = cellModel.updateLivingState();
-        return cellModel;
-      });
-      resolve(cellMap);
+      cellMap.forEach(cellModel => cellModel.updateLivingState())
+      resolve();
     });
   }
 
@@ -109,7 +112,6 @@ export default function runLife(geometryArray, userData) {
       }
       this.shouldUpdate = prevState !== this.isAlive;
       this.setMaterialIdx();
-      return this;
     }
 
     function getNeighborCount() {
@@ -130,11 +132,11 @@ export default function runLife(geometryArray, userData) {
     function setMaterialIdx() {
       const isHidden = hiddenIndices.includes(this.idx);
       if (isHidden) {
-        this.materialIdx = hiddenMaterialIdx;
+        this.materialIndex = hiddenMaterialIdx;
         return;
       }
 
-      this.materialIdx = this.isAlive
+      this.materialIndex = this.isAlive
         ? aliveMaterialIdx
         : this.originalMaterial;
     }

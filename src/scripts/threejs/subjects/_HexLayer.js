@@ -73,8 +73,7 @@ export default function HexLayer(scene, camera) {
   this.update = ({ nowSecond }) => {
     if (nowSecond && !(nowSecond % 3) && life.lastUpdate !== nowSecond) {
       life.lastUpdate = nowSecond;
-      life.evolve();
-
+      life.evolve(nowSecond);
     }
   };
 
