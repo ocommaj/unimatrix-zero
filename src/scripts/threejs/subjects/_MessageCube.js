@@ -52,7 +52,7 @@ export default function MessageCube({scene, configCubed}) {
       let update = () => Cube.wrapBackgroundGeometry(bgGeometry);
       this.update = update;
       const callback = () => {
-        update = null;
+        this.update = null;
         const IntroBox = scene.userData.subjects.introBox;
         IntroBox.updatePositions().then(() => IntroBox.animateReveal());
         console.dir(this.update);

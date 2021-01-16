@@ -2,7 +2,7 @@ import { Color } from 'three';
 
 export default function runLife(geometryArray, userData) {
   const ALIVE = 1;
-  const HIDDEN = 4;
+  const SPAWN_RATE = 0.4;
   const {
     cellsPerRow,
     hiddenIndices,
@@ -10,16 +10,22 @@ export default function runLife(geometryArray, userData) {
     aliveMaterialIdx,
     hiddenMaterialIdx,
   } = userData;
-  const cells = [ ...geometryArray ];
-  const cellMap = cells.map(({ materialIndex }, i) => {
-    return cellModel(materialIndex, i);
-  });
-  const rowMap = cellMap.reduce(mapRows, []);
+  let cellMap = mapCells(geometryArray);
+  let rowMap = cellMap.reduce(mapRows, []);
 
-  return { initialSpawn, evolve };
+  return {
+    initialSpawn,
+    evolve,
+  };
+
+  function mapCells(geometryArray) {
+    return geometryArray.map(({ materialIndex }, i) => {
+      return cellModel(materialIndex, i);
+    });
+  }
 
   function initialSpawn() {
-    setAlive(spawnRandom(0.5)).then(() => evolve());
+    setAlive(spawnRandom(SPAWN_RATE)).then(() => evolve(cellMap));
   }
 
   function evolve() {
@@ -27,19 +33,19 @@ export default function runLife(geometryArray, userData) {
   }
 
   function updateRender(updatedMap) {
-    updatedMap.forEach(cellModel => {
-      cells[cellModel.idx].materialIndex = cellModel.materialIdx;
-      geometryArray[cellModel.idx] = cells[cellModel.idx];
+    rowMap = updatedMap.reduce(mapRows, []);
+    updatedMap.forEach((cellModel, i) => {
+      geometryArray[i].materialIndex = cellModel.materialIdx;
     });
   }
 
   function updateLivingModel() {
     return new Promise(resolve => {
-      const updated = cellMap.map(cellModel => {
-        cellModel.updateLivingState();
+      cellMap = cellMap.map((cellModel) => {
+        cellModel = cellModel.updateLivingState();
         return cellModel;
       });
-      resolve(updated);
+      resolve(cellMap);
     });
   }
 
@@ -49,29 +55,46 @@ export default function runLife(geometryArray, userData) {
     const cellIdx = idx - (rowIdx * cellsPerRow);
     const oddRow = rowIdx % 2;
     const nextCell = oddRow ? cellIdx + 1 : cellIdx - 1;
-    const neighborRows = [rowIdx, rowIdx + 1, rowIdx - 1];
-    const neighbors = [
+    const neighborRows = rowIdx && rowIdx !== rowCount - 1
+      ? [rowIdx, rowIdx + 1, rowIdx - 1]
+      : [rowIdx, rowIdx + 1];
+    const neighbors = cellIdx ? [
       [cellIdx - 1, cellIdx + 1],
       [cellIdx, nextCell],
       [cellIdx, nextCell],
+    ] : [
+      [1],
+      [0],
+      [0],
     ];
 
-    if (rowIdx === 0) neighborRows.pop();
-    if (rowIdx === rowCount - 1) neighborRows.splice(1, 1);
-    if (neighborRows.length === 2) neighbors.pop();
+    if (cellIdx === cellsPerRow - 1) neighbors[0] = [cellIdx - 1];
+    if (cellIdx === cellsPerRow - 1 && oddRow) {
+      neighbors[1].pop();
+      neighbors[2].pop();
+    }
+    if (!cellIdx && oddRow) {
+      neighbors[1].push(1);
+      neighbors[2].push(1);
+    }
+
+    if (!rowIdx) neighbors.pop();
+    if (rowIdx === rowCount - 1) neighborRows[1] = rowIdx - 1;
 
     return {
       idx,
+      cellIdx,
       rowIdx,
       neighbors,
+      neighborRows,
       originalMaterial,
       updateLivingState,
       getNeighborCount,
       setMaterialIdx,
     };
 
-    async function updateLivingState() {
-      await this.getNeighborCount();
+    function updateLivingState() {
+      this.getNeighborCount();
       const prevState = this.isAlive;
       switch (this.aliveNeighborCount) {
         case 2:
@@ -80,24 +103,25 @@ export default function runLife(geometryArray, userData) {
         case 3:
           this.isAlive = 1;
           break;
-        /* case 4:
-          this.isAlive = 1;
-          break;*/
         default:
           this.isAlive = 0;
           break;
       }
       this.shouldUpdate = prevState !== this.isAlive;
       this.setMaterialIdx();
+      return this;
     }
 
     function getNeighborCount() {
       const aliveNeighbors = this.neighbors.reduce(
         (accumulator, adjCells, row) => {
-          const filtered = rowMap[neighborRows[row]]
-            .slice(adjCells[0], adjCells[1] + 1).filter(cell => cell.isAlive);
-
-          accumulator.push(...filtered);
+          const neighborRow = rowMap[neighborRows[row]];
+          const aliveCells = adjCells.filter(cellIdx => {
+            if (neighborRow !== undefined) {
+              return neighborRow[cellIdx].isAlive;
+            }
+          });
+          accumulator.push(...aliveCells);
           return accumulator;
         }, []);
       this.aliveNeighborCount = aliveNeighbors.length;
@@ -116,12 +140,12 @@ export default function runLife(geometryArray, userData) {
     }
   }
 
-  function mapRows(accumulator, cell) {
-    const rowIdx = cell.rowIdx;
+  function mapRows(accumulator, cellModel) {
+    const rowIdx = cellModel.rowIdx;
     if (!accumulator[rowIdx]) {
       accumulator[rowIdx] = [];
     }
-    accumulator[rowIdx].push(cell);
+    accumulator[rowIdx].push(cellModel);
     return accumulator;
   }
 

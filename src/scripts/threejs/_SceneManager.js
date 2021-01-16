@@ -50,6 +50,8 @@ export default function SceneManager({ canvas, device }) {
     );
 
     camera.position.z = setZoom(width);
+    // camera.position.x = -20;
+    // camera.position.y = -12;
     camera.setZoom = setZoom;
     camera.maxZoom = maxZoom;
 

@@ -74,6 +74,7 @@ export default function HexLayer(scene, camera) {
     if (nowSecond && !(nowSecond % 3) && life.lastUpdate !== nowSecond) {
       life.lastUpdate = nowSecond;
       life.evolve();
+
     }
   };
 

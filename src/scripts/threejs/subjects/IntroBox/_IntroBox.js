@@ -104,7 +104,8 @@ export default function IntroBox({ scene, camera }) {
   }
 
   function animateReveal() {
-    const target = animationTargets.largeWidth;
+    const { deviceType } = scene.userData;
+    const target = { deviceType, ...animationTargets[deviceType] };
     const comma = scene.getObjectByName('messageComma');
     const callback = () => {
       mergeGeometry(IntroBox).then(() => positionDOMElement(IntroBox, camera));

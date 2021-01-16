@@ -18,6 +18,7 @@ const largeWidth = {
 
 const targets = {
   largeWidth,
+  desktop: largeWidth,
 };
 
 export default targets;
