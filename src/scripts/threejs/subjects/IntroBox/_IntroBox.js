@@ -14,9 +14,8 @@ export default function IntroBox({ scene, camera }) {
   initialize().then(loaded => scene.add(loaded));
 
   this.meshGroup = IntroBox;
-  this.animateReveal = animateReveal;
   this.onResize = resizeHandler;
-  this.updatePositions = updatePositions;
+  this.reveal = reveal;
 
   function initialize(resolve) {
     return new Promise(resolve => {
@@ -76,6 +75,10 @@ export default function IntroBox({ scene, camera }) {
     }, { ...sides });
 
     return { sides, midpoints };
+  }
+
+  function reveal() {
+    updatePositions().then(() => animateReveal());
   }
 
   function updatePositions() {

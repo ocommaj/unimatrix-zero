@@ -1,18 +1,17 @@
-import CubeCubes from './_CubeCubes';
+import CubedCubes from './CubedCubes';
 import SpellHi from './_Hi';
-import { shrinkCube } from '../animate';
 
 export default function MessageCube({scene, configCubed}) {
-  const Cube = CubeCubes(configCubed);
-  Cube.group.name = 'mainMessageCube';
+  const Cube = new CubedCubes(configCubed);
+  Cube.meshGroup.name = 'mainMessageCube';
 
   let comma = null;
   let message = SpellHi(Cube.facingPlane);
   let messageLoop = message.loopAnimation(() => messageLoopCallback());
-  scene.add(Cube.group);
-  // Cube.group.visible = false;
+  scene.add(Cube.meshGroup);
+  // Cube.meshGroup.visible = false;
 
-  this.meshGroup = Cube.group;
+  this.meshGroup = Cube.meshGroup;
   this.onClick = clickHandler;
   this.punchThroughBG = (bgGeo) => Cube.wrapBackgroundGeometry(bgGeo);
   this.sayHi = () => messageLoop.play();
@@ -48,17 +47,25 @@ export default function MessageCube({scene, configCubed}) {
   function clickHandler(intersectedMesh, camera) {
     messageLoop.pause();
     if (intersectedMesh.object === message.iDot) {
+      const { deviceType } = scene.userData;
       const { geometry: bgGeometry } = scene.userData.subjects.hexLayer.mesh;
-      let update = () => Cube.wrapBackgroundGeometry(bgGeometry);
-      this.update = update;
-      const callback = () => {
+      const onStart = () => {
+        this.update = () => Cube.wrapBackgroundGeometry(bgGeometry);
+        Cube.meshGroup.add(comma);
+      };
+      const afterMove = () => {
+        scene.attach(comma);
+        Cube.meshGroup.remove(comma);
+        Cube.meshGroup.updateWorldMatrix(true, true);
         this.update = null;
+      };
+      const showIntroBox = () => {
         const IntroBox = scene.userData.subjects.introBox;
-        IntroBox.updatePositions().then(() => IntroBox.animateReveal());
-        console.dir(this.update);
+        IntroBox.reveal();
       };
 
-      addComma().then(() => shrinkCube(scene, Cube, comma, callback).play());
+      const args = { deviceType, onStart, afterMove, onComplete: showIntroBox };
+      addComma().then(() => Cube.moveAndShrink(args));
 
       return;
     }

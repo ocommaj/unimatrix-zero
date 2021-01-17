@@ -1,6 +1,7 @@
 import bubbleToTop from './_bubbleToTop';
 import hiTimelines from './_Hi';
 import facingPlaneToBack from './_facingPlaneToBack';
+import relocateCubedCubes from './_relocateCubedcubes';
 import showIntroBox from './_showIntroBox';
 import shrinkCube from './_shrinkCube';
 import spinPlane from './_spinPlane';
@@ -15,12 +16,18 @@ function meshAnimationProperties(meshArray) {
   }, { positions: [], rotations: [], scales: [], materials: [] });
 }
 
+const CubedCubesAnimations = {
+  facingPlaneToBack,
+  relocateCubedCubes,
+  shrinkCube,
+  spinPlane,
+};
+
 export {
   meshAnimationProperties,
   bubbleToTop,
   hiTimelines,
-  facingPlaneToBack,
   showIntroBox,
   shrinkCube,
-  spinPlane,
+  CubedCubesAnimations,
 };

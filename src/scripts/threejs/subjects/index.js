@@ -1,6 +1,5 @@
 import Comma from './_Comma';
 import Cube from './_Cube';
-import CubeCubes from './_CubeCubes';
 import HexLayer from './_HexLayer';
 import GeneralLight from './_GeneralLight';
 import IntroBox from './IntroBox';
@@ -12,7 +11,6 @@ export default {
   letters,
   comma: (config) => new Comma(config),
   cube: (config) => Cube(config),
-  cubeCubes: (config) => CubeCubes(config),
   generalLight: (scene) => new GeneralLight(scene),
   hexLayer: (scene, camera) => new HexLayer(scene, camera),
   imageBubble: (scene) => new ImageBubble(scene),

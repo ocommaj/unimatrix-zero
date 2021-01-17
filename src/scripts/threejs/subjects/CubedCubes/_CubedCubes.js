@@ -2,11 +2,12 @@ import { Group, BufferGeometry, Vector3 } from 'three';
 import {
   BufferGeometryUtils,
 } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
-import Cube from './_Cube';
-import { facingPlaneToBack } from '../animate';
-import { spinPlane } from '../animate';
+import Cube from '../_Cube';
+import { CubedCubesAnimations } from '../../animate';
+import animationTargets from './_animationTargets';
 
-export default function CubeCubes({ count, spacing, cubeConfig }) {
+export default function CubedCubes({ count, spacing, cubeConfig }) {
+  const animation = CubedCubesAnimations;
   const { size, rotation, scale } = cubeConfig;
   const offsets = setOffsets(count, size, spacing);
   const boxes = makeCubes(size, offsets, rotation, scale);
@@ -17,15 +18,26 @@ export default function CubeCubes({ count, spacing, cubeConfig }) {
   let facingPlane = CubeCubes.children.slice(-Math.pow(count, 2));
   facingPlane.forEach(cube => illuminate(cube));
 
-  return {
-    group: CubeCubes,
-    facingPlane,
-    getFacingPlane,
-    offsets,
-    onClick,
-    planeLoop,
-    wrapBackgroundGeometry,
-  };
+  this.meshGroup = CubeCubes;
+  this.facingPlane = facingPlane;
+  this.getFacingPlane = getFacingPlane;
+  this.moveAndShrink = moveAndShrink;
+  this.offsets = offsets;
+  this.onClick = onClick;
+  this.planeLoop = planeLoop;
+  this.wrapBackgroundGeometry = wrapBackgroundGeometry;
+
+  function moveAndShrink({ deviceType, onStart, afterMove, onComplete }) {
+    const target = animationTargets[deviceType];
+
+    animation.relocateCubedCubes({
+      afterMove,
+      onComplete,
+      onStart,
+      target,
+      meshGroup: CubeCubes,
+    }).play();
+  }
 
   function wrapBackgroundGeometry(bgGeometry) {
     const { hiddenIndices } = bgGeometry.userData;
@@ -116,7 +128,7 @@ export default function CubeCubes({ count, spacing, cubeConfig }) {
     const toMoveBack = CubeCubes.children.splice(-Math.pow(count, 2));
     CubeCubes.children.unshift(...toMoveBack);
     facingPlane = toMoveBack;
-    return facingPlaneToBack({
+    return animation.facingPlaneToBack({
       callback,
       facingPlane,
       others: CubeCubes.children.filter(box => !facingPlane.includes(box)),
@@ -172,7 +184,7 @@ export default function CubeCubes({ count, spacing, cubeConfig }) {
       box.visible = false;
     }
 
-    spinPlane({ scene, sliceClone, axis }).play()
+    animation.spinPlane({ scene, sliceClone, axis }).play()
       .then(() => {
         for (const box of slice) box.visible = true;
         CubeCubes.remove(sliceClone);

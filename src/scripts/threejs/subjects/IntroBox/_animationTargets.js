@@ -16,6 +16,10 @@ const largeWidth = {
   },
 };
 
+const smallWidth = {
+
+};
+
 const targets = {
   largeWidth,
   desktop: largeWidth,
