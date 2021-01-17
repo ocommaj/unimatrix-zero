@@ -20,7 +20,6 @@ export default function SceneManager({ canvas, device }) {
   const interaction = new Interaction(renderer, scene, camera);
   scene.userData.subjects = subjects;
   scene.userData.deviceType = device;
-  // console.dir(scene)
 
   function buildScene() {
     const scene = new Scene();
@@ -50,8 +49,6 @@ export default function SceneManager({ canvas, device }) {
     );
 
     camera.position.z = setZoom(width);
-    // camera.position.x = -20;
-    // camera.position.y = -12;
     camera.setZoom = setZoom;
     camera.maxZoom = maxZoom;
 
