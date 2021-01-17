@@ -69,11 +69,11 @@ export default function HexLayer(scene, camera) {
 
   const life = new LifeGame(hexBuffer.groups, hexBuffer.userData);
   this.mesh = mesh;
-  this.playLife = () => life.initialSpawn();
+  this.playLife = () => life.generation();
   this.update = ({ nowSecond }) => {
-    if (nowSecond && !(nowSecond % 3) && life.lastUpdate !== nowSecond) {
-      life.lastUpdate = nowSecond;
-      life.evolve(nowSecond);
+    if (nowSecond && !(nowSecond % 3) && life.lastTime !== nowSecond) {
+      life.lastTime = nowSecond;
+      life.generation(nowSecond);
     }
   };
 

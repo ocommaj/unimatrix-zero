@@ -1,4 +1,3 @@
-import { Color } from 'three';
 
 export default function runLife(geometryArray, userData) {
   const ALIVE = 1;
@@ -12,10 +11,9 @@ export default function runLife(geometryArray, userData) {
   } = userData;
   const cellMap = mapCells(geometryArray);
   const rowMap = cellMap.reduce(mapRows, []);
+  let updatedCounts = [];
 
-  this.initialSpawn = initialSpawn;
-  this.evolve = (lastUpdate) => evolve(lastUpdate);
-  this.lastUpdate = 0;
+  this.generation = (lastUpdate = 0) => generation(lastUpdate);
 
   function mapCells(geometryArray) {
     return geometryArray.map(({ materialIndex }, i) => {
@@ -23,31 +21,57 @@ export default function runLife(geometryArray, userData) {
     });
   }
 
+  async function generation(lastUpdate) {
+    if (!lastUpdate) {
+      initialSpawn();
+      return;
+    }
+    const updateCount = await evolve();
+    if (!updateCount) initialSpawn();
+  }
+
   function initialSpawn() {
     setAlive(spawnRandom(SPAWN_RATE)).then(() => evolve());
   }
 
-  function evolve(lastUpdate=0) {
-    updateLivingModel().then(() => updateRender(lastUpdate));
+  async function evolve() {
+    let response;
+    response = await updateLivingModel().then(() => updateRender());
+    return response;
   }
 
-  function updateRender(lastUpdate) {
-    if (lastUpdate) {
-      const filtered = cellMap.filter(cellModel => cellModel.shouldUpdate);
-      filtered.forEach(cellModel => {
-        geometryArray[cellModel.idx].materialIndex = cellModel.materialIndex;
-      })
-      return
+  function updateRender() {
+    const filtered = cellMap.filter(cellModel => cellModel.shouldUpdate);
+    const countToUpdate = filtered.length;
+    if (updatedCounts.length) {
+      if (countToUpdate && !checkRepeatUpdates(countToUpdate, 4)) {
+        updatedCounts.push(countToUpdate);
+        filtered.forEach(cellModel => {
+          geometryArray[cellModel.idx].materialIndex = cellModel.materialIndex;
+        });
+        return countToUpdate;
+      }
+
+      updatedCounts = [];
+      return 0;
     }
 
     cellMap.forEach((cellModel, i) => {
       geometryArray[i].materialIndex = cellModel.materialIndex;
     });
+    updatedCounts.push(countToUpdate);
+    return countToUpdate;
+
+    function checkRepeatUpdates(changeCellsCount, numberOfPrevious) {
+      const checkAncestors = updatedCounts.slice(-numberOfPrevious);
+      if (!checkAncestors.length) return false;
+      return checkAncestors.every(previous => previous === changeCellsCount);
+    }
   }
 
   function updateLivingModel() {
     return new Promise(resolve => {
-      cellMap.forEach(cellModel => cellModel.updateLivingState())
+      cellMap.forEach(cellModel => cellModel.updateLivingState());
       resolve();
     });
   }
@@ -153,7 +177,12 @@ export default function runLife(geometryArray, userData) {
 
   function setAlive(atIndices) {
     return new Promise(resolve => {
-      atIndices.forEach(idx => { cellMap[idx].isAlive = ALIVE; });
+      const aliveIndices = [ ...atIndices ];
+      const deadCellModels = cellMap.filter(cellModel => {
+        return !aliveIndices.includes(cellModel.idx);
+      });
+      deadCellModels.forEach(cellModel => { cellModel.isAlive = 0; });
+      aliveIndices.forEach(idx => { cellMap[idx].isAlive = ALIVE; });
       resolve();
     });
   }
