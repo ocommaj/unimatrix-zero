@@ -1,23 +1,45 @@
+import { Vector3 } from 'three'
+
 export default function positionDOMElement(inMeshGroup, camera) {
-  const { clientWidth, clientHeight } = document.getElementById('canvas');
-  const { style } = document.getElementById('introBox');
+  const tempCenterVector = new Vector3()
+  const {
+    clientWidth: canvasWidth,
+    clientHeight: canvasHeight,
+  } = document.getElementById('canvas');
+  const {
+    style,
+    clientWidth: elemWidth,
+    clientHeight: elemHeight,
+  } = document.getElementById('introBox');
   const target = inMeshGroup.getObjectByName('introBoxBG');
+  const { deviceType } = inMeshGroup.userData;
+  target.updateWorldMatrix()
   target.geometry.computeBoundingBox();
 
-  const { boundingBox } = target.geometry;
-  boundingBox.max.project(camera);
-  boundingBox.min.project(camera);
+  const domElement = document.getElementById('introBox')
+  console.dir(domElement)
 
-  const left = (boundingBox.min.x * 0.5 + 0.55) * clientWidth;
-  const right = (boundingBox.max.x * -0.5 + 0.55) * clientWidth;
-  const bottom = (boundingBox.min.y * 0.5 + 0.15) * clientHeight;
-  const top = (boundingBox.max.y * -0.5 + 0.15) * clientHeight;
-  const width = right - left;
-  const height = bottom - top;
+  const { boundingBox } = target.geometry;
+  boundingBox.getCenter(tempCenterVector);
+  tempCenterVector.applyMatrix4(target.matrixWorld);
+  tempCenterVector.project(camera)
+
+  console.dir(tempCenterVector)
+  console.log(`domElem width: ${elemWidth}`)
+  console.log(`domElem height: ${elemHeight}`)
+
+  const offset = {
+    x: (elemWidth * (deviceType === 'desktop' ? .45 : .22)),
+    y: (elemHeight * (deviceType === 'desktop' ? .75 : .5))
+  }
+
+  const left = ((tempCenterVector.x * .5 + .5) * canvasWidth) - offset.x;
+  const top = ((tempCenterVector.y * .5 + .5) * canvasHeight) - offset.y;
+
+  console.log(`left: ${left}`)
+  console.log(`top: ${top}`)
 
   style.visibility = 'visible';
-  style.width = `${width}px`;
-  style.height = `${height}px`;
   style.transform = `translate(${left}px, ${top}px) skew(0deg, -1deg)`;
   style.opacity = 1;
 }

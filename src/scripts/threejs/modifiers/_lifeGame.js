@@ -1,4 +1,3 @@
-
 export default function runLife(geometryArray, userData) {
   const ALIVE = 1;
   const SPAWN_RATE = 0.4;

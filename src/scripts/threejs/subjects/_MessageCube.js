@@ -58,7 +58,8 @@ export default function MessageCube({scene, configCubed}) {
       const afterMove = () => {
         scene.attach(comma);
         Cube.meshGroup.remove(comma);
-        Cube.meshGroup.updateWorldMatrix(true, true);
+        Cube.meshGroup.updateMatrix()
+        Cube.meshGroup.updateWorldMatrix(true, false);
         this.update = null;
       };
       const showIntroBox = () => {

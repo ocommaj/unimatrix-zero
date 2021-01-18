@@ -6,24 +6,25 @@ export default function relocateCubedCubes(args) {
     onStart,
     afterMove,
     onComplete,
-    target: { deviceType, duration, positions, scales, timing },
+    target: { duration, positions, rotations, scales, timing }
   } = args;
 
   const tl = gsap.timeline({
     paused: true,
     delay: 1.4,
     onStart: () => onStart(),
-    onComplete: () => { deviceType === 'desktop' ? onComplete() : null; },
+    onComplete: () => onComplete(),
     defaults: {
       duration: duration,
       ease: 'power1',
     },
-  });
+  })
 
   tl.to(meshGroup.position, { ...positions[0] }, timing.positions[0])
+    .to(meshGroup.rotation, { ...rotations }, '<')
     .to(meshGroup.scale, { ...scales[0] }, timing.scales[0])
     .to(meshGroup.position, { ...positions[1] }, timing.positions[1])
     .call(() => afterMove());
 
-  return tl;
+  return tl
 }

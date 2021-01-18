@@ -1,10 +1,10 @@
 const largeWidth = {
-  deviceType: 'desktop',
   duration: 0.8,
   positions: [
     { y: '+=1' },
     { x: '-=4.25' },
   ],
+  rotations: {},
   scales: [
     { x: 0.7, y: 0.7, z: 0.7 },
   ],
@@ -15,12 +15,13 @@ const largeWidth = {
 };
 
 const smallWidth = {
-  deviceType: 'mobile',
   duration: 1.2,
   positions: [
     { x: '-=1.5', z: '-=1.5' },
+    //{ z: '-=1.5' },
     { x: '+=1.5' },
   ],
+  rotations: { /*x: 0, y: '+=6.28', z: 0*/ },
   scales: [
     { x: 0.5, y: 0.5, z: 0.5 },
   ],
