@@ -46,8 +46,8 @@ export default function HexLayer(scene, camera) {
 
   camera.getWorldPosition(camPosVector);
 
-  const COUNT = 40;
-  const ROW_COUNT = 24;
+  const { aspect } = camera;
+  const { count: COUNT, rowCount: ROW_COUNT } = generateCellCount(aspect);
   const X_OFFSET = 1.025;
   const Y_OFFSET = 0.75;
   const HIDDEN_MATERIAL_IDX = 4;
@@ -56,6 +56,7 @@ export default function HexLayer(scene, camera) {
   const hexBuffer = bigBufferGeometry();
   hexBuffer.userData.aliveMaterialIdx = ALIVE_MATERIAL_IDX;
   hexBuffer.userData.hiddenMaterialIdx = HIDDEN_MATERIAL_IDX;
+  hexBuffer.userData.cellOffsetY = Y_OFFSET;
   hexBuffer.userData.cellsPerRow = COUNT;
   hexBuffer.userData.rowCount = ROW_COUNT;
   hexBuffer.userData.hiddenIndices = [];
@@ -77,6 +78,18 @@ export default function HexLayer(scene, camera) {
     }
   };
 
+  function generateCellCount(aspectRatio) {
+    if (aspectRatio > 1) {
+      return { count: 40, rowCount: 24 };
+    }
+    if (aspectRatio < 1 && aspectRatio > 0.7) {
+      return { count: 28, rowCount: 28 };
+    }
+    if (aspectRatio < 0.7) {
+      return { count: 18, rowCount: 38 };
+    }
+  }
+
   function bigBufferGeometry() {
     const positions = positionsArray();
     const hexGeos = positions.map((pos, i) => hexBufferGeometry(pos));
@@ -93,7 +106,9 @@ export default function HexLayer(scene, camera) {
         const tempPosVector = new Vector3();
         const isOdd = yInt % 2 !== 0;
         const yPos = yInt * Y_OFFSET;
-        const startX = isOdd ? -19.5 * X_OFFSET : -20 * X_OFFSET;
+        const startX = isOdd
+          ? -(COUNT / 2 * X_OFFSET - 0.5)
+          : -(COUNT / 2 * X_OFFSET);
         return [ ...Array(COUNT).keys() ].map(cellInt => {
           const xPos = startX + cellInt * X_OFFSET;
           tempPosVector.set(xPos, yPos, 0);

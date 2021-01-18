@@ -3,6 +3,7 @@ import hiTimelines from './_Hi';
 import facingPlaneToBack from './_facingPlaneToBack';
 import relocateCubedCubes from './_relocateCubedCubes';
 import showIntroBox from './_showIntroBox';
+import showComma from './_showComma';
 import spinPlane from './_spinPlane';
 
 function meshAnimationProperties(meshArray) {
@@ -26,5 +27,6 @@ export {
   bubbleToTop,
   hiTimelines,
   showIntroBox,
+  showComma,
   CubedCubesAnimations,
 };

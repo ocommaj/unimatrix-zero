@@ -40,7 +40,7 @@ export default function CubedCubes({ count, spacing, cubeConfig }) {
   }
 
   function wrapBackgroundGeometry(bgGeometry) {
-    const { hiddenIndices } = bgGeometry.userData;
+    const { hiddenIndices, cellOffsetY, rowCount } = bgGeometry.userData;
     const cubedCubesBounds = getPlaneBoundingBox();
     const indicesToHide = filterGeosToHide();
     if (hiddenIndices.length) {
@@ -56,7 +56,7 @@ export default function CubedCubes({ count, spacing, cubeConfig }) {
       const copiedPlane = BufferGeometryUtils.mergeBufferGeometries(copiedGeos);
       copiedPlane.computeBoundingBox();
       const boundingBox = copiedPlane.boundingBox;
-      offset.set(-0.5, 0.75 * 12, 0);
+      offset.set(-0.5, cellOffsetY * rowCount / 2, 0);
       boundingBox.translate(offset);
       boundingBox.expandByScalar(1.0125);
       copiedPlane.dispose();

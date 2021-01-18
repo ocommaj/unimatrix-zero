@@ -20,6 +20,9 @@ export default function SceneManager({ canvas, device }) {
   const interaction = new Interaction(renderer, scene, camera);
   scene.userData.subjects = subjects;
   scene.userData.deviceType = device;
+  scene.userData.camera = camera;
+  // console.dir(camera)
+  // console.dir(scene)
 
   function buildScene() {
     const scene = new Scene();
@@ -53,8 +56,8 @@ export default function SceneManager({ canvas, device }) {
     camera.maxZoom = maxZoom;
 
     function maxZoom(width) {
-      if (width <= 370) return 18;
-      if (width > 370 && width <= 800) return 16;
+      if (width <= 380) return 18;
+      if (width > 380 && width <= 800) return 16;
       if (width > 800 && width <= 1000) return 12;
       if (width > 1000) return 12;
     }
@@ -70,7 +73,6 @@ export default function SceneManager({ canvas, device }) {
   function initSceneSubjects(scene) {
     const cubeConfig = { size: 1 };
     const configCubed = { cubeConfig, count: 5, spacing: 1.5 };
-
     const hexLayer = Subjects.hexLayer(scene, camera);
     hexLayer.playLife();
 

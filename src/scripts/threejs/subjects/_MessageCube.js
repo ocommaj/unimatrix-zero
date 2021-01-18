@@ -1,5 +1,6 @@
 import CubedCubes from './CubedCubes';
 import SpellHi from './_Hi';
+import { showComma } from '../animate';
 
 export default function MessageCube({scene, configCubed}) {
   const Cube = new CubedCubes(configCubed);
@@ -7,7 +8,7 @@ export default function MessageCube({scene, configCubed}) {
 
   let comma = null;
   let message = SpellHi(Cube.facingPlane);
-  let messageLoop = message.loopAnimation(() => messageLoopCallback());
+  let messageLoop = message.animate.loop(() => messageLoopCallback());
   scene.add(Cube.meshGroup);
   // Cube.meshGroup.visible = false;
 
@@ -20,7 +21,7 @@ export default function MessageCube({scene, configCubed}) {
     Cube.planeLoop(() => {
       const facing = Cube.getFacingPlane();
       message = SpellHi(facing);
-      messageLoop = message.loopAnimation(messageLoopCallback);
+      messageLoop = message.animate.loop(messageLoopCallback);
       messageLoop.play();
     }).play();
   }
@@ -33,12 +34,13 @@ export default function MessageCube({scene, configCubed}) {
     };
 
     return new Promise((resolve) => {
+      const { deviceType, camera } = scene.userData;
       comma = scene.getObjectByName('messageComma');
       comma.position.set(coordinates.x, coordinates.y, coordinates.z);
       messageLoop.progress(0.5);
       messageLoop.progress(0);
-      message.showComma(comma);
-      messageLoop = message.loopAnimation(messageLoopCallback);
+      showComma({ comma, deviceType, camera });
+      messageLoop = message.animate.loop(messageLoopCallback);
       messageLoop.progress(0.5);
       resolve();
     });

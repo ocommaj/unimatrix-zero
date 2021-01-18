@@ -29,12 +29,7 @@ export default function hiTimelines(upperH, lowerI, notLetters) {
 
   const toggleHBeam = beamToggler();
 
-  return {
-    loopHi,
-    showHi,
-    hideHi,
-    showComma,
-  };
+  return { loopHi };
 
   function loopHi(loopCallback) {
     return gsap.timeline({ ...tlDefaults })
@@ -71,7 +66,6 @@ export default function hiTimelines(upperH, lowerI, notLetters) {
 
   function dotI() {
     return gsap.timeline({
-      // duration: 1.4,
       repeat: 2,
       repeatDelay: 0.2,
       yoyo: true,
@@ -103,17 +97,6 @@ export default function hiTimelines(upperH, lowerI, notLetters) {
           .to(lastPos, { x: lastStartX }, '<');
       },
     };
-  }
-
-  function showComma(commaMesh) {
-    return gsap.timeline({
-      defaults: {
-        duration: 0.7,
-        ease: 'elastic',
-      },
-    }).to(commaMesh.scale, { x: 0.5, y: 0.5, z: 0.5 })
-      // .to(commaMesh.scale, { x: 1, y: 1, z: 2 })
-      .to(commaMesh.rotation, { y: 6.28 }, '<');
   }
 
 }

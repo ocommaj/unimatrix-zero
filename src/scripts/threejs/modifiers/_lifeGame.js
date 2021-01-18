@@ -14,7 +14,6 @@ export default function runLife(geometryArray, userData) {
   let updatedCounts = [];
 
   this.generation = (lastUpdate = 0) => generation(lastUpdate);
-
   function mapCells(geometryArray) {
     return geometryArray.map(({ materialIndex }, i) => {
       return cellModel(materialIndex, i);

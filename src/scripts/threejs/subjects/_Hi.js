@@ -5,14 +5,10 @@ export default function spellHi(inFace) {
   const upperH = makeUpperH(inFace);
   const lowerI = makeLowerI(inFace);
   const notLetters = notInLetters(inFace, [ upperH, lowerI ]);
-  const animations = hiTimelines(upperH, lowerI, notLetters);
-
-  const { showComma, hideHi, loopHi: loopAnimation } = animations;
+  const { loopHi: loop } = hiTimelines(upperH, lowerI, notLetters);
 
   return {
-    loopAnimation,
-    showComma,
-    hideHi,
+    animate: { loop },
     iDot: lowerI.dot,
   };
 
