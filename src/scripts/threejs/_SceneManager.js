@@ -54,7 +54,7 @@ export default function SceneManager({ canvas, device }) {
     );
 
     camera.position.z = setZoom(width);
-    camera.position.y = device.type === 'mobile' ? -1 : 0;
+    //camera.position.y = device.type === 'mobile' ? -1 : 0;
     camera.setZoom = setZoom;
     camera.maxZoom = maxZoom;
     //console.dir(camera.position.z)
