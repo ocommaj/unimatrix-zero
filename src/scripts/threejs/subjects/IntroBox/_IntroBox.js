@@ -108,7 +108,6 @@ export default function IntroBox({ scene, camera }) {
 
   function animateReveal() {
     const { device } = scene.userData;
-    //console.dir(device)
     const target = { device, ...animationTargets[device.type] };
     const comma = scene.getObjectByName('messageComma');
     const callback = () => {
