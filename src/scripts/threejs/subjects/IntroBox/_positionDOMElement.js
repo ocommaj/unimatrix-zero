@@ -12,7 +12,7 @@ export default function positionDOMElement(inMeshGroup, camera) {
     clientHeight: elemHeight,
   } = document.getElementById('introBox');
   const target = inMeshGroup.getObjectByName('introBoxBG');
-  const { deviceType } = inMeshGroup.userData;
+  const { device } = inMeshGroup.userData;
   target.updateWorldMatrix()
   target.geometry.computeBoundingBox();
 
@@ -26,8 +26,8 @@ export default function positionDOMElement(inMeshGroup, camera) {
   //console.log(`domElem height: ${elemHeight}`)
 
   const offset = {
-    x: (elemWidth * (deviceType === 'desktop' ? .45 : .22)),
-    y: (elemHeight * (deviceType === 'desktop' ? .75 : .5))
+    x: (elemWidth * (device.type === 'desktop' ? .45 : .22)),
+    y: (elemHeight * (device.type === 'desktop' ? .75 : .5))
   }
 
   const left = ((tempCenterVector.x * .5 + .5) * canvasWidth) - offset.x;

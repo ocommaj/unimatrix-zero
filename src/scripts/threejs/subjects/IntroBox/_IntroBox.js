@@ -107,11 +107,12 @@ export default function IntroBox({ scene, camera }) {
   }
 
   function animateReveal() {
-    const { deviceType } = scene.userData;
-    const target = { deviceType, ...animationTargets[deviceType] };
+    const { device } = scene.userData;
+    //console.dir(device)
+    const target = { device, ...animationTargets[device.type] };
     const comma = scene.getObjectByName('messageComma');
     const callback = () => {
-      IntroBox.userData.deviceType = deviceType;
+      IntroBox.userData.device = device;
       mergeGeometry(IntroBox).then(() => positionDOMElement(IntroBox, camera));
     };
 

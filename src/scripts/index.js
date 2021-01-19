@@ -2,7 +2,7 @@ import { Device } from './browserMethods';
 import SceneManager from './threejs';
 
 export default function main() {
-  const device = Device();
+  const { device } = Device();
   const canvas = document.getElementById('canvas');
   const introList = {
     padi: document.getElementById('introListItem_padi'),
@@ -11,7 +11,7 @@ export default function main() {
   canvas.width = canvas.offsetWidth;
   canvas.height = canvas.offsetHeight;
 
-  const scene = new SceneManager({ canvas, device: device.type });
+  const scene = new SceneManager({ canvas, device });
 
   bindEventListeners();
   render();

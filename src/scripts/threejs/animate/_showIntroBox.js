@@ -64,7 +64,7 @@ function showIntroBox(introBoxGroup, mainCube, comma, target, callback) {
       ...target.inner.materials
     }, '<')
     .call(() => {
-      if (target.deviceType === 'mobile') mainCube.visible = false;
+      if (target.device.type === 'mobile') mainCube.visible = false;
     });
 
   return tl;

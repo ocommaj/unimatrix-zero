@@ -19,7 +19,9 @@ export default function SceneManager({ canvas, device }) {
   const subjects = initSceneSubjects(scene);
   const interaction = new Interaction(renderer, scene, camera);
   scene.userData.subjects = subjects;
-  scene.userData.deviceType = device;
+  scene.userData.device = device;
+  scene.userData.deviceType = device.type;
+  scene.userData.devicePixelRatio = device.devicePixelRatio;
   scene.userData.camera = camera;
   // console.dir(camera)
   // console.dir(scene)
@@ -34,7 +36,7 @@ export default function SceneManager({ canvas, device }) {
       canvas: canvas,
       antialias: true,
       alpha: true });
-    const DPR = (window.devicePixelRatio) ? window.devicePixelRatio : 1;
+    const DPR = device.devicePixelRatio;
     renderer.setPixelRatio(DPR);
     renderer.setClearColor('#262626');
     renderer.setSize(width, height);
@@ -54,9 +56,13 @@ export default function SceneManager({ canvas, device }) {
     camera.position.z = setZoom(width);
     camera.setZoom = setZoom;
     camera.maxZoom = maxZoom;
+    //console.dir(camera.position.z)
 
     function maxZoom(width) {
-      if (width <= 420) return 18;
+      const DPR = device.devicePixelRatio;
+      if (width <= 413 && DPR > 2) return 18;
+      if (width >= 413 && width <= 760 && DPR > 2) return 17.5;
+      if (width <= 420 && device.devicePixelRatio <= 2) return 17;
       if (width > 420 && width <= 800) return 16;
       if (width > 800 && width <= 1000) return 12;
       if (width > 1000) return 12;

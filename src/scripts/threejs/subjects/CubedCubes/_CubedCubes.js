@@ -27,8 +27,8 @@ export default function CubedCubes({ count, spacing, cubeConfig }) {
   this.planeLoop = planeLoop;
   this.wrapBackgroundGeometry = wrapBackgroundGeometry;
 
-  function moveAndShrink({ deviceType, onStart, afterMove, onComplete }) {
-    const target = { deviceType, ...animationTargets[deviceType] };
+  function moveAndShrink({ device, onStart, afterMove, onComplete }) {
+    const target = { device, ...animationTargets[device.type] };
 
     animation.relocateCubedCubes({
       afterMove,

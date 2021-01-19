@@ -49,7 +49,7 @@ export default function MessageCube({scene, configCubed}) {
   function clickHandler(intersectedMesh, camera) {
     messageLoop.pause();
     if (intersectedMesh.object === message.iDot) {
-      const { deviceType } = scene.userData;
+      const { device } = scene.userData;
       const { geometry: bgGeometry } = scene.userData.subjects.hexLayer.mesh;
       const onStart = () => {
         this.update = () => Cube.wrapBackgroundGeometry(bgGeometry);
@@ -67,7 +67,7 @@ export default function MessageCube({scene, configCubed}) {
         IntroBox.reveal();
       };
 
-      const args = { deviceType, onStart, afterMove, onComplete: showIntroBox };
+      const args = { device, onStart, afterMove, onComplete: showIntroBox };
       addComma().then(() => Cube.moveAndShrink(args));
 
       return;

@@ -3,10 +3,10 @@ import cylinderGeometry from './_cylinderGeometry';
 
 export default function mergeGeometry(introBox) {
   return new Promise(resolve => {
-    const { deviceType, midpoints: { inner: midpoint } } = introBox.userData;
+    const { device, midpoints: { inner: midpoint } } = introBox.userData;
     const mesh = new Mesh();
     const tempPosVector = new Vector3();
-    const geometry = cylinderGeometry(deviceType);
+    const geometry = cylinderGeometry(device.type);
     const material = midpoint.material[4].clone();
 
     midpoint.getWorldPosition(tempPosVector);
@@ -20,8 +20,8 @@ export default function mergeGeometry(introBox) {
       tempPosVector.y,
       tempPosVector.z);
     const cylinderMesh = new Mesh(geometry, material);
-    const zPosTransform = deviceType === 'mobile' ? 4.775 : 4.7;
-    const xPosTransform = deviceType === 'mobile' ? 1.1 : 0.6;
+    const zPosTransform = device.type === 'mobile' ? 4.775 : 4.7;
+    const xPosTransform = device.type === 'mobile' ? 1.1 : 0.6;
     cylinderMesh.name = 'introBoxDrum';
     cylinderMesh.position.set(
       tempPosVector.x + xPosTransform,

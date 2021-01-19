@@ -1,9 +1,10 @@
 export default function Device() {
   const isMobile = detectMobile();
   const type = isMobile ? 'mobile' : 'desktop';
+  const devicePixelRatio = window.devicePixelRatio ? window.devicePixelRatio : 1;
   const events = isMobile ? [ 'touchStart' ] : ['resize', 'mousemove', 'click'];
 
-  return { type, events };
+  return { device: { type, devicePixelRatio }, events };
 }
 
 function detectMobile() {
