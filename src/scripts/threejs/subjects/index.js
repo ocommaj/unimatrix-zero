@@ -4,7 +4,7 @@ import HexLayer from './_HexLayer';
 import GeneralLight from './_GeneralLight';
 import IntroBox from './IntroBox';
 import MessageCube from './_MessageCube';
-import ImageBubble from './_imageBubble';
+import ImageBubble from './ImageBubble';
 import * as letters from './_Letters';
 
 export default {

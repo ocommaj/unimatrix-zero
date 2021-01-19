@@ -1,18 +1,9 @@
 import { gsap } from 'gsap';
 
-export default function bubbleToTop(mesh) {
+export default function bubbleToTop(mesh, startValue, targetValue) {
   const timelineDefaults = {
     paused: true,
-    onStart: () => { mesh.visible = true; },
-    onComplete: () => {
-      mesh.visible = false;
-      mesh.material.opacity = 1;
-      mesh.scale.set(0, 0, 0);
-      mesh.position.set(
-        mesh.position.x,
-        mesh.position.y - 10,
-        mesh.position.z - 2);
-    },
+    onStart: () => { mesh.visible = targetValue.visible; },
     defaults: {
       duration: 1,
       ease: 'power1.in',
@@ -20,7 +11,11 @@ export default function bubbleToTop(mesh) {
   };
 
   return gsap.timeline(timelineDefaults)
-    .to(mesh.scale, { x: 1, y: 1, z: 1 })
-    .to(mesh.position, { y: '+=10', z: '+=2', duration: 4 }, '<')
-    .to(mesh.material, { opacity: 0.4 }, '-=2');
+    .to(mesh.scale, { ...targetValue.scale })
+    .to(mesh.position, { ...targetValue.position }, '<')
+    .to(mesh.material, { ...targetValue.material }, '-=2')
+    .set(mesh, { visible: startValue.visible })
+    .set(mesh.material, { ...startValue.material })
+    .set(mesh.scale, { ...startValue.scale })
+    .set(mesh.position, { ...startValue.position })
 }
