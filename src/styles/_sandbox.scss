@@ -19,7 +19,7 @@
 #introBox {
   //visibility: hidden;
   padding: 1rem;
-  padding-top: 0;
+  padding-top: .5rem;
   color: lightgray;
   top: 0rem;
   left: 0rem;
@@ -55,9 +55,6 @@
     @media (max-width: 420px) {
       li {
         font-size: 1.25rem;
-      }
-      li:nth-child(1) {
-        //margin-top: 0;
       }
     }
 
