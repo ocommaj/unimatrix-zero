@@ -1,2 +1,2 @@
-import ImageBubble from './_ImageBubble';
+import ImageBubble from './_imageBubble';
 export default ImageBubble;
