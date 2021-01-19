@@ -56,6 +56,9 @@
       li {
         font-size: 1.25rem;
       }
+      li:nth-child(1) {
+        margin-top: 1.5rem;
+      }
     }
 
     li .gradient_1 {
