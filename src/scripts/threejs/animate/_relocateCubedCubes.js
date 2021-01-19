@@ -24,6 +24,7 @@ export default function relocateCubedCubes(args) {
     .to(meshGroup.rotation, { ...rotations }, '<')
     .to(meshGroup.scale, { ...scales[0] }, timing.scales[0])
     .to(meshGroup.position, { ...positions[1] }, timing.positions[1])
+    .set(meshGroup.rotation, { x: 0, y: 0, z: 0 })
     .call(() => afterMove());
 
   return tl

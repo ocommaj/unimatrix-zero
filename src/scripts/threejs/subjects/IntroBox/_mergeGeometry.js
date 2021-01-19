@@ -21,7 +21,7 @@ export default function mergeGeometry(introBox) {
       tempPosVector.z);
     const cylinderMesh = new Mesh(geometry, material);
     const zPosTransform = deviceType === 'mobile' ? 4.775 : 4.7;
-    const xPosTransform = deviceType === 'mobile' ? 1.175 : 0.6;
+    const xPosTransform = deviceType === 'mobile' ? 1.1 : 0.6;
     cylinderMesh.name = 'introBoxDrum';
     cylinderMesh.position.set(
       tempPosVector.x + xPosTransform,

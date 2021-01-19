@@ -112,9 +112,7 @@ export default function IntroBox({ scene, camera }) {
     const comma = scene.getObjectByName('messageComma');
     const callback = () => {
       IntroBox.userData.deviceType = deviceType;
-      mergeGeometry(IntroBox).then(() => //console.log('temp disable')
-      positionDOMElement(IntroBox, camera)
-    );
+      mergeGeometry(IntroBox).then(() => positionDOMElement(IntroBox, camera));
     };
 
     const anim = showIntroBox(IntroBox, mainCube, comma, target, callback);

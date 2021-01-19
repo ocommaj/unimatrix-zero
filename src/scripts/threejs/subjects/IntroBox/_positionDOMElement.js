@@ -16,17 +16,14 @@ export default function positionDOMElement(inMeshGroup, camera) {
   target.updateWorldMatrix()
   target.geometry.computeBoundingBox();
 
-  const domElement = document.getElementById('introBox')
-  console.dir(domElement)
-
   const { boundingBox } = target.geometry;
   boundingBox.getCenter(tempCenterVector);
   tempCenterVector.applyMatrix4(target.matrixWorld);
   tempCenterVector.project(camera)
 
-  console.dir(tempCenterVector)
-  console.log(`domElem width: ${elemWidth}`)
-  console.log(`domElem height: ${elemHeight}`)
+  //console.dir(tempCenterVector)
+  //console.log(`domElem width: ${elemWidth}`)
+  //console.log(`domElem height: ${elemHeight}`)
 
   const offset = {
     x: (elemWidth * (deviceType === 'desktop' ? .45 : .22)),
@@ -36,8 +33,8 @@ export default function positionDOMElement(inMeshGroup, camera) {
   const left = ((tempCenterVector.x * .5 + .5) * canvasWidth) - offset.x;
   const top = ((tempCenterVector.y * .5 + .5) * canvasHeight) - offset.y;
 
-  console.log(`left: ${left}`)
-  console.log(`top: ${top}`)
+  //console.log(`left: ${left}`)
+  //console.log(`top: ${top}`)
 
   style.visibility = 'visible';
   style.transform = `translate(${left}px, ${top}px) skew(0deg, -1deg)`;

@@ -5,7 +5,6 @@ export default showIntroBox;
 
 function showIntroBox(introBoxGroup, mainCube, comma, target, callback) {
   const { userData: { sides, midpoints } } = introBoxGroup;
-
   const {
     inner: midInner,
     top: midTop,
@@ -35,7 +34,6 @@ function showIntroBox(introBoxGroup, mainCube, comma, target, callback) {
     },
   });
 
-  //if (target.deviceType === 'desktop' || target.deviceType === 'largeWidth') {
   tl.to([inner.positions, midInner.position], { ...target.inner.positions })
     .to(top.positions, { ...target.horizontal.topPosition }, '<')
     .to(midTop.position, { ...target.horizontal.topPosition }, '<')
@@ -64,12 +62,10 @@ function showIntroBox(introBoxGroup, mainCube, comma, target, callback) {
     .to(comma.position, { ...target.comma.positions[1] }, '<')
     .to([inner.materials, midInner.material], {
       ...target.inner.materials
-    }, '<');
-  //}
-
-  if (target.deviceType === 'mobile' || target.deviceType === 'smallWidth') {
-    console.log('mobiley!');
-  }
+    }, '<')
+    .call(() => {
+      if (target.deviceType === 'mobile') mainCube.visible = false;
+    });
 
   return tl;
 }

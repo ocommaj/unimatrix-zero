@@ -17,11 +17,11 @@ const largeWidth = {
 const smallWidth = {
   duration: 1.2,
   positions: [
-    { x: '-=1.5', z: '-=1.5' },
-    //{ z: '-=1.5' },
-    { x: '+=1.5' },
+    //{ x: '-=1.5', z: '-=1.5' },
+    { z: '-=1.5' },
+    //{ x: '+=1.5' },
   ],
-  rotations: { /*x: 0, y: '+=6.28', z: 0*/ },
+  rotations: { x: 0, y: '+=6.28', z: 0 },
   scales: [
     { x: 0.5, y: 0.5, z: 0.5 },
   ],

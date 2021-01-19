@@ -19,12 +19,10 @@
 #introBox {
   //visibility: hidden;
   padding: 1rem;
-  //padding-top: 2rem;
   color: lightgray;
   top: 0rem;
   left: 0rem;
-  //opacity: 0;
-  opacity: 1;
+  opacity: 0;
   transition: opacity .7s ease;
   //border: solid 2px lightgray;
 
@@ -35,17 +33,13 @@
 
     ul {
       margin: 0;
-      padding-left: .75rem;
-      //padding-top: 1rem;
+      padding-left: 1rem;
     }
+
     li {
       font-size: 1.5rem;
-      //font-size: 1.25rem;
-      //line-height: 2rem;
       margin: 1rem 0;
-      //margin: 0 0px;
       max-width: 70vw;
-
       list-style: none;
       list-style-position: outside;
       background: -webkit-linear-gradient(40deg, #be95ff, #c6c6c6, #ff8389);
@@ -55,6 +49,12 @@
       animation-iteration-count: infinite;
       animation-fill-mode: forwards;
       cursor: pointer;
+    }
+
+    @media (max-width: 420px) {
+      li {
+        font-size: 1.25rem;
+      }
     }
 
     li .gradient_1 {
