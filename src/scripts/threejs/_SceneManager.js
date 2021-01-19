@@ -54,6 +54,7 @@ export default function SceneManager({ canvas, device }) {
     );
 
     camera.position.z = setZoom(width);
+    camera.position.y = device.type === 'mobile' ? -1 : 0;
     camera.setZoom = setZoom;
     camera.maxZoom = maxZoom;
     //console.dir(camera.position.z)
@@ -86,6 +87,7 @@ export default function SceneManager({ canvas, device }) {
     messageCube.punchThroughBG(hexLayer.mesh.geometry);
 
     const introBox = Subjects.introBox({ scene, camera });
+    //const hollowEarth = Subjects.hollowEarth({ scene, camera })
 
     return {
       hexLayer,

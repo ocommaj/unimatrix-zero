@@ -1,6 +1,7 @@
 import Comma from './_Comma';
 import Cube from './_Cube';
 import HexLayer from './_HexLayer';
+import HollowEarth from './HollowEarth';
 import GeneralLight from './_GeneralLight';
 import IntroBox from './IntroBox';
 import MessageCube from './_MessageCube';
@@ -13,6 +14,7 @@ export default {
   cube: (config) => Cube(config),
   generalLight: (scene) => new GeneralLight(scene),
   hexLayer: (scene, camera) => new HexLayer(scene, camera),
+  hollowEarth: (config) => new HollowEarth(config),
   imageBubble: (scene) => new ImageBubble(scene),
   introBox: (config) => new IntroBox(config),
   messageCube: (config) => new MessageCube(config),
