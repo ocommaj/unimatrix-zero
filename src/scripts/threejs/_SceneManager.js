@@ -55,7 +55,7 @@ export default function SceneManager({ canvas, device }) {
     );
 
     camera.position.z = setZoom(width);
-    camera.position.y = device.type === 'mobile' ? -1 : 0;
+    camera.position.y = device.type === 'mobile' ? -1.25 : 0;
     camera.setZoom = setZoom;
     camera.maxZoom = maxZoom;
     console.dir(camera.position.z)
@@ -72,7 +72,7 @@ export default function SceneManager({ canvas, device }) {
         return iPhoneZoom(device.model)
         function iPhoneZoom(model) {
           const iPhoneInitialZoom = {
-            '8': 17,
+            '8': 16.5,
             '8Plus': 18,
             'X/XS': 18,
             'XR/11': 18,
