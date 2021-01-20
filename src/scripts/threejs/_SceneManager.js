@@ -54,21 +54,31 @@ export default function SceneManager({ canvas, device }) {
       fieldOfView, aspect, near, far
     );
 
-    camera.position.z = setZoom(width);
+    camera.position.z = setZoom(width, height);
     camera.position.y = device.type === 'mobile' ? -1.25 : 0;
     camera.setZoom = setZoom;
     camera.maxZoom = maxZoom;
     console.dir(camera.position.z)
 
-    function maxZoom(width) {
+    function maxZoom(width, height) {
       const DPR = device.devicePixelRatio;
       if (!device.iPhone) {
         if (width <= 413 && DPR > 2) return 18;
         if (width > 420 && width <= 800) return 16;
         if (width > 800) return 12;
       }
+      if (device.type === 'mobile') {
+        if (DPR === 2) {
+          if (width >= 370 && width <= 410) return 17;
+          if (width > 410 && width < 428) return 18;
+        }
+        if (DPR > 2) {
+          if (width >= 370 && width < 390) return 18;
+          if (width >= 390 && width <= 428) return 17.5;
+        }
+      }
 
-      if (device.iPhone) {
+      /*if (device.iPhone) {
         const updatedDevice = device.mobileDetect()
         return iPhoneZoom(updatedDevice.model)
         function iPhoneZoom(model) {
@@ -81,7 +91,7 @@ export default function SceneManager({ canvas, device }) {
           }
           return iPhoneInitialZoom[model]
         }
-      }
+      }*/
     }
 
     function setZoom(width, zValue = null) {

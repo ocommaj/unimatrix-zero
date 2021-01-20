@@ -28,7 +28,6 @@ export function mobileDetect() {
   const iPhoneDetected = iPhoneModelDetect();
   if (!iPhoneDetected) return { type: 'mobile' }
   if (iPhoneDetected) return { type: 'mobile', ...iPhoneDetected }
-
 }
 
 function iPhoneModelDetect() {
