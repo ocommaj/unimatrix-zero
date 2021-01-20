@@ -69,7 +69,8 @@ export default function SceneManager({ canvas, device }) {
       }
 
       if (device.iPhone) {
-        return iPhoneZoom(device.model)
+        const updatedDevice = device.mobileDetect()
+        return iPhoneZoom(updatedDevice.model)
         function iPhoneZoom(model) {
           const iPhoneInitialZoom = {
             '8': 17,

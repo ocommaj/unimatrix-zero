@@ -10,7 +10,8 @@ export default function Device() {
 
   return { device: {
     ...device,
-    devicePixelRatio
+    devicePixelRatio,
+    mobileDetect
   }, events };
 }
 
@@ -20,7 +21,7 @@ function iPadDetect() {
   const iPadDetected = testEx.test(userAgent);
 }
 
-function mobileDetect() {
+export function mobileDetect() {
   const userAgent = window.navigator.userAgent.toLowerCase();
   const testEx = /android|webos|iphone|ipod|blackberry|iemobile|opera mini/i;
   if (!testEx.test(userAgent)) return false;
