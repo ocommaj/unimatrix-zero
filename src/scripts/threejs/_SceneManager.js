@@ -80,18 +80,31 @@ export default function SceneManager({ canvas, device }) {
       }
       if (device.type === 'mobile' && device.iPhone) {
         console.log('is iPhone')
-        if (DPR === 2) {
+        return iPhoneZoom(device.model)
+        /*if (DPR === 2) {
           if (width >= 370 && width <= 410) return 17;
-          if (width > 410 && width < 428) return 18.5;
+          if (width > 410 && width < 428) return 18.75;
         }
         if (DPR > 2) {
           if (width >= 370 && width < 390) return 18.5;
           if (width >= 390 && width <= 413) return 17.5;
-          if (width >= 414 && width <= 428 && height < 800) return 17;
-          if (width >= 414 && width <= 428 && height > 800) return 18.5;
-        }
+          if (width >= 414 && width <= 428 && height < 800) return 17.5;
+          if (width >= 414 && width <= 428 && height > 800) return 19;
+        }*/
       }
 
+      function iPhoneZoom(model) {
+        const initialZooms = {
+          '8': 17,
+          '8Plus': 17.5,
+          'X/XS/11Pro/12Mini': 18.5,
+          'XR/11': 18.75,
+          'XSMax/11ProMax': 19,
+          '12/12Pro': 18.5,
+          '12ProMax': 20,
+        }
+        return initialZooms[model]
+      }
     }
 
     return camera;

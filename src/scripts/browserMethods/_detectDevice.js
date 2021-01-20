@@ -11,7 +11,6 @@ export default function Device() {
   return { device: {
     ...device,
     devicePixelRatio,
-    mobileDetect
   }, events };
 }
 
@@ -46,43 +45,32 @@ function iPhoneModelDetect() {
       model: '8'
     }
   }
-  if (width === 414 && height === 736 && dpr === 3) {
+  if (width/height === 414/736 && dpr === 3) {
     return {
       iPhone,
       model: '8Plus'
     }
   }
-  if (width === 375 && height === 812 && dpr === 3) {
+  if (width/height === 375/812 && dpr === 3) {
     return {
       iPhone,
-      model: 'X/XS'
+      model: 'X/XS/11Pro/12Mini'
     }
   }
-  if (width === 414 && height === 896 && dpr === 2) {
+  if (width/height === 414/896) {
     return {
       iPhone,
-      model: 'XR/11'
+      model: dpr === 2 ? 'XR/11' : 'XSMax/11ProMax'
     }
   }
-  if (width === 414 && height === 896 && dpr === 3) {
-    return {
-      iPhone,
-      model: 'XSMax/11ProMax'
-    }
-  }
-  if (width === 375 && height === 812 && dpr === 3) {
-    return {
-      iPhone,
-      model: '11Pro/12Mini'
-    }
-  }
-  if (width === 390 && height === 844 && dpr === 3) {
+
+  if (width/height === 390/844 && dpr === 3) {
     return {
       iPhone,
       model: '12/12Pro'
     }
   }
-  if (width === 428 && height === 926 && dpr === 3) {
+  if (width/height === 428/926 && dpr === 3) {
     return {
       iPhone,
       model: '12ProMax'
