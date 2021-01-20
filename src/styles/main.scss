@@ -7,7 +7,7 @@
 
 body {
   background-color: #161616;
-  font-family: 'Chicago', monospace;
+  font-family: 'Chicago', 'Open Sans', monospace;
   color: #f4f4f4;
   margin: 0;
   width: 100vw;
@@ -25,4 +25,15 @@ canvas {
 
 div {
   font-family: 'Chicago', monospace;
+}
+
+:root {
+  font-size: 16px;
+}
+
+@media only screen
+and (max-width: 414px) {
+  :root {
+    font-size: 15px;
+  }
 }

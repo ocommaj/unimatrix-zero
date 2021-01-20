@@ -78,20 +78,6 @@ export default function SceneManager({ canvas, device }) {
         }
       }
 
-      /*if (device.iPhone) {
-        const updatedDevice = device.mobileDetect()
-        return iPhoneZoom(updatedDevice.model)
-        function iPhoneZoom(model) {
-          const iPhoneInitialZoom = {
-            '8': 17,
-            '8Plus': 18,
-            'X/XS': 18,
-            'XR/11': 18,
-            'XSMax/11ProMax': 18,
-          }
-          return iPhoneInitialZoom[model]
-        }
-      }*/
     }
 
     function setZoom(width, zValue = null) {
@@ -113,7 +99,10 @@ export default function SceneManager({ canvas, device }) {
     messageCube.punchThroughBG(hexLayer.mesh.geometry);
 
     const introBox = Subjects.introBox({ scene, camera });
-    //const hollowEarth = Subjects.hollowEarth({ scene, camera })
+
+    //if (device.type !== 'mobile') {
+    //  const hollowEarth = Subjects.hollowEarth({ scene, camera })
+    //}
 
     return {
       hexLayer,
