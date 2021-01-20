@@ -56,13 +56,18 @@ export default function SceneManager({ canvas, device }) {
       fieldOfView, aspect, near, far
     );
 
-    camera.position.z = setZoom(width);
+    camera.position.z = setZoom(width, height);
     camera.position.y = device.type === 'mobile' ? -1.25 : 0;
     camera.setZoom = setZoom;
     camera.maxZoom = maxZoom;
     console.dir(camera.position.z)
 
-    function maxZoom(width) {
+    function setZoom(width, height, zValue = null) {
+      const maxZ = maxZoom(width, height);
+      return (zValue && zValue <= maxZ) ? zValue : maxZ;
+    }
+
+    function maxZoom(width, height) {
       const DPR = device.devicePixelRatio;
       if (device.type === 'desktop') {
         if (width > 420 && width <= 800) return 16;
@@ -77,20 +82,16 @@ export default function SceneManager({ canvas, device }) {
         console.log('is iPhone')
         if (DPR === 2) {
           if (width >= 370 && width <= 410) return 17;
-          if (width > 410 && width < 428) return 18;
+          if (width > 410 && width < 428) return 18.5;
         }
         if (DPR > 2) {
-          if (width >= 370 && width < 390) return 18;
+          if (width >= 370 && width < 390) return 18.5;
           if (width >= 390 && width <= 413) return 17.5;
-          if (width >= 414 && width <= 428) return 17;
+          if (width >= 414 && width <= 428 && height < 800) return 17;
+          if (width >= 414 && width <= 428 && height > 800) return 18.5;
         }
       }
 
-    }
-
-    function setZoom(width, zValue = null) {
-      const maxZ = maxZoom(width);
-      return (zValue && zValue <= maxZ) ? zValue : maxZ;
     }
 
     return camera;

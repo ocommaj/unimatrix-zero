@@ -56,17 +56,17 @@ and (-webkit-device-pixel-ratio: 3) {
 @media only screen
 and (min-width: 414px)
 and (max-width: 428px)
-and (-webkit-device-pixel-ratio: 3) {
-  :root {
-    font-size: 13px;
-  }
-}
-
-/*@media only screen
-and (min-width: 414px)
-and (max-width: 428px)
 and (-webkit-device-pixel-ratio: 2) {
   :root {
     font-size: 15px;
   }
-}*/
+}
+
+@media only screen
+and (min-width: 414px)
+and (max-width: 428px)
+and (-webkit-device-pixel-ratio: 3) {
+  :root {
+    font-size: 13.5px;
+  }
+}

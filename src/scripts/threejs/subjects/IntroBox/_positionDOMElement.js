@@ -21,10 +21,11 @@ export default function positionDOMElement(inMeshGroup, camera) {
   tempCenterVector.applyMatrix4(target.matrixWorld);
   tempCenterVector.project(camera)
 
-  const mobileOffsetYfactor = device.devicePixelRatio > 2 ? .6 : .565;
+  const offsetXfactor = device.type === 'desktop' ? .45 : .225;
+  const offsetYfactor = device.type === 'desktop' ? .75 : .6;
   const offset = {
-    x: (elemWidth * (device.type === 'desktop' ? .45 : .225)),
-    y: (elemHeight * (device.type === 'desktop' ? .75 : mobileOffsetYfactor))
+    x: (elemWidth * offsetXfactor),
+    y: (elemHeight * offsetYfactor)
   }
 
   const left = ((tempCenterVector.x * .5 + .5) * canvasWidth) - offset.x;
