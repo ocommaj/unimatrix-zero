@@ -62,8 +62,13 @@ export default function SceneManager({ canvas, device }) {
     function maxZoom(width) {
       const DPR = device.devicePixelRatio;
       if (width <= 413 && DPR > 2) return 18;
-      if (width >= 413 && width <= 760 && DPR > 2) return 17.5;
-      if (width <= 420 && device.devicePixelRatio <= 2) return 17;
+      if (width >= 414 && width <= 760 && DPR > 2) {
+        console.log('firing')
+        return 18
+      };
+      if (width <= 413 && DPR <= 2) return 17;
+      if (width >= 414 && width <= 420 && DPR <= 2) return 18;
+      if (width >= 414 && width <= 420 && DPR === 3) return 20;
       if (width > 420 && width <= 800) return 16;
       if (width > 800) return 12;
     }
