@@ -1,5 +1,8 @@
 import { Group, Mesh, MeshLambertMaterial } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+//import { LineMaterial } from './jsm/lines/LineMaterial.js';
+//import { Wireframe } from './jsm/lines/Wireframe.js';
+//import { WireframeGeometry2 } from './jsm/lines/WireframeGeometry2.js';
 
 export default function Comma({ parent, position = null }) {
   // import('../../../assets/three/comma_tag.glb')
@@ -28,6 +31,7 @@ export default function Comma({ parent, position = null }) {
         group.name = 'messageComma';
         group.scale.set(0, 0, 0);
         //parent.add(group)*/
+
 
         mesh.copy(loaded);
         mesh.scale.set(0, 0, 0);

@@ -46,6 +46,8 @@ export default function SceneManager({ canvas, device }) {
   }
 
   function buildCamera({ width, height }) {
+    console.log(`width: ${width}`)
+    console.log(`height: ${height}`)
     const aspect = width / height;
     const fieldOfView = 60;
     const near = 1;
@@ -54,20 +56,25 @@ export default function SceneManager({ canvas, device }) {
       fieldOfView, aspect, near, far
     );
 
-    camera.position.z = setZoom(width, height);
+    camera.position.z = setZoom(width);
     camera.position.y = device.type === 'mobile' ? -1.25 : 0;
     camera.setZoom = setZoom;
     camera.maxZoom = maxZoom;
     console.dir(camera.position.z)
 
-    function maxZoom(width, height) {
+    function maxZoom(width) {
       const DPR = device.devicePixelRatio;
-      if (!device.iPhone) {
+      if (device.type === 'desktop') {
+        if (width > 420 && width <= 800) return 16;
+        if (width > 800) return 12;
+      }
+      if (device.type === 'mobile' && !device.iPhone) {
         if (width <= 413 && DPR > 2) return 18;
         if (width > 420 && width <= 800) return 16;
         if (width > 800) return 12;
       }
-      if (device.type === 'mobile') {
+      if (device.type === 'mobile' && device.iPhone) {
+        console.log('is iPhone')
         if (DPR === 2) {
           if (width >= 370 && width <= 410) return 17;
           if (width > 410 && width < 428) return 18;
