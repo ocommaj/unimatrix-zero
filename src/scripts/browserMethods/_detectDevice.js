@@ -1,6 +1,6 @@
 export default function Device() {
   const devicePixelRatio = window.devicePixelRatio ? window.devicePixelRatio : 1;
-  const { width, height } = screen;
+  const { width, height } = window.screen;
   const isMobile = mobileDetect();
   const device = isMobile ? { ...isMobile } : { type: 'desktop' };
   const events = isMobile ? [ 'touchStart' ] : ['resize', 'mousemove', 'click'];
@@ -31,8 +31,8 @@ function mobileDetect() {
 }
 
 function iPhoneModelDetect() {
-  console.dir(screen);
-  const { width, height } = screen;
+  //console.dir(screen);
+  const { width, height } = window.screen;
   const userAgent = window.navigator.userAgent.toLowerCase();
   const dpr = devicePixelRatio;
   const testEx = /iphone/i;
@@ -40,7 +40,7 @@ function iPhoneModelDetect() {
     return false
   }
   const iPhone = true;
-  if (width === 375 && height === 667 && dpr === 2) {
+  if (width/height === 375/667 && dpr === 2) {
     return {
       iPhone,
       model: '8'
@@ -86,6 +86,12 @@ function iPhoneModelDetect() {
     return {
       iPhone,
       model: '12ProMax'
+    }
+  }
+  else {
+    return {
+      iPhone,
+      model: 'X/Xs'
     }
   }
 
