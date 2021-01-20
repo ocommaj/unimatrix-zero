@@ -79,7 +79,6 @@ export default function SceneManager({ canvas, device }) {
         if (width > 800) return 12;
       }
       if (device.type === 'mobile' && device.iPhone) {
-        console.log('is iPhone')
         return iPhoneZoom(device.model)
         /*if (DPR === 2) {
           if (width >= 370 && width <= 410) return 17;
