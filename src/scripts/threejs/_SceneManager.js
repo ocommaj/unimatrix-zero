@@ -81,7 +81,8 @@ export default function SceneManager({ canvas, device }) {
         }
         if (DPR > 2) {
           if (width >= 370 && width < 390) return 18;
-          if (width >= 390 && width <= 428) return 17.5;
+          if (width >= 390 && width <= 413) return 17.5;
+          if (width >= 414 && width <= 428) return 17;
         }
       }
 
