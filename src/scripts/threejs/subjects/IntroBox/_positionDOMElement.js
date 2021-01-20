@@ -22,7 +22,7 @@ export default function positionDOMElement(inMeshGroup, camera) {
   tempCenterVector.project(camera)
 
   const offsetXfactor = device.type === 'desktop' ? .45 : .225;
-  const offsetYfactor = device.type === 'desktop' ? .75 : .75; //.625
+  const offsetYfactor = device.type === 'desktop' ? .75 : .625;
   const offset = {
     x: (elemWidth * offsetXfactor),
     y: (elemHeight * offsetYfactor)
