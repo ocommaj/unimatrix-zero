@@ -79,6 +79,7 @@ export default function IntroBox({ scene, camera }) {
 
   function reveal() {
     updatePositions().then(() => animateReveal());
+    scene.userData.introBoxShows = IntroBox.visible;
   }
 
   function updatePositions() {

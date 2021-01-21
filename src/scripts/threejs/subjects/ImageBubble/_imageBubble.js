@@ -6,7 +6,6 @@ import animationTargets from './_animationTargets';
 export default function imageBubble(scene) {
   const { device } = scene.userData;
   const { start, toTop } = animationTargets[device.type];
-  console.dir(toTop)
   const loader = new TextureLoader();
   const texture = loader.load(imgTexture);
   texture.rotation = 0.15;
@@ -25,5 +24,9 @@ export default function imageBubble(scene) {
   mesh.visible = start.visible;
   scene.add(mesh);
 
-  this.animateReveal = (key) => bubbleToTop(mesh, start, toTop).play();
+  this.animateReveal = (e) => animateReveal(e);
+
+  function animateReveal(onComplete) {
+    bubbleToTop(mesh, start, toTop, onComplete).play();
+  }
 }

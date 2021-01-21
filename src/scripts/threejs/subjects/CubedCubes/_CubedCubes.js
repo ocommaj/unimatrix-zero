@@ -148,7 +148,6 @@ export default function CubedCubes({ count, spacing, cubeConfig }) {
     const round = (float) => (Math.ceil(float * 2 - 0.5) / 2);
     const rounded = round(atPosition);
     return boxes.filter(box => round(box.position[axis]) === rounded);
-
   }
 
   function makeCubes(size, offsets, rotation, scale) {

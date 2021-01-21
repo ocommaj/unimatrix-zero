@@ -21,9 +21,18 @@ export default function main() {
     canvas.addEventListener('touchstart', (e) => scene.onClick(e));
     canvas.addEventListener('mousemove', (e) => scene.onMouseMove(e));
     canvas.addEventListener('click', (e) => scene.onClick(e));
-    introList.padi.addEventListener('click', () => {
-      scene.imageBubble.animateReveal('padi');
-    });
+    introList.padi.addEventListener('click', clickHandler)
+  }
+
+  function clickHandler() {
+      const completionHandler = () => {
+        this.addEventListener('click', clickHandler);
+        this.classList.toggle('clickable');
+      }
+
+      this.removeEventListener('click', clickHandler);
+      this.classList.toggle('clickable');
+      scene.imageBubble.animateReveal(completionHandler);
   }
 
   function resizeCanvas() {

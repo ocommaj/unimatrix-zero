@@ -10,7 +10,6 @@ export default function MessageCube({scene, configCubed}) {
   let message = SpellHi(Cube.facingPlane);
   let messageLoop = message.animate.loop(() => messageLoopCallback());
   scene.add(Cube.meshGroup);
-  // Cube.meshGroup.visible = false;
 
   this.meshGroup = Cube.meshGroup;
   this.onClick = clickHandler;
@@ -48,30 +47,31 @@ export default function MessageCube({scene, configCubed}) {
 
   function clickHandler(intersectedMesh, camera) {
     messageLoop.pause();
-    if (intersectedMesh.object === message.iDot) {
-      const { device } = scene.userData;
-      const { geometry: bgGeometry } = scene.userData.subjects.hexLayer.mesh;
-      const onStart = () => {
-        this.update = () => Cube.wrapBackgroundGeometry(bgGeometry);
-        Cube.meshGroup.add(comma);
-      };
-      const afterMove = () => {
-        scene.attach(comma);
-        Cube.meshGroup.remove(comma);
-        Cube.meshGroup.updateMatrix()
-        Cube.meshGroup.updateWorldMatrix(true, false);
-        this.update = null;
-      };
-      const showIntroBox = () => {
-        const IntroBox = scene.userData.subjects.introBox;
-        IntroBox.reveal();
-      };
+    if (intersectedMesh.object === message.iDot
+        && !scene.userData.introBoxShows) {
+        const { device } = scene.userData;
+        const { geometry: bgGeometry } = scene.userData.subjects.hexLayer.mesh;
+        const onStart = () => {
+          this.update = () => Cube.wrapBackgroundGeometry(bgGeometry);
+          Cube.meshGroup.add(comma);
+        };
+        const afterMove = () => {
+          scene.attach(comma);
+          Cube.meshGroup.remove(comma);
+          Cube.meshGroup.updateMatrix()
+          Cube.meshGroup.updateWorldMatrix(true, false);
+          this.update = null;
+        };
+        const showIntroBox = () => {
+          const IntroBox = scene.userData.subjects.introBox;
+          IntroBox.reveal();
+        };
 
-      const args = { device, onStart, afterMove, onComplete: showIntroBox };
-      addComma().then(() => Cube.moveAndShrink(args));
+        const args = { device, onStart, afterMove, onComplete: showIntroBox };
+        addComma().then(() => Cube.moveAndShrink(args));
 
-      return;
-    }
+        return;
+      }
 
     const callback = () => messageLoop.resume();
     Cube.onClick(scene, intersectedMesh.object, callback);

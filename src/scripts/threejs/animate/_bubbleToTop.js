@@ -1,9 +1,10 @@
 import { gsap } from 'gsap';
 
-export default function bubbleToTop(mesh, startValue, targetValue) {
+export default function bubbleToTop(mesh, startValue, targetValue, onComplete) {
   const timelineDefaults = {
     paused: true,
     onStart: () => { mesh.visible = targetValue.visible; },
+    onComplete: () => onComplete(),
     defaults: {
       duration: 1,
       ease: 'power1.in',

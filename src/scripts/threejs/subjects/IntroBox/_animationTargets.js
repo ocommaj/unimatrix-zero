@@ -1,14 +1,14 @@
 const largeWidth = {
   comma: {
     positions: [
-      { x: '+=5.5', y: '-=.75', z: '+=2.1' },
+      { x: '+=5', y: '-=.25', z: '+=2.1' },
       { z: '-=.1' }
     ],
     scale: { z: 0.5 },
     rotation: { y: -0.15 }
   },
   inner: {
-    positions: { x: '+=7.25', y: '-=.25', z: '+=2' },
+    positions: { x: '+=6.75', y: '+=.25', z: '+=2' },
     scales: { x: 2.75, y: 4, z: 0.5 },
     materials: {
       opacity: 0.5,
@@ -24,14 +24,13 @@ const largeWidth = {
     rotation: { y: '+=0.2' }
   },
   horizontal: {
-    topPosition: { x: '+=7.25', y: '+=.3', z: '+=2.25' },
-    bottomPosition: { x: '+=7.25', y: '-=1.5', z: '+=2.25'},
+    topPosition: { x: '+=6.75', y: '+=.8', z: '+=2.25' },
+    bottomPosition: { x: '+=6.75', y: '-=1', z: '+=2.25'},
     scaleMid: { x: 5.4, y: 0.75 },
   },
   vertical: {
-    leftPosition: { x: '+=6.9', y: '-=.6', z: '+=2.25' },
-    rightPosition: { x: '+=7.6', y: '-=.6', z: '+=2.25'},
-    //scaleMid: { x: 0.5, y: 5.85 },
+    leftPosition: { x: '+=6.4', y: '-=.1', z: '+=2.25' },
+    rightPosition: { x: '+=7.1', y: '-=.1', z: '+=2.25'},
     scaleMid: { x: 0.5, y: 5.25 },
   },
   zeroScale: { x: 0, y: 0, z: 0 }

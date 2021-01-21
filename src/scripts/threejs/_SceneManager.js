@@ -13,16 +13,14 @@ export default function SceneManager({ canvas, device }) {
     height: canvas.height,
   };
 
-  console.dir(device)
   const scene = buildScene();
   const renderer = buildRender(screenDimensions);
   const camera = buildCamera(screenDimensions);
   const subjects = initSceneSubjects(scene);
   const interaction = new Interaction(renderer, scene, camera);
-  scene.userData.subjects = subjects;
   scene.userData.camera = camera;
-  // console.dir(camera)
-  // console.dir(scene)
+  scene.userData.subjects = subjects;
+  scene.userData.introBoxShows = subjects.introBox.meshGroup.visible;
 
   function buildScene() {
     const scene = new Scene();
@@ -46,8 +44,6 @@ export default function SceneManager({ canvas, device }) {
   }
 
   function buildCamera({ width, height }) {
-    console.log(`width: ${width}`)
-    console.log(`height: ${height}`)
     const aspect = width / height;
     const fieldOfView = 60;
     const near = 1;
@@ -60,14 +56,13 @@ export default function SceneManager({ canvas, device }) {
     camera.position.y = device.type === 'mobile' ? -1.25 : 0;
     camera.setZoom = setZoom;
     camera.maxZoom = maxZoom;
-    console.dir(camera.position.z)
 
-    function setZoom(width, height, zValue = null) {
-      const maxZ = maxZoom(width, height);
+    function setZoom(width, zValue = null) {
+      const maxZ = maxZoom(width);
       return (zValue && zValue <= maxZ) ? zValue : maxZ;
     }
 
-    function maxZoom(width, height) {
+    function maxZoom(width) {
       const DPR = device.devicePixelRatio;
       if (device.type === 'desktop') {
         if (width > 420 && width <= 800) return 16;
@@ -80,16 +75,6 @@ export default function SceneManager({ canvas, device }) {
       }
       if (device.type === 'mobile' && device.iPhone) {
         return iPhoneZoom(device.model)
-        /*if (DPR === 2) {
-          if (width >= 370 && width <= 410) return 17;
-          if (width > 410 && width < 428) return 18.75;
-        }
-        if (DPR > 2) {
-          if (width >= 370 && width < 390) return 18.5;
-          if (width >= 390 && width <= 413) return 17.5;
-          if (width >= 414 && width <= 428 && height < 800) return 17.5;
-          if (width >= 414 && width <= 428 && height > 800) return 19;
-        }*/
       }
 
       function iPhoneZoom(model) {
@@ -121,9 +106,9 @@ export default function SceneManager({ canvas, device }) {
 
     const introBox = Subjects.introBox({ scene, camera });
 
-    //if (device.type !== 'mobile') {
-    //  const hollowEarth = Subjects.hollowEarth({ scene, camera })
-    //}
+    if (device.type !== 'mobile') {
+      const hollowEarth = Subjects.hollowEarth({ scene, camera })
+    }
 
     return {
       hexLayer,
@@ -136,7 +121,7 @@ export default function SceneManager({ canvas, device }) {
   }
 
   this.imageBubble = {
-    animateReveal: (key) => subjects.imageBubble.animateReveal(key),
+    animateReveal: subjects.imageBubble.animateReveal,
   };
 
   this.update = () => {

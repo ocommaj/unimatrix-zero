@@ -1,8 +1,8 @@
 const largeWidth = {
   duration: 0.8,
   positions: [
-    { y: '+=1' },
-    { x: '-=4.25' },
+    { y: '+=.5' },
+    { x: '-=3.75' },
   ],
   rotations: {},
   scales: [
