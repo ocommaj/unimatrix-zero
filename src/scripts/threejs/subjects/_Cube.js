@@ -13,7 +13,6 @@ function Cube({ size, position = null, rotation = null, scale = null }) {
     opacity: 0.9,
   });
   const material_two = new MeshLambertMaterial({
-    // color: 0xa6c8ff,
     color: BLUE_60,
     transparent: true,
     opacity: 0.5,
@@ -38,4 +37,6 @@ function Cube({ size, position = null, rotation = null, scale = null }) {
   cube.userData.isClickable = true;
 
   return cube;
+
+
 }

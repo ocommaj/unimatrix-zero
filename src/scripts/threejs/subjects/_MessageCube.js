@@ -7,7 +7,8 @@ export default function MessageCube({scene, configCubed}) {
   Cube.meshGroup.name = 'mainMessageCube';
 
   let comma = null;
-  let message = SpellHi(Cube.facingPlane);
+  let facingPlane = Cube.getFacingPlane()
+  let message = SpellHi(facingPlane);
   let messageLoop = message.animate.loop(() => messageLoopCallback());
   scene.add(Cube.meshGroup);
 
@@ -18,8 +19,8 @@ export default function MessageCube({scene, configCubed}) {
 
   function messageLoopCallback(nextMessage = null) {
     Cube.planeLoop(() => {
-      const facing = Cube.getFacingPlane();
-      message = SpellHi(facing);
+      facingPlane = Cube.getFacingPlane();
+      message = SpellHi(facingPlane);
       messageLoop = message.animate.loop(messageLoopCallback);
       messageLoop.play();
     }).play();

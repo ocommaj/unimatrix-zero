@@ -11,7 +11,7 @@ import * as letters from './_Letters';
 export default {
   letters,
   comma: (config) => new Comma(config),
-  cube: (config) => Cube(config),
+  cube: (config) => new Cube(config),
   generalLight: (scene) => new GeneralLight(scene),
   hexLayer: (scene, camera) => new HexLayer(scene, camera),
   hollowEarth: (config) => new HollowEarth(config),

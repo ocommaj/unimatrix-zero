@@ -1,4 +1,4 @@
-import { Group, BufferGeometry, Vector3 } from 'three';
+import { Color, Group, PointLight, BufferGeometry, Vector3 } from 'three';
 import {
   BufferGeometryUtils,
 } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
@@ -15,11 +15,9 @@ export default function CubedCubes({ count, spacing, cubeConfig }) {
   CubeCubes.add(...boxes);
 
   let spinCount = 0;
-  let facingPlane = CubeCubes.children.slice(-Math.pow(count, 2));
-  facingPlane.forEach(cube => illuminate(cube));
+  let facingPlane = getFacingPlane();
 
   this.meshGroup = CubeCubes;
-  this.facingPlane = facingPlane;
   this.getFacingPlane = getFacingPlane;
   this.moveAndShrink = moveAndShrink;
   this.offsets = offsets;
@@ -116,14 +114,6 @@ export default function CubedCubes({ count, spacing, cubeConfig }) {
     return CubeCubes.children.slice(-Math.pow(count, 2));
   }
 
-  function illuminate(cube) {
-    const innerLight = cube.children[0];
-    if (innerLight.visible === false) {
-      innerLight.visible = true;
-      innerLight.intensity = 0.5;
-    }
-  }
-
   function planeLoop(callback) {
     const toMoveBack = CubeCubes.children.splice(-Math.pow(count, 2));
     CubeCubes.children.unshift(...toMoveBack);
@@ -151,7 +141,7 @@ export default function CubedCubes({ count, spacing, cubeConfig }) {
   }
 
   function makeCubes(size, offsets, rotation, scale) {
-    const posBox = (position) => Cube({ size, position, rotation, scale });
+    const posBox = (position) => new Cube({ size, position, rotation, scale });
     const row = (y, z) => offsets.map((x) => posBox({ x, y, z }));
     const plane = (z) => [].concat.apply([], offsets.map((y) => row(y, z)));
 

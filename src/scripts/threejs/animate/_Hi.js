@@ -16,6 +16,8 @@ const tlDefaults = {
 };
 
 export default function hiTimelines(upperH, lowerI, notLetters) {
+  const innerLights = upperH.boxes.map(cube => cube.children[0])
+  innerLights.push(...lowerI.boxes.map(cube => cube.children[0]))
   const h = {
     ...meshAnimationProperties(upperH.boxes),
     beam: { ...meshAnimationProperties(upperH.beamBoxes) },
@@ -40,7 +42,9 @@ export default function hiTimelines(upperH, lowerI, notLetters) {
 
   function showHi() {
     return gsap.timeline({ ...tlDefaults, paused: false })
-      .to(h.positions, { z: '+=.25' })
+      .set(innerLights, { visible: true} )
+      .to(innerLights, { intensity: 1 })
+      .to(h.positions, { z: '+=.25' }, '<')
       .to(blanks.positions, { z: '-=.5'}, '<')
       .to(blanks.scales, { x: 0.75, y: 0.75 }, '<')
       .to(h.scales, { y: 1.5 }, '<')
@@ -53,14 +57,16 @@ export default function hiTimelines(upperH, lowerI, notLetters) {
 
   function hideHi() {
     const tl = gsap.timeline({ ...tlDefaults, paused: false })
-      .to(h.positions, { z: h.startPos.z }, '<3')
+      .to(innerLights, { intensity: 0 }, '<3')
+      .to(h.positions, { z: h.startPos.z }, '<')
       .to(blanks.positions, { z: blanks.startPos.z }, '<')
       .to(blanks.scales, { x: 1, y: 1 }, '<')
       .to(h.scales, { y: 1 }, '<')
       .add(toggleHBeam.reset(), '<')
       .to(i.positions, { z: i.startPos.z }, '<')
       .to(i.scales, { y: 1 }, '<')
-      .to(i.dot.position, { y: '+=.25' }, '<');
+      .to(i.dot.position, { y: '+=.25' }, '<')
+      .set(innerLights, { visible: false });
     return tl;
   }
 
