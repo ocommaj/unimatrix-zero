@@ -14,7 +14,7 @@ export default function SceneManager({ canvas, device }) {
   };
 
   const scene = buildScene();
-  const renderer = buildRender(screenDimensions);
+  const renderer = buildRenderer(screenDimensions);
   const camera = buildCamera(screenDimensions);
   const subjects = initSceneSubjects(scene);
   const interaction = new Interaction(renderer, scene, camera);
@@ -30,7 +30,7 @@ export default function SceneManager({ canvas, device }) {
     return scene;
   }
 
-  function buildRender({ width, height }) {
+  function buildRenderer({ width, height }) {
     const renderer = new WebGLRenderer({
       canvas: canvas,
       antialias: true,

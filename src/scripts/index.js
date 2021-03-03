@@ -10,7 +10,7 @@ export default function main() {
 
   canvas.width = canvas.offsetWidth;
   canvas.height = canvas.offsetHeight;
-
+  console.log(`height: ${canvas.offsetHeight}`)
   const scene = new SceneManager({ canvas, device });
 
   bindEventListeners();

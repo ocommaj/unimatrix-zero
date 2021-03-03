@@ -11,6 +11,10 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "repository": {
+  "type": "git",
+  "url": "git://github.com/ocommaj/unimatrix-zero.git"
+  },
   "devDependencies": {
     "@babel/preset-env": "^7.12.7",
     "babel-eslint": "^10.1.0",

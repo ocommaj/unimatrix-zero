@@ -6,18 +6,34 @@ export default function MessageCube({scene, configCubed}) {
   const Cube = new CubedCubes(configCubed);
   Cube.meshGroup.name = 'mainMessageCube';
 
+  let loopCount = 0;
   let comma = null;
   let facingPlane = Cube.getFacingPlane()
   let message = SpellHi(facingPlane);
   let messageLoop = message.animate.loop(() => messageLoopCallback());
   scene.add(Cube.meshGroup);
 
+  this.messageCubeToIntroBox = messageCubeToIntroBox;
+  this.timedDisplayIntroBox = timedDisplayIntroBox;
   this.meshGroup = Cube.meshGroup;
   this.onClick = clickHandler;
   this.punchThroughBG = (bgGeo) => Cube.wrapBackgroundGeometry(bgGeo);
   this.sayHi = () => messageLoop.play();
+  this.update = (args) => this.timedDisplayIntroBox(args);
+
+  function timedDisplayIntroBox({ nowSecond }) {
+    console.log('firing')
+    console.log(nowSecond)
+
+    if (nowSecond === 6) {
+      this.update = null;
+      messageLoop.pause()
+      this.messageCubeToIntroBox()
+    }
+  }
 
   function messageLoopCallback(nextMessage = null) {
+
     Cube.planeLoop(() => {
       facingPlane = Cube.getFacingPlane();
       message = SpellHi(facingPlane);
@@ -50,32 +66,36 @@ export default function MessageCube({scene, configCubed}) {
     messageLoop.pause();
     if (intersectedMesh.object === message.iDot
         && !scene.userData.introBoxShows) {
-        const { device } = scene.userData;
-        const { geometry: bgGeometry } = scene.userData.subjects.hexLayer.mesh;
-        const onStart = () => {
-          this.update = () => Cube.wrapBackgroundGeometry(bgGeometry);
-          Cube.meshGroup.add(comma);
-        };
-        const afterMove = () => {
-          scene.attach(comma);
-          Cube.meshGroup.remove(comma);
-          Cube.meshGroup.updateMatrix()
-          Cube.meshGroup.updateWorldMatrix(true, false);
-          this.update = null;
-        };
-        const showIntroBox = () => {
-          const IntroBox = scene.userData.subjects.introBox;
-          IntroBox.reveal();
-        };
-
-        const args = { device, onStart, afterMove, onComplete: showIntroBox };
-        addComma().then(() => Cube.moveAndShrink(args));
-
+        this.messageCubeToIntroBox()
         return;
       }
 
     const callback = () => messageLoop.resume();
-    Cube.onClick(scene, intersectedMesh.object, callback);
+    if (intersectedMesh.object !== message.iDot) {
+      Cube.onClick(scene, intersectedMesh.object, callback);
+    }
   }
 
+  function messageCubeToIntroBox() {
+    const { device } = scene.userData;
+    const { geometry: bgGeometry } = scene.userData.subjects.hexLayer.mesh;
+    const onStart = () => {
+      this.update = () => Cube.wrapBackgroundGeometry(bgGeometry);
+      Cube.meshGroup.add(comma);
+    };
+    const afterMove = () => {
+      scene.attach(comma);
+      Cube.meshGroup.remove(comma);
+      Cube.meshGroup.updateMatrix()
+      Cube.meshGroup.updateWorldMatrix(true, false);
+      this.update = null;
+    };
+    const showIntroBox = () => {
+      const IntroBox = scene.userData.subjects.introBox;
+      IntroBox.reveal();
+    };
+
+    const args = { device, onStart, afterMove, onComplete: showIntroBox };
+    addComma().then(() => Cube.moveAndShrink(args));
+  }
 }
