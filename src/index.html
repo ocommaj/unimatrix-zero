@@ -9,16 +9,22 @@
     <style>
       body { background-color: #262626; }
       #introBox { visibility: hidden; }
+      #barButtons { visibility: hidden; }
     </style>
   </head>
 
   <body>
-    <!--div class="overlayHtml" id="barWrapper">
-      <h2>Work</h2>
-      <h2>GitHub</h2>
-      <h2>CV</h2>
-      <h2>Contact</h2>
-    </div-->
+    <div id="canvasWrapper">
+      <canvas id="canvas" ></canvas>
+    </div>
+    <div class="overlayHtml" id="barWrapper">
+      <div id="barButtons">
+        <h2>CV</h2>
+        <h2>Work</h2>
+        <h2>GitHub</h2>
+        <h2>Contact</h2>
+      </div>
+    </div>
     <div class="overlayHtml" id="introBox">
       <div class="wrappedContent">
         <ul id="introList">
@@ -36,8 +42,6 @@
         </ul>
       </div>
     </div>
-    <div id="canvasWrapper">
-      <canvas id="canvas" ></canvas>
-    </div>
+
   </body>
 </html>

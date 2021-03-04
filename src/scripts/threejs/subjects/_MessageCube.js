@@ -22,9 +22,6 @@ export default function MessageCube({scene, configCubed}) {
   this.update = (args) => this.timedDisplayIntroBox(args);
 
   function timedDisplayIntroBox({ nowSecond }) {
-    console.log('firing')
-    console.log(nowSecond)
-
     if (nowSecond === 6) {
       this.update = null;
       messageLoop.pause()
@@ -77,8 +74,8 @@ export default function MessageCube({scene, configCubed}) {
   }
 
   function messageCubeToIntroBox() {
-    const { device } = scene.userData;
-    const { geometry: bgGeometry } = scene.userData.subjects.hexLayer.mesh;
+    const { device, subjects: { hexLayer } } = scene.userData;
+    const { mesh: { geometry: bgGeometry } } = hexLayer;
     const onStart = () => {
       this.update = () => Cube.wrapBackgroundGeometry(bgGeometry);
       Cube.meshGroup.add(comma);
