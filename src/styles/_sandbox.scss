@@ -5,11 +5,8 @@
 }
 
 #barWrapper {
-  //padding: .25rem;
-  //margin: 1rem;
 
   h2 {
-
     //bottom: 1rem;
     width: 100%;
     margin: .125rem .25rem;
@@ -31,17 +28,7 @@
   h2:nth-child(1) {
     border-top-left-radius: .5rem;
     border-top-right-radius: .5rem;
-
-    //bottom: 8.5rem;
   }
-
-  /*h2:nth-child(2) {
-    bottom: 6rem;
-  }
-
-  h2:nth-child(3) {
-    bottom: 3.5rem;
-  }*/
 
   h2:last-child {
     border-bottom-right-radius: .5rem;

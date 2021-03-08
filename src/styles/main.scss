@@ -31,7 +31,7 @@ canvas {
   overflow: hidden;
   height: 100%;
   width: 100%;
-  @include desktop-canvas-polygon;
+  @include responsive-canvas-wrapper;
 }
 
 #barWrapper {
@@ -45,7 +45,7 @@ canvas {
   bottom: 0;
   left: 0;
   right: 0;
-  @include desktop-buttons-polygon;
+  @include responsive-buttons-wrapper;
 }
 
 #barButtons {
@@ -55,8 +55,9 @@ canvas {
   bottom: 2rem;
   display: flex;
   flex-direction: column;
-  width: 15rem;
+  //width: 15rem;
   height: auto;
+  @include responsive-buttons;
 
 }
 
