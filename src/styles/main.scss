@@ -55,9 +55,8 @@ canvas {
   bottom: 2rem;
   display: flex;
   flex-direction: column;
-  //width: 15rem;
   height: auto;
-  @include responsive-buttons;
+  @include responsive-button-width;
 
 }
 

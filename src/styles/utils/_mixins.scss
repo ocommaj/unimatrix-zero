@@ -19,7 +19,7 @@
   }
 }
 
-@mixin responsive-buttons {
+@mixin responsive-button-width {
   @include media(">=desktop") {
     width: 15rem;
   }
