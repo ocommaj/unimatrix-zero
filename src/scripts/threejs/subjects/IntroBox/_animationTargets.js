@@ -39,14 +39,14 @@ const largeWidth = {
 const smallWidth = {
   comma: {
     positions: [
-      { x: '-=.6', y: '-=1.75', z: '+=10' },
+      { x: '-=.6', y: '-=1.25', z: '+=10' },
       { z: '-=.25' }
     ],
     scale: { x: '+=.025', z: 0.5 },
     rotation: { x: -.15, y: -0.15 }
   },
   inner: {
-    positions: { x: '+=1.35', y: '-=1', z: '+=9.875' },
+    positions: { x: '+=1.35', y: '-=.75', z: '+=9.875' },
     //scales: { x: 2.2, y: 4.5, z: 0.5 },
     scales: { x: 2.2, y: 4, z: 0.5 },
     materials: {
@@ -63,15 +63,15 @@ const smallWidth = {
     rotation: {}
   },
   horizontal: {
-    topPosition: { x: '+=1.4', y: '+=0', z: '+=10.25' },
-    bottomPosition: { x: '+=1.4', y: '-=2.25', z: '+=10.25' },
+    topPosition: { x: '+=1.4', y: '+=.25', z: '+=10.25' },
+    bottomPosition: { x: '+=1.4', y: '-=1.75', z: '+=10.25' },
     scaleMid: { x: 4.25, y: .5 }
   },
   vertical: {
     //leftPosition: { x: '+=.95', y: '+=0', z: '+=10.25' },
-    leftPosition: { x: '+=.95', y: '-=1', z: '+=10.25' },
+    leftPosition: { x: '+=.95', y: '-=.75', z: '+=10.25' },
     //rightPosition: { x: '+=1.85', y: '+=0', z: '+=10.25' },
-    rightPosition: { x: '+=1.85', y: '-=1', z: '+=10.25' },
+    rightPosition: { x: '+=1.85', y: '-=.75', z: '+=10.25' },
     //scaleMid: { x: 0.375, y: 5.5 },
     scaleMid: { x: 0.375, y: 5 },
   },
