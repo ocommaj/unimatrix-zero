@@ -3,13 +3,16 @@ import SceneManager from './threejs';
 
 export default function main() {
   const { device } = Device();
+  const { innerWidth, innerHeight } = window;
   const canvas = document.getElementById('canvas');
   const introList = {
     padi: document.getElementById('introListItem_padi'),
   };
 
-  canvas.width = canvas.offsetWidth;
-  canvas.height = canvas.offsetHeight;
+  //canvas.width = canvas.offsetWidth;
+  canvas.width = innerWidth;
+  //canvas.height = canvas.offsetHeight;
+  canvas.height = innerHeight;
   console.log(`height: ${canvas.offsetHeight}`)
   const scene = new SceneManager({ canvas, device });
 
