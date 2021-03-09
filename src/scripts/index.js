@@ -6,6 +6,7 @@ export default function main() {
   const { innerWidth, innerHeight } = window;
 
   const buttonWrapper = document.getElementById('barWrapper');
+  const canvasWrapper = document.getElementById('canvasWrapper');
   const canvas = document.getElementById('canvas');
 
   const introList = {
@@ -15,9 +16,11 @@ export default function main() {
 
   canvas.width = innerWidth;
   buttonWrapper.width = innerWidth;
+  canvasWrapper.width = innerWidth;
 
   canvas.height = innerHeight;
   buttonWrapper.height = innerHeight;
+  canvasWrapper.height = innerWidth;
 
 
   const scene = new SceneManager({ canvas, device });
