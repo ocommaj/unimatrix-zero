@@ -25,6 +25,7 @@ canvas {
   right: 0;
   margin: 0;
   padding: 0;
+  @include responsive-canvas-wrapper;
 }
 
 :root {
@@ -39,7 +40,7 @@ canvas {
   right: 0;
   //height: 100%;
   //width: 100%;
-  @include responsive-canvas-wrapper;
+  //@include responsive-canvas-wrapper;
 }
 
 #barWrapper {
@@ -60,7 +61,7 @@ canvas {
   visibility: visible;
   position: absolute;
   left: 2rem;
-  bottom: 2rem;
+  //bottom: 1rem;
   display: flex;
   flex-direction: column;
   height: auto;
