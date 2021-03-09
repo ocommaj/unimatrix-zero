@@ -5,6 +5,7 @@ export default function main() {
   const { device } = Device();
   const { innerWidth, innerHeight } = window;
 
+  const body = document.querySelector('body');
   const buttonWrapper = document.getElementById('barWrapper');
   const canvasWrapper = document.getElementById('canvasWrapper');
   const canvas = document.getElementById('canvas');
@@ -13,7 +14,8 @@ export default function main() {
     padi: document.getElementById('introListItem_padi'),
   };
 
-
+  body.width = innerWidth;
+  body.height = innerHeight;
   canvas.width = innerWidth;
   buttonWrapper.width = innerWidth;
   canvasWrapper.width = innerWidth;
