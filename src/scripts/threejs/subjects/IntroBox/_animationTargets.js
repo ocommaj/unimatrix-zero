@@ -64,7 +64,7 @@ const smallWidth = {
     rotation: {}
   },
   horizontal: {
-    topPosition: { x: '+=1.4', y: '+=.25', z: '+=10.25' },
+    topPosition: { x: '+=1.4', y: '+=.5', z: '+=10.25' },
     bottomPosition: { x: '+=1.4', y: '-=1.75', z: '+=10.25' },
     scaleMid: { x: 4.25, y: .5 }
   },
