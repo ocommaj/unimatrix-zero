@@ -28,6 +28,8 @@ export default function Comma({ parent, position = null }) {
         mesh.material = mat_one;
         mesh.scale.set(0, 0, 0);
         parent.add(mesh);
+
+        this.mesh = mesh;
       });
 
       function loadComma(position, resolve) {

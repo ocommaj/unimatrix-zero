@@ -77,8 +77,8 @@ export default function IntroBox({ scene, camera }) {
     return { sides, midpoints };
   }
 
-  function reveal() {
-    updatePositions().then(() => animateReveal());
+  function reveal(onComplete) {
+    updatePositions().then(() => animateReveal(onComplete));
     scene.userData.introBoxShows = IntroBox.visible;
   }
 
@@ -107,13 +107,16 @@ export default function IntroBox({ scene, camera }) {
     if (IntroBox.visible) positionDOMElement(IntroBox, camera);
   }
 
-  function animateReveal() {
+  function animateReveal(onComplete) {
     const { device } = scene.userData;
     const target = { device, ...animationTargets[device.type] };
     const comma = scene.getObjectByName('messageComma');
     const callback = () => {
       IntroBox.userData.device = device;
-      mergeGeometry(IntroBox).then(() => positionDOMElement(IntroBox, camera));
+      mergeGeometry(IntroBox).then(() => {
+        positionDOMElement(IntroBox, camera)
+        onComplete()
+      });
     };
 
     const anim = showIntroBox(IntroBox, mainCube, comma, target, callback);

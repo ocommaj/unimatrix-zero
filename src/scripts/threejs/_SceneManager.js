@@ -18,6 +18,7 @@ export default function SceneManager({ canvas, device }) {
   const camera = buildCamera(screenDimensions);
   const subjects = initSceneSubjects(scene);
   const interaction = new Interaction(renderer, scene, camera);
+  window.scene = scene;
   scene.userData.camera = camera;
   scene.userData.subjects = subjects;
   scene.userData.introBoxShows = subjects.introBox.meshGroup.visible;

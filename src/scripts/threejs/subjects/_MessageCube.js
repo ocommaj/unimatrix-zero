@@ -1,6 +1,7 @@
 import CubedCubes from './CubedCubes';
 import SpellHi from './_Hi';
 import { showComma } from '../animate';
+import CommaMenu from './_CommaMenu';
 
 export default function MessageCube({scene, configCubed}) {
   const Cube = new CubedCubes(configCubed);
@@ -88,8 +89,9 @@ export default function MessageCube({scene, configCubed}) {
       this.update = null;
     };
     const showIntroBox = () => {
+      const { showMenuIcon } = CommaMenu();
       const IntroBox = scene.userData.subjects.introBox;
-      IntroBox.reveal();
+      IntroBox.reveal(() => showMenuIcon());
     };
 
     const args = { device, onStart, afterMove, onComplete: showIntroBox };
