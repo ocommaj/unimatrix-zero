@@ -1,4 +1,4 @@
-import { Device } from './browserMethods';
+import { Device } from './browserElements';
 import SceneManager from './threejs';
 
 export default function main() {

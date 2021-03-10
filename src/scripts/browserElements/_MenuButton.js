@@ -1,31 +1,34 @@
-import { Vector3 } from 'three'
-import menuSVG from '../../../assets/icons/menu.svg'
+import { Vector3 } from 'three';
+import menuSVG from '../../assets/icons/menu.svg';
 
-export default function CommaMenu() {
+export default function MenuButton() {
   const menuButton = document.createElement('button');
   const menuIcon = document.createElement('object');
+
   menuButton.id = "menuButton"
   menuIcon.id = "commaMenuIcon";
   menuIcon.type = "image/svg+xml";
   menuIcon.data = menuSVG;
 
   menuButton.appendChild(menuIcon)
+
+  menuButton.addEventListener('click', clickHandler)
   menuIcon.addEventListener('load', styleSVG)
+
   return {
     showMenuIcon
   }
 
   function showMenuIcon() {
-    const { camera, subjects: { comma: { mesh } } } = window.scene.userData;
     document.body.appendChild(menuButton)
-    positionDOMElement(menuButton, mesh, camera)
+    positionDOMElement(menuButton)
   }
 }
 
 function styleSVG(e) {
   const { contentDocument } = e.target;
   const rects = contentDocument.querySelectorAll('.cls-2');
-  const fill = 'linear-gradient(40deg, #be95ff, #c6c6c6, #ff8389)'
+
   for (let i = 0; i < rects.length; i++) {
     rects[i].style.transition = 'opacity .7s ease;'
     rects[i].style.opacity = 1;
@@ -33,7 +36,15 @@ function styleSVG(e) {
   }
 }
 
-function positionDOMElement(element, target, camera) {
+function positionDOMElement(element) {
+  const {
+    camera,
+    device: { type: deviceType },
+    subjects: { comma: { mesh: target } }
+  } = window.scene.userData;
+
+  console.log(deviceType)
+
   const tempCenterVector = new Vector3();
   const {
     clientWidth: canvasWidth,
@@ -48,7 +59,14 @@ function positionDOMElement(element, target, camera) {
   tempCenterVector.applyMatrix4(target.matrixWorld);
   tempCenterVector.project(camera);
 
-  const x = (tempCenterVector.x *  .5 + .5) * canvasWidth + 16;
-  const y = (tempCenterVector.y * -.5 + .5) * canvasHeight - 4;
+  const xOffset = deviceType === "mobile" ? 4 : 16;
+  const yOffset = deviceType === "mobile" ? 6 : 4;
+
+  const x = (tempCenterVector.x *  .5 + .5) * canvasWidth + xOffset;
+  const y = (tempCenterVector.y * -.5 + .5) * canvasHeight - yOffset;
   element.style.transform = `translate(-50%, -50%) translate(${x}px,${y}px)`;
+}
+
+function clickHandler() {
+  console.log('clicky')
 }
