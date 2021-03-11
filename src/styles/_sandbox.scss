@@ -16,13 +16,31 @@
     -webkit-backdrop-filter: blur(.5rem);
     backdrop-filter: blur(.5rem);
     transition: color, filter 0.4s ease;
+    overflow: hidden;
     cursor: pointer;
+  }
+
+  h2::before {
+    content: '';
+    display: block;
+    position: absolute;
+    background: rgba(#f4f4f4, .5);
+    width: 4rem;
+    height: 100%;
+    top: 0;
+    filter: blur(2rem);
+    transform: translateX(-6rem) skewX(-15deg);
   }
 
   h2:hover {
     filter: hue-rotate(75deg);
     color: #f4f4f4;
     background: -webkit-linear-gradient(40deg, rgba(255,131,137,.2)), rgba(190, 149, 255, .2);
+
+    &::before {
+      transform: translateX(18rem) skewX(-15deg);
+      transition: 0.7s;
+    }
   }
 
   h2:nth-child(1) {
