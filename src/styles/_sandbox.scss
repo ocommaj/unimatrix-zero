@@ -33,9 +33,9 @@
   }
 
   h2:hover {
-    filter: hue-rotate(75deg);
+    //filter: hue-rotate(75deg);
     color: #f4f4f4;
-    background: -webkit-linear-gradient(40deg, rgba(255,131,137,.2)), rgba(190, 149, 255, .2);
+    background: -webkit-linear-gradient(40deg, rgba(255,131,137,.8)), rgba(190, 149, 255, .8);
 
     &::before {
       transform: translateX(18rem) skewX(-15deg);

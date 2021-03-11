@@ -43,8 +43,6 @@ function positionDOMElement(element) {
     subjects: { comma: { mesh: target } }
   } = window.scene.userData;
 
-  console.log(deviceType)
-
   const tempCenterVector = new Vector3();
   const {
     clientWidth: canvasWidth,
@@ -65,6 +63,10 @@ function positionDOMElement(element) {
   const x = (tempCenterVector.x *  .5 + .5) * canvasWidth + xOffset;
   const y = (tempCenterVector.y * -.5 + .5) * canvasHeight - yOffset;
   element.style.transform = `translate(-50%, -50%) translate(${x}px,${y}px)`;
+
+  if (deviceType !== "mobile") {
+    element.style.display = 'none';
+  }
 }
 
 function clickHandler() {
