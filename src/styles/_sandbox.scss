@@ -50,7 +50,6 @@
   h2:last-child {
     border-bottom-right-radius: .5rem;
     border-bottom-left-radius: .5rem;
-    //bottom: 1rem;
   }
 }
 
@@ -63,8 +62,7 @@
   opacity: 0;
   transition: opacity .7s ease;
 
-  .wrappedContent {
-    color: gray;
+  color: gray;
 
     ul {
       margin: 0;
@@ -186,7 +184,7 @@
       }
     }
   }
-}
+
 
 .overlayHtml {
   position: absolute;

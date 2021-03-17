@@ -10,9 +10,9 @@ export default function main() {
   const canvasWrapper = document.getElementById('canvasWrapper');
   const canvas = document.getElementById('canvas');
 
-  const introList = {
+  /*const introList = {
     padi: document.getElementById('introListItem_padi'),
-  };
+  };*/
 
   body.width = innerWidth;
   body.height = innerHeight;
@@ -35,7 +35,7 @@ export default function main() {
     canvas.addEventListener('touchstart', (e) => scene.onClick(e));
     canvas.addEventListener('mousemove', (e) => scene.onMouseMove(e));
     canvas.addEventListener('click', (e) => scene.onClick(e));
-    introList.padi.addEventListener('click', clickHandler)
+    //introList.padi.addEventListener('click', clickHandler)
   }
 
   function clickHandler() {
