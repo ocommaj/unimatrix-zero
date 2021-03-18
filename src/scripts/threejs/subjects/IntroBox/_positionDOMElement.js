@@ -1,21 +1,20 @@
 import { Vector3 } from 'three';
-import { IntroBox } from '../../../browserElements';
+import { ContentBox } from '../../../browserElements';
 
-export default function positionDOMElement(inMeshGroup, camera) {
-  const introBoxDOM = document.getElementById('introBox') || IntroBox();
+export default async function positionDOMElement(inMeshGroup, camera) {
+  const element = document.getElementById('contentBox')
+    || await ContentBox('intro');
   const {
     style,
     clientWidth: elemWidth,
     clientHeight: elemHeight,
-  } = introBoxDOM;
+  } = element;
 
   const tempCenterVector = new Vector3()
   const {
     clientWidth: canvasWidth,
     clientHeight: canvasHeight,
   } = document.getElementById('canvas');
-
-
 
   const target = inMeshGroup.getObjectByName('introBoxBG');
   const { device } = inMeshGroup.userData;

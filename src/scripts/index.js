@@ -24,7 +24,6 @@ export default function main() {
   buttonWrapper.height = innerHeight;
   canvasWrapper.height = innerWidth;
 
-
   const scene = new SceneManager({ canvas, device });
 
   bindEventListeners();

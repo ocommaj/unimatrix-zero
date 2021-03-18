@@ -45,4 +45,19 @@ const CONTENT_ITEMS = [
   }
 ]
 
-export default CONTENT_ITEMS
+export function loadContentElements(container) {
+  const introList = document.createElement('ul');
+  introList.id = 'introList';
+
+  CONTENT_ITEMS.forEach(item => {
+    const listItem = document.createElement('li');
+    listItem.id = `introListItem_${item.id}`;
+    listItem.innerHTML = item.content;
+    introList.appendChild(listItem);
+  })
+  //return introList
+  container.appendChild(introList);
+}
+
+//export default CONTENT_ITEMS
+//export default loadContentElements

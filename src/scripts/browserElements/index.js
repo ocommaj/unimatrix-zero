@@ -1,4 +1,4 @@
 import Device from './_detectDevice';
-import IntroBox from './IntroBox';
+import ContentBox from './ContentBox';
 import MenuButton from './_MenuButton';
-export { Device, IntroBox, MenuButton };
+export { Device, ContentBox, MenuButton };
