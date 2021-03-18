@@ -54,6 +54,8 @@
 }
 
 #contentBox {
+  direction: rtl;
+  margin-top: 1.5rem;
   padding: 0 1rem;
   padding-left: 1.5rem;
   color: lightgray;
@@ -62,14 +64,18 @@
   opacity: 0;
   transition: opacity .7s ease;
 
+  overflow-y: scroll;
   color: gray;
+  //background-color: #c6c6c6;
 
     ul {
       margin: 0;
       padding-left: 1rem;
+      direction: ltr;
     }
 
     li {
+      //direction: ltr;
       font-size: 1.4rem;
       margin: .5rem 0;
       margin-top: 0;

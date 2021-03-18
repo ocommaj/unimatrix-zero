@@ -26,17 +26,33 @@ export default async function positionDOMElement(inMeshGroup, camera) {
   tempCenterVector.applyMatrix4(target.matrixWorld);
   tempCenterVector.project(camera)
 
+  const tempMax = new Vector3()
+  const tempMin = new Vector3()
+
+  tempMax.copy(boundingBox.max)
+  tempMin.copy(boundingBox.min)
+
+  tempMax.project(camera)
+  tempMin.project(camera)
+
+  const projectTop = ((tempMax.y * .5) * canvasHeight)
+  const projectBottom = ((tempMin.y * .5 + .75) * canvasHeight)
+
   const offsetXfactor = device.type === 'desktop' ? .45 : .225;
-  const offsetYfactor = .725;
+  const offsetYfactor = .775;
+
+  const maxHeight = (projectBottom - projectTop) * offsetYfactor
+
   const offset = {
     x: (elemWidth * offsetXfactor),
-    y: (elemHeight * offsetYfactor)
+    y: (maxHeight * offsetYfactor)
   }
 
   const left = ((tempCenterVector.x * .5 + .5) * canvasWidth) - offset.x;
   const top = ((tempCenterVector.y * .5 + .5) * canvasHeight) - offset.y;
 
   style.visibility = 'visible';
+  style.maxHeight = `${maxHeight}px`;
   style.transform = `translate(${left}px, ${top}px) skew(0deg, -1deg)`;
   style.opacity = 1;
 }

@@ -42,7 +42,15 @@ const CONTENT_ITEMS = [
   {
     id: "geek",
     content: "Trek, not Wars &#128406."
-  }
+  },
+  /*{
+    id: "test_one",
+    content: "Overflow."
+  },
+  {
+    id: "test_two",
+    content: "More Overflow."
+  }*/
 ]
 
 export function loadContentElements(container) {
