@@ -23,16 +23,23 @@ export function loadContentElements(container) {
 
 function portfolioProjectElement(item) {
   const element = document.createElement('div');
+  element.classList.add('portfolioItem');
+  element.id = `portfolioItem_${item.projectID}`;
+
   const title = document.createElement('a');
-  title.href = item.projectURL;
+  title.classList.add('portfolioItemLink')
   title.id = `portfolioItemTitle_${item.projectID}`;
+  title.href = item.projectURL;
+  title.target = '_blank';
   title.innerHTML = item.title;
 
   const iframe = document.createElement('iframe');
+  iframe.classList.add('portfolioItemPreview');
   iframe.id = `portfolioItemPreview_${item.projectID}`;
   iframe.src = item.previewURL;
 
   const projectBrief = document.createElement('p');
+  projectBrief.classList.add('portfolioItemDescription');
   projectBrief.id = `portfolioItemDescription_${item.description}`;
   projectBrief.innerHTML = item.description;
 
