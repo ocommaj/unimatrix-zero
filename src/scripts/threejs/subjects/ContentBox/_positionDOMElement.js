@@ -35,24 +35,31 @@ export default async function positionDOMElement(inMeshGroup, camera) {
   tempMax.project(camera)
   tempMin.project(camera)
 
+  const offsetXfactor = device.type === 'desktop' ? .45 : .125/*.225*/;
+  const offsetYfactor = device.type === 'desktop' ? .75 : .7125;
+  //const offsetYfactor = device.type === 'desktop' ? .5 : .675;
+
   const projectTop = ((tempMax.y * .5) * canvasHeight)
-  const projectBottom = ((tempMin.y * .5 + .75) * canvasHeight)
+  const projectBottom = ((tempMin.y * .5 + offsetYfactor) * canvasHeight)
+  const projectLeft = ((tempMin.x * .5) * canvasWidth)
+  const projectRight = ((tempMax.x * .5) * canvasWidth)
 
-  const offsetXfactor = device.type === 'desktop' ? .45 : .225;
-  const offsetYfactor = .775;
-
-  const maxHeight = (projectBottom - projectTop) * offsetYfactor
+  const maxHeight = ((projectBottom - projectTop) * offsetYfactor)
+  const maxWidth = 300;
 
   const offset = {
-    x: (elemWidth * offsetXfactor),
+    x: (maxWidth * offsetXfactor),
     y: (maxHeight * offsetYfactor)
   }
 
   const left = ((tempCenterVector.x * .5 + .5) * canvasWidth) - offset.x;
+  //const right = ((tempCenterVector.x * .5 + .5) * canvasWidth) + offset.x;
   const top = ((tempCenterVector.y * .5 + .5) * canvasHeight) - offset.y;
+  const bottom = ((tempCenterVector.y * .5 - .5) * canvasHeight);
 
-  style.visibility = 'visible';
-  style.maxHeight = `${maxHeight}px`;
-  style.transform = `translate(${left}px, ${top}px) skew(0deg, -1deg)`;
+  style.height = `${maxHeight}px`;
+  style.top = `${top}px`;
+  style.bottom = `${top + maxHeight}px`;
+  style.left = `${left}px`;
   style.opacity = 1;
 }

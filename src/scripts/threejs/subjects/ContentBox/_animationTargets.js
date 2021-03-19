@@ -40,7 +40,7 @@ const largeWidth = {
 const smallWidth = {
   comma: {
     positions: [
-      { x: '-=.6', y: '-=1.25', z: '+=10' },
+      { x: '-=.6', y: '-=1.3', z: '+=10' },
       { z: '-=.25' }
     ],
     scale: { x: '+=.025', z: 0.5 },
@@ -65,7 +65,7 @@ const smallWidth = {
   },
   horizontal: {
     topPosition: { x: '+=1.4', y: '+=.5', z: '+=10.25' },
-    bottomPosition: { x: '+=1.4', y: '-=1.75', z: '+=10.25' },
+    bottomPosition: { x: '+=1.4', y: '-=1.8', z: '+=10.25' },
     scaleMid: { x: 4.25, y: .5 }
   },
   vertical: {

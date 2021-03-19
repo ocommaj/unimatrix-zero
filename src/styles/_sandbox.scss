@@ -55,18 +55,17 @@
 
 #contentBox {
   direction: rtl;
-  margin-top: 1.5rem;
-  padding: 0 1rem;
-  padding-left: 1.5rem;
-  color: lightgray;
-  top: 0rem;
-  left: 0rem;
+  max-width: 300px;
+  padding: 0;
+  color: #f4f4f4;
   opacity: 0;
   transition: opacity .7s ease;
 
   overflow-y: scroll;
-  color: gray;
   //background-color: #c6c6c6;
+    * {
+      direction: ltr;
+    }
 
     iframe {
       width: 100%;
@@ -74,16 +73,21 @@
     }
 
     ul {
+      height: 100%;
       margin: 0;
-      padding-left: 1rem;
+      padding-left: 0;
       direction: ltr;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
     }
 
     li {
       //direction: ltr;
       font-size: 1.4rem;
-      margin: .5rem 0;
-      margin-top: 0;
+      margin: 0;
+      //margin: .5rem 0;
+      //margin-top: 0;
       max-width: 70vw;
       list-style: none;
       list-style-position: outside;
