@@ -1,4 +1,5 @@
+import './_barButtons';
 import Device from './_detectDevice';
-import ContentBox from './ContentBox';
 import MenuButton from './_MenuButton';
+import { ContentBox }  from './ContentBox';
 export { Device, ContentBox, MenuButton };

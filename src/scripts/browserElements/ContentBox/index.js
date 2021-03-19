@@ -1,2 +1,2 @@
-import ContentBox from './_ContentBox';
-export default ContentBox;
+import { ContentBox, switchContent } from './_ContentBox';
+export { ContentBox, switchContent };

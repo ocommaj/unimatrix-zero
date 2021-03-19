@@ -4,7 +4,7 @@ import animationTargets from './_animationTargets';
 import mergeGeometry from './_mergeGeometry';
 import positionDOMElement from './_positionDOMElement';
 
-export default function IntroBox({ scene, camera }) {
+export default function ContentBox({ scene, camera }) {
   const mainCube = scene.getObjectByName('mainMessageCube');
   const sideLength = Math.cbrt(mainCube.children.length);
   const sliceLength = Math.pow(sideLength, 2);
