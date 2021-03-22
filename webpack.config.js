@@ -12,9 +12,9 @@ module.exports = {
         options: { esModule: true },
       },
       {
-        test: /\.(png|svg|jpg|gif|ico)$/,
+        test: /\.(png|svg|jpg|jpeg|gif|ico)$/,
         type: 'asset/resource',
-        /* use: [
+        /*use: [
           'file-loader',
           {
             loader: 'image-webpack-loader',
