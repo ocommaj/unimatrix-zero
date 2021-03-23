@@ -4,7 +4,10 @@ const CONTENT_ITEMS = [
     displayURL: 'hailstone.ocommaj.com',
     projectURL: 'https://hailstone.ocommaj.com',
     previewType: 'iframe',
-    loadSrc: (element) => { element.src = 'https://hailstone.ocommaj.com'},
+    loadSrc: (element) => {
+      element.src = 'https://hailstone.ocommaj.com',
+      element.sandbox = 'allow-scripts allow-same-origin'
+    },
     title: 'Chuuk Wreck Map',
     description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
   },
@@ -23,7 +26,7 @@ const CONTENT_ITEMS = [
   },
   {
     projectID: 'xavierHome',
-    displayURL: 'Xavier High School, FSM',
+    displayURL: 'Xavier HS, Micronesia',
     projectURL: 'https://www.xaviermicronesia.org',
     previewType: 'img',
     loadSrc: (element) => {
@@ -31,7 +34,7 @@ const CONTENT_ITEMS = [
       '../../../assets/img/xavierWebsitePreview.jpg')
         .then(src => { element.src = src.default })
     },
-    title: 'Xavier High School, FSM',
+    title: 'Xavier High School',
     description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
   }
 ]

@@ -1,23 +1,10 @@
 @use '../thirdParty/includeMedia' as *;
 
-@mixin responsive-canvas-wrapper {
-  @include media(">=desktop") {
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 30% 100%, 0 65%);
-  }
-  @include media("<desktop") {
-    //clip-path: polygon(0 0, 100% 0, 100% 80%, 0 77.5%);
-  }
-}
-
 @mixin responsive-buttons-wrapper {
   @include media(">=desktop") {
     clip-path: polygon(0 65%, 0% 100%, 30% 100%);
   }
 
-  @include media("<desktop") {
-    //clip-path: polygon(0 80%, 100% 85%, 100% 100%, 0 100%);
-    display: none;
-  }
 }
 
 @mixin responsive-button-width {
@@ -26,9 +13,48 @@
     bottom: 2rem;
   }
 
-  @include media("<desktop") {
-    //width: calc(100% - 4rem);
-    //bottom: 1rem;
-    display: none;
+  @include media("<=desktop", ">=tablet") {
+    width: calc(100% - 4rem);
+    bottom: 2rem;
+    flex-direction: row;
+  }
+
+  @include media("<=tablet") {
+    width: calc(100% - 2rem);
+    flex-direction: row;
+    left: 1rem;
+    top: 80vh;
+    justify-content: center;
+
+    h2 {
+      width: auto;
+    }
+  }
+
+}
+
+@mixin responsive-bar-buttons {
+  @include media(">=desktop") {
+    h2:nth-child(1) {
+      border-top-left-radius: .5rem;
+      border-top-right-radius: .5rem;
+    }
+
+    h2:last-child {
+      border-bottom-right-radius: .5rem;
+      border-bottom-left-radius: .5rem;
+    }
+  }
+}
+
+@mixin responsive-portfolio-items {
+  @include media("<=tablet") {
+      .portfolioItem {
+        padding-left: 0;
+      }
+
+      .portfolioItemPreview {
+        max-width: 90%;
+      }
   }
 }

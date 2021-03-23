@@ -1,7 +1,6 @@
 import CubedCubes from './CubedCubes';
 import SpellHi from './_Hi';
 import { showComma } from '../animate';
-import { MenuButton } from '../../browserElements'
 
 export default function MessageCube({scene, configCubed}) {
   const Cube = new CubedCubes(configCubed);
@@ -89,9 +88,12 @@ export default function MessageCube({scene, configCubed}) {
       this.update = null;
     };
     const showIntroBox = () => {
-      const { showMenuIcon } = MenuButton();
-      const IntroBox = scene.userData.subjects.introBox;
-      IntroBox.reveal(() => showMenuIcon());
+      const { introBox } = scene.userData.subjects;
+      const onComplete = () => {
+        const menuButtons = document.getElementById('barWrapper')
+        barWrapper.classList.toggle('invisible')
+      }
+      introBox.reveal(onComplete);
     };
 
     const args = { device, onStart, afterMove, onComplete: showIntroBox };

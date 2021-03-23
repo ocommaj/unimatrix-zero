@@ -107,9 +107,9 @@ export default function SceneManager({ canvas, device }) {
 
     const introBox = Subjects.introBox({ scene, camera });
 
-    if (device.type !== 'mobile') {
+    //if (device.type !== 'mobile') {
       const hollowEarth = Subjects.hollowEarth({ scene, camera })
-    }
+    //}
 
     return {
       hexLayer,
