@@ -64,8 +64,8 @@ canvas {
   z-index: 1100;
   top: 0;
   left: 0;
-  width: 48px;
-  height: 48px;
+  width: 2.5rem;
+  height: 2.5rem;
 
   background: none;
   border: none;
@@ -121,15 +121,6 @@ and (-webkit-device-pixel-ratio: 2) {
 }
 
 @media only screen
-and (min-width: 375px)
-and (max-width: 413px)
-and (-webkit-device-pixel-ratio: 3) {
-  :root {
-    font-size: 13.5px;
-  }
-}
-
-@media only screen
 and (min-width: 414px)
 and (max-width: 428px)
 and (-webkit-device-pixel-ratio: 2) {
@@ -139,11 +130,20 @@ and (-webkit-device-pixel-ratio: 2) {
 }
 
 @media only screen
+and (min-width: 375px)
+and (max-width: 428px)
+and (-webkit-device-pixel-ratio: 3) {
+  :root {
+    font-size: 13.5px;
+  }
+}
+
+/*@media only screen
 and (min-width: 414px)
 and (max-width: 428px)
 and (-webkit-device-pixel-ratio: 3) {
   :root {
-    //font-size: 13.5px;
-    font-size: 15px;
+    font-size: 13.5px;
+    //font-size: 15px;
   }
-}
+}*/
