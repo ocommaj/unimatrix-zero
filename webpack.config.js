@@ -13,13 +13,7 @@ module.exports = {
       },
       {
         test: /\.(png|svg|jpg|jpeg|gif|ico)$/,
-        type: 'asset/resource',
-        /*use: [
-          'file-loader',
-          {
-            loader: 'image-webpack-loader',
-          },
-        ],*/
+        type: 'asset/resource'
       },
       {
         test: /\.ttf$/,
@@ -59,6 +53,9 @@ module.exports = {
       template: './src/index.html',
       filename: './index.html',
       favicon: './src/assets/icons/favicon/fav.ico',
+      meta: {
+        "og:image": "https://github.com/ocommaj/unimatrix-zero/blob/main/src/assets/img/ocommaj_preview_hi.jpg?raw=true"
+      }
     }),
   ],
   mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
