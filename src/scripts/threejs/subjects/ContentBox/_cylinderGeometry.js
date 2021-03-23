@@ -15,7 +15,7 @@ export default function introBoxCylinder(deviceType) {
     mobile: {
       radiusTop: 5.25,
       radiusBottom: 5.25,
-      height: 5.5,
+      height: 5,
       radialSegments: 64,
       heightSegments: 1,
       openEnded: true,

@@ -143,6 +143,7 @@ and (min-width: 414px)
 and (max-width: 428px)
 and (-webkit-device-pixel-ratio: 3) {
   :root {
-    font-size: 13.5px;
+    //font-size: 13.5px;
+    font-size: 15px;
   }
 }

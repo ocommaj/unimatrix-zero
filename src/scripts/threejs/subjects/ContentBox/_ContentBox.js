@@ -109,6 +109,12 @@ export default function ContentBox({ scene, camera }) {
 
   function animateReveal(onComplete) {
     const { device } = scene.userData;
+    //console.dir(device)
+    /*const animTarget =
+      (!!device.model && device.model === 'X/XS/11Pro/12Mini')
+        ? animationTargets.iPhoneXXSup
+        : animationTargets[device.type]
+    const target = { device, ...animTarget };*/
     const target = { device, ...animationTargets[device.type] };
     const comma = scene.getObjectByName('messageComma');
     const callback = () => {
