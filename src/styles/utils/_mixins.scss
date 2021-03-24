@@ -10,20 +10,20 @@
 @mixin responsive-button-width {
   @include media(">=desktop") {
     width: 15rem;
-    bottom: 2rem;
+    flex-direction: column;
   }
 
   @include media("<=desktop", ">=tablet") {
-    width: calc(100% - 4rem);
-    bottom: 2rem;
-    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+
+    .navButton {
+      width: auto;
+    }
   }
 
   @include media("<=tablet") {
-    width: calc(100% - 2rem);
-    flex-direction: row;
-    left: 1rem;
-    top: 80vh;
+    width: 100%;
     justify-content: center;
 
     .navButton {

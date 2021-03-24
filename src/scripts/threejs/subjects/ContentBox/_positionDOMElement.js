@@ -50,7 +50,7 @@ export default async function positionDOMElement(inMeshGroup, camera) {
   const maxWidth = setMaxWidth(canvasWidth)
 
   function setMaxWidth(canvasWidth) {
-    if (canvasWidth <= 415) {
+    if (canvasWidth <= 428) {
       return canvasWidth * .65
     } else if (canvasWidth <= 1440) {
       return 300

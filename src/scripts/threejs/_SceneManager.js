@@ -78,13 +78,13 @@ export default function SceneManager({ canvas, device }) {
 
       function iPhoneZoom(model) {
         const initialZooms = {
-          '8': 17,
+          '8': 16.25,
           '8Plus': 16.5,
-          'X/XS/11Pro/12Mini': 18.5,
-          'XR/11': 18.75,
-          'XSMax/11ProMax': 19,
-          '12/12Pro': 18.5,
-          '12ProMax': 20,
+          'X/XS/11Pro/12Mini': 16.75,
+          'XR/11': 16.75,
+          'XSMax/11ProMax': 16.75,
+          '12/12Pro': 16.75,
+          '12ProMax': 16.75,
         }
         return initialZooms[model]
       }

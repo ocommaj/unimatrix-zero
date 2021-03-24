@@ -9,8 +9,6 @@ body {
   font-family: 'Chicago', 'Open Sans', monospace;
   color: #f4f4f4;
   margin: 0;
-  width: 100vw;
-  height: 100vh;
   position: relative;
   overflow: hidden;
 }
@@ -34,10 +32,12 @@ body {
 
 #navButtonsWrapper {
   position: absolute;
+
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
+  margin: 1rem;
   @include responsive-buttons-wrapper;
 
   pointer-events: none;
@@ -56,12 +56,9 @@ body {
 }
 
 #navButtons {
-  visibility: visible;
   position: absolute;
-  left: 2rem;
   display: flex;
-  flex-direction: column;
-  height: auto;
+  bottom: 1rem;
   @include responsive-button-width;
   @include responsive-bar-buttons;
 

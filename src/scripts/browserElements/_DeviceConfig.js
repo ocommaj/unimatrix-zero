@@ -13,6 +13,16 @@ function DeviceConfig() {
   }
 }
 
+function domThreeInterface(deviceType) {
+  const initialCameraPos = {}
+  //switch (deviceType)
+
+
+  return {
+    contentBoxConfig: contentBoxConfig(deviceType)
+  }
+}
+
 function contentBoxConfig(deviceType) {
   const config = {}
   switch (deviceType) {
@@ -25,15 +35,16 @@ function contentBoxConfig(deviceType) {
       config.offsetYfactor = .75;
       break;
     case '8':
-    case '8Plus': {
+    case '8Plus':
+    case 'XR/11':
+    case 'X/XS/11Pro/12Mini':
+    case 'XSMax/11ProMax':
+    case '12/12Pro':
+    case '12ProMax': {
       config.offsetXfactor = .125;
       config.offsetYfactor = .75;
       break;
     }
-    case 'X/XS/11Pro/12Mini':
-      config.offsetXfactor = .125;
-      config.offsetYfactor = .7125;
-      break;
     default:
       config.offsetXfactor = .125;
       config.offsetYfactor = .75;
