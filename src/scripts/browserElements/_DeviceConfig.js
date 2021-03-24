@@ -15,8 +15,6 @@ function DeviceConfig() {
 
 function domThreeInterface(deviceType) {
   const initialCameraPos = {}
-  //switch (deviceType)
-
 
   return {
     contentBoxConfig: contentBoxConfig(deviceType)
