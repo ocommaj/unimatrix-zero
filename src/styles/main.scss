@@ -24,7 +24,6 @@ body {
     display: block;
     width: 100%;
     height: 100%;
-    //@include responsive-canvas-wrapper;
   }
 }
 
@@ -33,24 +32,20 @@ body {
   font-size: 16px;
 }
 
-//#barWrapper {
 #navButtonsWrapper {
-  width: 100%;
-  height: 100%;
-
   position: absolute;
-  top: 1rem;
+  top: 0;
   bottom: 0;
   left: 0;
   right: 0;
   @include responsive-buttons-wrapper;
 
   pointer-events: none;
-
-  //opacity: 0;
 }
 
 .overlayHtml {
+  position: absolute;
+  z-index: 1000;
   transition: opacity 0.7s ease;
   pointer-events: auto;
 }
@@ -60,7 +55,6 @@ body {
   pointer-events: none;
 }
 
-//#barButtons {
 #navButtons {
   visibility: visible;
   position: absolute;
@@ -92,31 +86,8 @@ body {
   cursor: pointer;
 }
 
-/*#menuButton::before {
-  content: '';
-  display: block;
-  position: absolute;
-  background: rgba(#f4f4f4, .25);
-  width: 1rem;
-  height: 50%;
-  top: .5rem;
-  filter: blur(1rem);
-  transform: translateX(-3rem) skewX(-15deg);
-}
-
-#menuButton:hover {
-  &::before {
-    transform: translateX(6rem) skewX(-15deg);
-    transition: 0.7s;
-  }
-}*/
-
-#commaMenuIcon {
-  pointer-events: none;
-}
-
 @media only screen
-and (min-height: 900px) {
+and (min-width: 1441px) {
   :root {
     font-size: 20px;
   }
@@ -155,13 +126,3 @@ and (-webkit-device-pixel-ratio: 3) {
     font-size: 13.5px;
   }
 }
-
-/*@media only screen
-and (min-width: 414px)
-and (max-width: 428px)
-and (-webkit-device-pixel-ratio: 3) {
-  :root {
-    font-size: 13.5px;
-    //font-size: 15px;
-  }
-}*/

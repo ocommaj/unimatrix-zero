@@ -1,29 +1,19 @@
 @use 'components';
 
-#helperText {
-  h2 {
-    color: lightgray;
-  }
-}
+.navButton {
+  position: relative;
+  width: 100%;
+  margin: .125rem .25rem;
+  padding: .25rem .75rem;
+  color: #c6c6c6;
+  background: -webkit-linear-gradient(40deg, rgba(190, 149, 255, .2), rgba(255,131,137,.2));
+  -webkit-backdrop-filter: blur(.5rem);
+  backdrop-filter: blur(.5rem);
+  transition: color, filter 0.4s ease;
+  overflow: hidden;
+  cursor: pointer;
 
-//#barButtons {
-#navButtons {
-  h2 {
-    position: relative;
-    width: 100%;
-    margin: .125rem .25rem;
-    padding: .25rem .75rem;
-    color: #c6c6c6;
-    background: -webkit-linear-gradient(40deg, rgba(190, 149, 255, .2), rgba(255,131,137,.2));
-    -webkit-backdrop-filter: blur(.5rem);
-    backdrop-filter: blur(.5rem);
-    transition: color, filter 0.4s ease;
-    overflow: hidden;
-    cursor: pointer;
-
-  }
-
-  h2::before {
+  &::before {
     content: '';
     display: block;
     position: absolute;
@@ -35,22 +25,21 @@
     transform: translateX(-8rem) skewX(-15deg);
   }
 
-  h2:hover {
-    color: #f4f4f4;
-    background: -webkit-linear-gradient(40deg, rgba(255,131,137,.8)), rgba(190, 149, 255, .8);
+}
 
-    &::before {
-      transform: translateX(18rem) skewX(-15deg);
-      transition: 1s;
-    }
+.navButton:hover {
+  color: #f4f4f4;
+  background: -webkit-linear-gradient(40deg, rgba(255,131,137,.8)), rgba(190, 149, 255, .8);
+
+  &::before {
+    transform: translateX(18rem) skewX(-15deg);
+    transition: 1s;
   }
-
 }
 
 #contentBox {
   direction: rtl;
   margin-top: .5rem;
-  //max-width: 300px;
   padding: 0;
   color: #f4f4f4;
 
@@ -136,10 +125,6 @@
       animation-duration: 4.6s;
     }
 
-    li:last-child {
-      //line-height: 1
-    }
-
     @keyframes bg_gradient_slide {
       0% {
         background-position: 0 1600px;
@@ -187,9 +172,3 @@
       }
     }
   }
-
-
-.overlayHtml {
-  position: absolute;
-  z-index: 1000;
-}

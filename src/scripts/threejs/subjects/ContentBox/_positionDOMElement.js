@@ -48,7 +48,19 @@ export default async function positionDOMElement(inMeshGroup, camera) {
   const projectRight = ((tempMax.x * .5) * canvasWidth)
 
   const maxHeight = ((projectBottom - projectTop) * offsetYfactor)
-  const maxWidth = canvasWidth >= 415 ? 300 : canvasWidth * .65;
+  //const maxWidth = canvasWidth >= 415 ? 300 : canvasWidth * .65;
+
+  const maxWidth = setMaxWidth(canvasWidth)
+
+  function setMaxWidth(canvasWidth) {
+    if (canvasWidth <= 415) {
+      return canvasWidth * .65
+    } else if (canvasWidth <= 1440) {
+      return 300
+    } else {
+      return 350
+    }
+  }
 
   const offset = {
     x: (maxWidth * offsetXfactor),
