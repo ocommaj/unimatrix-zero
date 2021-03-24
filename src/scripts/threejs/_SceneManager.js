@@ -49,9 +49,7 @@ export default function SceneManager({ canvas, device }) {
     const fieldOfView = 60;
     const near = 1;
     const far = 100;
-    const camera = new PerspectiveCamera(
-      fieldOfView, aspect, near, far
-    );
+    const camera = new PerspectiveCamera(fieldOfView, aspect, near, far);
 
     camera.position.z = setZoom(width, height);
     camera.position.y = device.type === 'mobile' ? -1.25 : 0;
@@ -106,10 +104,7 @@ export default function SceneManager({ canvas, device }) {
     messageCube.punchThroughBG(hexLayer.mesh.geometry);
 
     const introBox = Subjects.introBox({ scene, camera });
-
-    //if (device.type !== 'mobile') {
-      const hollowEarth = Subjects.hollowEarth({ scene, camera })
-    //}
+    const hollowEarth = Subjects.hollowEarth({ scene, camera });
 
     return {
       hexLayer,

@@ -35,12 +35,9 @@ export default async function positionDOMElement(inMeshGroup, camera) {
   tempMax.project(camera)
   tempMin.project(camera)
 
-  const offsetXfactor = device.type === 'desktop' ? .45 : .125/*.225*/;
-  let offsetYfactor = device.type === 'desktop' ? .75 : .75;
-  if (!!device.model && device.model === 'X/XS/11Pro/12Mini') {
-    offsetYfactor = .7125;
-  }
-  //const offsetYfactor = device.type === 'desktop' ? .5 : .675;
+  const { contentBoxConfig: deviceConfig } = device;
+  const { offsetXfactor, offsetYfactor } = deviceConfig;
+
 
   const projectTop = ((tempMax.y * .5) * canvasHeight)
   const projectBottom = ((tempMin.y * .5 + offsetYfactor) * canvasHeight)

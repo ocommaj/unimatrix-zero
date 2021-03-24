@@ -1,27 +1,18 @@
-import { Device } from './browserElements';
 import SceneManager from './threejs';
 
 export default function main() {
-  const { device } = Device();
-  const { innerWidth, innerHeight } = window;
+  const { innerWidth, innerHeight, deviceConfig: device } = window;
 
   const body = document.querySelector('body');
-  //const buttonWrapper = document.getElementById('barWrapper');
   const canvasWrapper = document.getElementById('canvasWrapper');
   const canvas = document.getElementById('canvas');
-
-  /*const introList = {
-    padi: document.getElementById('introListItem_padi'),
-  };*/
 
   body.width = innerWidth;
   body.height = innerHeight;
   canvas.width = innerWidth;
-  //buttonWrapper.width = innerWidth;
   canvasWrapper.width = innerWidth;
 
   canvas.height = innerHeight;
-  //buttonWrapper.height = innerHeight;
   canvasWrapper.height = innerWidth;
 
   const scene = new SceneManager({ canvas, device });
@@ -34,7 +25,6 @@ export default function main() {
     canvas.addEventListener('touchstart', (e) => scene.onClick(e));
     canvas.addEventListener('mousemove', (e) => scene.onMouseMove(e));
     canvas.addEventListener('click', (e) => scene.onClick(e));
-    //introList.padi.addEventListener('click', clickHandler)
   }
 
   function clickHandler() {

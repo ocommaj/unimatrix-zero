@@ -1,15 +1,45 @@
-export default function Device() {
+DeviceConfig()
+
+function DeviceConfig() {
   const devicePixelRatio = window.devicePixelRatio ? window.devicePixelRatio : 1;
   const isMobile = mobileDetect();
-  const device = isMobile ? { ...isMobile } : { type: 'desktop' };
-  const events = isMobile ? [ 'touchStart' ] : ['resize', 'mousemove', 'click'];
+  const device = isMobile
+    ? { ...isMobile }
+    : { type: 'desktop', contentBoxConfig: contentBoxConfig('desktop') };
 
-  iPadDetect()
-
-  return { device: {
+  window.deviceConfig = {
     ...device,
     devicePixelRatio,
-  }, events };
+  }
+}
+
+function contentBoxConfig(deviceType) {
+  const config = {}
+  switch (deviceType) {
+    case 'desktop':
+      config.offsetXfactor = .45;
+      config.offsetYfactor = .75;
+      break;
+    case 'mobile':
+      config.offsetXfactor = .125;
+      config.offsetYfactor = .75;
+      break;
+    case '8':
+    case '8Plus': {
+      config.offsetXfactor = .125;
+      config.offsetYfactor = .75;
+      break;
+    }
+    case 'X/XS/11Pro/12Mini':
+      config.offsetXfactor = .125;
+      config.offsetYfactor = .7125;
+      break;
+    default:
+      config.offsetXfactor = .125;
+      config.offsetYfactor = .75;
+      break;
+  }
+  return config;
 }
 
 function iPadDetect() {
@@ -23,8 +53,15 @@ export function mobileDetect() {
   const testEx = /android|webos|iphone|ipod|blackberry|iemobile|opera mini/i;
   if (!testEx.test(userAgent)) return false;
   const iPhoneDetected = iPhoneModelDetect();
-  if (!iPhoneDetected) return { type: 'mobile' }
-  if (iPhoneDetected) return { type: 'mobile', ...iPhoneDetected }
+  if (!iPhoneDetected) return {
+    type: 'mobile',
+    contentBoxConfig: contentBoxConfig('mobile')
+  }
+  if (iPhoneDetected) return {
+    type: 'mobile',
+    ...iPhoneDetected,
+    contentBoxConfig: contentBoxConfig(iPhoneDetected.model)
+  }
 }
 
 function iPhoneModelDetect() {
@@ -76,7 +113,7 @@ function iPhoneModelDetect() {
   else {
     return {
       iPhone,
-      model: 'X/Xs'
+      model: 'X/XS/11Pro/12Mini'
     }
   }
 
