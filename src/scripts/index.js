@@ -6,7 +6,7 @@ export default function main() {
   const { innerWidth, innerHeight } = window;
 
   const body = document.querySelector('body');
-  const buttonWrapper = document.getElementById('barWrapper');
+  //const buttonWrapper = document.getElementById('barWrapper');
   const canvasWrapper = document.getElementById('canvasWrapper');
   const canvas = document.getElementById('canvas');
 
@@ -17,11 +17,11 @@ export default function main() {
   body.width = innerWidth;
   body.height = innerHeight;
   canvas.width = innerWidth;
-  buttonWrapper.width = innerWidth;
+  //buttonWrapper.width = innerWidth;
   canvasWrapper.width = innerWidth;
 
   canvas.height = innerHeight;
-  buttonWrapper.height = innerHeight;
+  //buttonWrapper.height = innerHeight;
   canvasWrapper.height = innerWidth;
 
   const scene = new SceneManager({ canvas, device });

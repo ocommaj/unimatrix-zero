@@ -3,9 +3,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
 module.exports = {
-  /*devServer: {
+  devServer: {
     host: '0.0.0.0'
-  },*/
+  },
   entry: './src/index.js',
   module: {
     rules: [

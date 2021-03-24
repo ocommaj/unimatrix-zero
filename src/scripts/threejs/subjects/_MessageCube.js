@@ -89,10 +89,8 @@ export default function MessageCube({scene, configCubed}) {
     };
     const showIntroBox = () => {
       const { introBox } = scene.userData.subjects;
-      const onComplete = () => {
-        const menuButtons = document.getElementById('barWrapper')
-        barWrapper.classList.toggle('invisible')
-      }
+      const { revealNavButtons: onComplete } = window;
+
       introBox.reveal(onComplete);
     };
 

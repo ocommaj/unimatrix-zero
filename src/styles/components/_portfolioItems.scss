@@ -9,16 +9,14 @@
   .portfolioItemLink {
     appearance: none;
     font-size: 1.5rem;
-    //padding-left: 1rem;
     text-decoration: none;
     color: #f4f4f4;
   }
 
   .portfolioItemPreview {
     width: 95%;
-    height: 20vh;
+    //height: 20vh;
     margin-top: .75rem;
-    //margin-left: 1.25rem;
     outline: none;
     border: none;
   }
@@ -26,7 +24,6 @@
   .portfolioItemDescription {
     max-width: 90%;
     margin-top: .5rem;
-    //padding-left: 1.5rem;
   }
 
   @include responsive-portfolio-items;
