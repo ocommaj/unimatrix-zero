@@ -21,6 +21,21 @@ function domThreeInterface(deviceType) {
   }
 }
 
+function initialCameraPos(deviceType) {
+  const { width } = window.screen;
+  const config = {}
+  switch (deviceType) {
+    case 'desktop':
+      config.zPos = width >= 800 ? 16 : 12;
+      config.yPos = 0;
+      break;
+    case 'mobile':
+      config.yPos = -1.25;
+      config.zPos = 16.75;
+      break;
+  }
+}
+
 function contentBoxConfig(deviceType) {
   const config = {}
   switch (deviceType) {

@@ -8,14 +8,14 @@ export default function main() {
   const canvas = document.getElementById('canvas');
   const buttonWrapper = document.getElementById('navButtonsWrapper');
 
-  body.width = innerWidth;
-  body.height = innerHeight;
+  //body.width = innerWidth;
+  //body.height = innerHeight;
   canvas.width = innerWidth;
-  canvasWrapper.width = innerWidth;
+  //canvasWrapper.width = innerWidth;
   buttonWrapper.width = innerWidth;
 
   canvas.height = innerHeight;
-  canvasWrapper.height = innerWidth;
+  //canvasWrapper.height = innerWidth;
   buttonWrapper.height = innerHeight;
 
   const scene = new SceneManager({ canvas, device });
@@ -42,10 +42,11 @@ export default function main() {
   }
 
   function resizeCanvas() {
+    const { innerWidth: width, innerHeight: height } = window
     canvas.style.width = '100%';
     canvas.style.height = '100%';
-    canvas.width = canvas.offsetWidth;
-    canvas.height = canvas.offsetHeight;
+    canvas.width = width;
+    canvas.height = height;
     scene.onWindowResize();
   }
 
