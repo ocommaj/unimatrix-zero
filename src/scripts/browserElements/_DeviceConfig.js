@@ -1,11 +1,11 @@
 DeviceConfig()
 
 function DeviceConfig() {
-  const devicePixelRatio = window.devicePixelRatio ? window.devicePixelRatio : 1;
+  const devicePixelRatio = window.devicePixelRatio || 1;
   const isMobile = mobileDetect();
   const device = isMobile
     ? { ...isMobile }
-    : { type: 'desktop', contentBoxConfig: contentBoxConfig('desktop') };
+    : { type: 'desktop', ...threejsDOMInterface('desktop') };
 
   window.deviceConfig = {
     ...device,
@@ -13,39 +13,33 @@ function DeviceConfig() {
   }
 }
 
-function domThreeInterface(deviceType) {
-  const initialCameraPos = {}
-
+function threejsDOMInterface(deviceType) {
   return {
-    contentBoxConfig: contentBoxConfig(deviceType)
-  }
-}
-
-function initialCameraPos(deviceType) {
-  const { width } = window.screen;
-  const config = {}
-  switch (deviceType) {
-    case 'desktop':
-      config.zPos = width >= 800 ? 16 : 12;
-      config.yPos = 0;
-      break;
-    case 'mobile':
-      config.yPos = -1.25;
-      config.zPos = 16.75;
-      break;
+    contentBoxConfig: contentBoxConfig(deviceType),
+    defaultCameraPos: defaultCameraPos(deviceType)
   }
 }
 
 function contentBoxConfig(deviceType) {
+  return {
+    offsetXfactor: deviceType === 'desktop' ? .45 : .125,
+    offsetYfactor: .75,
+  }
+}
+
+function defaultCameraPos(deviceType) {
   const config = {}
   switch (deviceType) {
     case 'desktop':
-      config.offsetXfactor = .45;
-      config.offsetYfactor = .75;
+      config.yPos = 0;
+      config.zPos = (width=null) => {
+        const checkWidth = !!width ? width : window.screen.width;
+        return checkWidth >= 800 ? 12 : 16
+       };
       break;
     case 'mobile':
-      config.offsetXfactor = .125;
-      config.offsetYfactor = .75;
+      config.yPos = -1.25;
+      config.zPos = 16.75;
       break;
     case '8':
     case '8Plus':
@@ -53,14 +47,13 @@ function contentBoxConfig(deviceType) {
     case 'X/XS/11Pro/12Mini':
     case 'XSMax/11ProMax':
     case '12/12Pro':
-    case '12ProMax': {
-      config.offsetXfactor = .125;
-      config.offsetYfactor = .75;
+    case '12ProMax':
+      config.yPos = -1.25;
+      config.zPos = 16.75;
       break;
-    }
     default:
-      config.offsetXfactor = .125;
-      config.offsetYfactor = .75;
+      config.yPos = -1.25;
+      config.zPos = 16.75;
       break;
   }
   return config;
@@ -79,12 +72,12 @@ export function mobileDetect() {
   const iPhoneDetected = iPhoneModelDetect();
   if (!iPhoneDetected) return {
     type: 'mobile',
-    contentBoxConfig: contentBoxConfig('mobile')
+    ...threejsDOMInterface('mobile')
   }
   if (iPhoneDetected) return {
     type: 'mobile',
     ...iPhoneDetected,
-    contentBoxConfig: contentBoxConfig(iPhoneDetected.model)
+    ...threejsDOMInterface(iPhoneDetected.model)
   }
 }
 

@@ -51,46 +51,17 @@ export default function SceneManager({ canvas, device }) {
     const far = 100;
     const camera = new PerspectiveCamera(fieldOfView, aspect, near, far);
 
-    camera.position.z = setZoom(width, height);
-    camera.position.y = device.type === 'mobile' ? -1.25 : 0;
-    camera.setZoom = setZoom;
-    camera.maxZoom = maxZoom;
+    camera.setZoom = setPos;
 
-    function setZoom(width, zValue = null) {
-      const maxZ = maxZoom(width);
-      return (zValue && zValue <= maxZ) ? zValue : maxZ;
-    }
-
-    function maxZoom(width) {
-      const DPR = device.devicePixelRatio;
-      if (device.type === 'desktop') {
-        if (width > 420 && width <= 800) return 16;
-        if (width > 800) return 12;
-      }
-      if (device.type === 'mobile' && !device.iPhone) {
-        if (width <= 413 && DPR > 2) return 18;
-        if (width > 420 && width <= 800) return 16;
-        if (width > 800) return 12;
-      }
-      if (device.type === 'mobile' && device.iPhone) {
-        return iPhoneZoom(device.model)
-      }
-
-      function iPhoneZoom(model) {
-        const initialZooms = {
-          '8': 16.25,
-          '8Plus': 16.5,
-          'X/XS/11Pro/12Mini': 16.75,
-          'XR/11': 16.75,
-          'XSMax/11ProMax': 16.75,
-          '12/12Pro': 16.75,
-          '12ProMax': 16.75,
-        }
-        return initialZooms[model]
-      }
-    }
+    setPos()
 
     return camera;
+
+    function setPos(width=null) {
+      const { defaultCameraPos: { yPos, zPos } } = device;
+      camera.position.y = yPos;
+      camera.position.z = typeof zPos === 'function' ? zPos(width) : zPos;
+    }
   }
 
   function initSceneSubjects(scene) {
