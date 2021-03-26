@@ -9,7 +9,24 @@ const CONTENT_ITEMS = [
       element.sandbox = 'allow-scripts allow-same-origin'
     },
     title: 'Chuuk Wreck Map',
-    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+    subsections: [
+      {
+          id: 'techStack',
+          displayText: 'Tech Stack',
+          items: [
+            {
+              displayText: 'Mapbox GL JS'
+            },
+            {
+              displayText: 'Firebase',
+              subText: 'Auth, Firestore, Storage'
+            },
+            { displayText: 'Webpack, HTML/SCSS/JS' },
+            { displayText: 'DigitalOcean (hosting)'}
+          ]
+      }
+    ],
+    description: "Live application for scuba divers to share photos of the Japanese shipwrecks of Chuuk Lagoon, organized against a navigable 3D map rendered with custom infographic map marker icons. Active userbase authenticated via Firebase and against google, facebook, and twitter APIs. Built to scale to additional dive destinations and extend to include trip review content."
   },
   {
     projectID: 'xavierTech',
@@ -21,8 +38,45 @@ const CONTENT_ITEMS = [
       '../../../assets/img/xbot_preview.gif')
         .then(src => { element.src = src.default })
     },
-    title: 'Xavier Tech Platform',
-    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+    title: 'Xavier HS Tech eLearning Portal',
+    subsections: [
+      {
+        id: 'techStack',
+        displayText: 'Tech Stack',
+        items: [
+          { displayText: 'React' },
+          { displayText: 'Apollo-GraphQL'},
+          { displayText: 'MongoDB' },
+          { displayText: 'NodeJS & Express' },
+          { displayText: 'IBM Carbon Design System' },
+          { displayText: 'Firebase & Heroku (hosting)' }
+        ]
+      },
+      {
+        id: 'coreFeatures',
+        displayText: 'Core Features',
+        items: [
+          { displayText:
+            'Article & User databases supporting identity based CRUD operations'
+          },
+          { displayText:
+              'Reading List persistent as both account-based data and in local storage for external users'
+            },
+          {
+            displayText:
+              'CodePen style browser environment for testing and sharing HTML/CSS/JS'
+          },
+          { displayText:
+              'User authentication via Auth0 against G Suite domain accounts'
+          },
+          {
+            displayText:
+              'Front-end socket for internal IT wiki documentation & user support'
+          }
+        ]
+      }
+    ],
+    description: "Proof of concept application developed as prototype for supporting programming curriculum and a 1:1 student device program currently under consideration. Designed to host both publicly accessible content and interface with internal school-specific resources in order to meet the diverse needs and overcome the logistical and social barriers of the Central Pacific.\<br><br> Content database structured to support and encourage student users in  translating and sharing content in the region’s many local languages, with the dual intent of broadening access and teaching the spirit and practices of Open Source technology."
   },
   {
     projectID: 'xavierHome',
@@ -35,6 +89,17 @@ const CONTENT_ITEMS = [
         .then(src => { element.src = src.default })
     },
     title: 'Xavier High School',
+    subsections: [
+      {
+        id: 'techStack',
+        displayText: 'Tech Stack',
+        items: [
+          { displayText: 'HTML/SCSS/JS' },
+          { displayText: 'Bootstrap & JQuery' },
+          { displayText: 'GSAP' }
+        ]
+      }
+    ],
     description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
   }
 ]
@@ -52,26 +117,32 @@ export function loadContentElements(container) {
 }
 
 function portfolioProjectElement(item) {
+  const { projectID, projectURL, title, description, subsections } = item;
   const element = document.createElement('div');
   element.classList.add('portfolioItem');
-  element.id = `portfolioItem_${item.projectID}`;
+  element.id = `portfolioItem_${projectID}`;
 
-  const title = document.createElement('a');
-  title.classList.add('portfolioItemLink')
-  title.id = `portfolioItemTitle_${item.projectID}`;
-  title.href = item.projectURL;
-  title.target = '_blank';
-  title.innerHTML = item.title;
+  const label = document.createElement('a');
+  label.classList.add('portfolioItemLink')
+  label.id = `portfolioItemTitle_${projectID}`;
+  label.href = projectURL;
+  label.target = '_blank';
+  label.innerHTML = title;
 
   const previewFrame = projectPreview(item)
 
   const projectBrief = document.createElement('p');
   projectBrief.classList.add('portfolioItemDescription');
-  projectBrief.id = `portfolioItemDescription_${item.description}`;
-  projectBrief.innerHTML = item.description;
+  projectBrief.id = `portfolioItemDescription_${projectID}`;
+  projectBrief.innerHTML = description;
 
-  element.appendChild(title);
+  element.appendChild(label);
   element.appendChild(previewFrame);
+
+  !!subsections && subsections.forEach(section => {
+    element.appendChild(infoSection(section))
+  })
+
   element.appendChild(projectBrief);
   return element
 }
@@ -85,4 +156,46 @@ function projectPreview(item) {
   loadSrc(previewElement)
 
   return previewElement;
+}
+
+function infoSection(infoSection) {
+  const { id, items } = infoSection;
+  const fragment = document.createDocumentFragment();
+  const element = document.createElement('ul');
+  element.classList.add('portfolioItemInfoSection--List');
+
+
+  items.forEach(item => { element.appendChild(infoItem(item)) });
+
+  fragment.appendChild( sectionLabel() );
+  fragment.appendChild(element)
+
+  return fragment
+
+  function sectionLabel() {
+    const { displayText } = infoSection;
+    const element = document.createElement('strong');
+    element.classList.add('portfolioItemInfoSection--TopLabel');
+    element.innerHTML = displayText;
+    return element;
+  }
+
+  function infoItem(item) {
+    const element = document.createElement('li');
+    const label = document.createElement('p');
+    element.classList.add('infoSectionListEntry');
+    label.classList.add('infoSectionListEntry--topLabel');
+    label.innerHTML = item.displayText;
+
+    element.appendChild(label);
+    !!item.subText && element.appendChild(subLabel());
+    return element;
+
+    function subLabel() {
+      const label = document.createElement('p');
+      label.classList.add('infoSectionListEntry--subLabel');
+      label.innerHTML = item.subText;
+      return label;
+    }
+  }
 }

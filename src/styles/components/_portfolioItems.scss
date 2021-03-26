@@ -10,6 +10,7 @@
     appearance: none;
     font-size: 1.5rem;
     text-decoration: none;
+    outline: none;
     color: #f4f4f4;
   }
 
@@ -24,6 +25,32 @@
   .portfolioItemDescription {
     max-width: 90%;
     margin-top: .5rem;
+  }
+
+  .portfolioItemInfoSection--TopLabel {
+    color: #c6c6c6;
+    text-align: justify;
+  }
+
+  .portfolioItemInfoSection--List {
+    max-width: 95%;
+    margin-top: .25rem;
+    border-top: solid 2px #c6c6c6;
+    border-bottom: solid 2px #c6c6c6;
+  }
+
+  .infoSectionListEntry {
+
+  }
+
+  .infoSectionListEntry--topLabel,
+  .infoSectionListEntry--subLabel {
+    margin: .5rem 0;
+  }
+
+  .infoSectionListEntry--subLabel {
+    color: #a8a8a8;
+    margin-left: 1rem;
   }
 
   @include responsive-portfolio-items;

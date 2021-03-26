@@ -12,7 +12,7 @@ const BUTTON_ITEMS = [
   {
     id: 'github',
     displayLabel: 'GitHub',
-    fontAwesomeIcon: 'fa-external-link-alt',
+    faIcon: 'fa-external-link-alt',
     aTag: {
       url: 'https://github.com/ocommaj',
       target: 'blank'
@@ -42,13 +42,8 @@ function NavButtons() {
     button.dataset.sectionKey = item.id;
     button.innerHTML = item.displayLabel;
 
-    if (item.fontAwesomeIcon) {
-      button.appendChild( fontAwesomeIcon(item.fontAwesomeIcon) )
-    }
-
-    if (item.aTag) {
-      button.appendChild( linkButton(item.aTag) )
-    }
+    !!item.faIcon && button.appendChild(faIcon(item.faIcon))
+    !!item.aTag && button.appendChild(linkButton(item.aTag))
 
     button.addEventListener('click', switchContent);
     buttons.appendChild(button)
@@ -70,7 +65,7 @@ function linkButton(link) {
   return element;
 }
 
-function fontAwesomeIcon(className) {
+function faIcon(className) {
   const element = document.createElement('i');
   element.classList.add('fas')
   element.classList.add(className)
