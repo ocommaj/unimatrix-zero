@@ -1,0 +1,11 @@
+.overlayHtml {
+  position: absolute;
+  z-index: 1000;
+  transition: opacity 0.7s ease;
+  pointer-events: auto;
+}
+
+.overlayHtml.invisible {
+  opacity: 0;
+  pointer-events: none;
+}

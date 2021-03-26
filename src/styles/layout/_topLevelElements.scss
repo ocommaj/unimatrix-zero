@@ -1,0 +1,25 @@
+body {
+  background-color: #161616;
+  font-family: 'Chicago', 'Open Sans', monospace;
+  color: #f4f4f4;
+  margin: 0;
+  overflow: hidden;
+}
+
+canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.overlayHtml {
+  position: absolute;
+  z-index: 1000;
+  transition: opacity 0.7s ease;
+  pointer-events: auto;
+}
+
+.overlayHtml.invisible {
+  opacity: 0;
+  pointer-events: none;
+}

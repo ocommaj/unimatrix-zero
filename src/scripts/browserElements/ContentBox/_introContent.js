@@ -42,15 +42,7 @@ const CONTENT_ITEMS = [
   {
     id: "geek",
     content: "Trek, not Wars &#128406."
-  },
-  /*{
-    id: "test_one",
-    content: "Overflow."
-  },
-  {
-    id: "test_two",
-    content: "More Overflow."
-  }*/
+  }
 ]
 
 export function loadContentElements(container) {
@@ -59,7 +51,8 @@ export function loadContentElements(container) {
 
   CONTENT_ITEMS.forEach(item => {
     const listItem = document.createElement('li');
-    listItem.id = `introListItem_${item.id}`;
+    listItem.classList.add('introList-item');
+    listItem.id = `introList-item_${item.id}`;
     listItem.innerHTML = item.content;
     introList.appendChild(listItem);
   })

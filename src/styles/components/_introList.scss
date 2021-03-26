@@ -1,0 +1,25 @@
+@use '../utils' as *;
+
+#introList {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.introList-item {
+  font-size: 1.4rem;
+  margin: 0;
+  max-width: 70vw;
+  list-style: none;
+  list-style-position: outside;
+  background: -webkit-linear-gradient(40deg, #be95ff, #c6c6c6, #ff8389);
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  cursor: default;
+
+  @include animate-bg-gradient-slide;
+  @include stagger-animations;
+}

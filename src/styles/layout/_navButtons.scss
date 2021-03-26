@@ -1,0 +1,19 @@
+@use '../utils' as *;
+
+#navButtonsWrapper {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 2rem;
+  @include responsive-buttons-wrapper;
+}
+
+#navButtons {
+  position: absolute;
+  display: flex;
+  bottom: 0;
+  @include responsive-button-width;
+  @include responsive-bar-buttons;
+}

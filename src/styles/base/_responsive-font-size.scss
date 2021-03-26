@@ -1,0 +1,44 @@
+:root {
+  font-size: 16px;
+}
+
+@media only screen
+and (min-width: 1441px) {
+  :root {
+    font-size: 20px;
+  }
+}
+
+@media only screen
+and (max-width: 374px) {
+  :root {
+    font-size: 13px;
+  }
+}
+
+@media only screen
+and (min-width: 375px)
+and (max-width: 413px)
+and (-webkit-device-pixel-ratio: 2) {
+  :root {
+    font-size: 13px;
+  }
+}
+
+@media only screen
+and (min-width: 414px)
+and (max-width: 428px)
+and (-webkit-device-pixel-ratio: 2) {
+  :root {
+    font-size: 13.5px;
+  }
+}
+
+@media only screen
+and (min-width: 375px)
+and (max-width: 428px)
+and (-webkit-device-pixel-ratio: 3) {
+  :root {
+    font-size: 13.5px;
+  }
+}

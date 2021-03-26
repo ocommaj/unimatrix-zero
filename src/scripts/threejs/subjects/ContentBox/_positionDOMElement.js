@@ -2,13 +2,13 @@ import { Vector3 } from 'three';
 import { ContentBox } from '../../../browserElements';
 
 export default async function positionDOMElement(inMeshGroup, camera) {
-  const element = document.getElementById('contentBox')
+  const elem = document.getElementById('contentBox')
     || await ContentBox('intro');
   const {
     style,
     clientWidth: elemWidth,
     clientHeight: elemHeight,
-  } = element;
+  } = elem;
 
   const tempCenterVector = new Vector3()
   const {
@@ -70,6 +70,7 @@ export default async function positionDOMElement(inMeshGroup, camera) {
   style.top = `${top}px`;
   style.bottom = `${top + maxHeight}px`;
   style.left = `${left}px`;
-  style.opacity = 1;
   style.maxWidth = `${maxWidth}px`;
+
+  !!elem.classList.contains('invisible') && elem.classList.remove('invisible')
 }

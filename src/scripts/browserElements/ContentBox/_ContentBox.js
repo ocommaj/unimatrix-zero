@@ -1,6 +1,7 @@
 export async function ContentBox(sectionKey) {
   const contentBox = document.createElement('div');
   contentBox.classList.add('overlayHtml');
+  contentBox.classList.add('invisible');
   contentBox.id = 'contentBox';
 
   await loadContent(sectionKey, contentBox)
