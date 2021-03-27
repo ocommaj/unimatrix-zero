@@ -35,7 +35,7 @@ const CONTENT_ITEMS = {
         },
         {
           headline: true,
-          displayText: 'Supervisor/Contact:\<br><a href="president@xaviermicronesia.org">Dennis Baker, S.J. <i class="far fa-envelope"></i></a>\<br>President, Xavier High School'
+          displayText: 'Supervisor/Contact:\<br><a href="mailto:president@xaviermicronesia.org">Dennis Baker, S.J. <i class="far fa-envelope"></i></a>\<br>President, Xavier High School'
         },
       ]
     },
