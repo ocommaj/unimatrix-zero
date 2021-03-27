@@ -56,9 +56,6 @@ export function loadContentElements(container) {
     listItem.innerHTML = item.content;
     introList.appendChild(listItem);
   })
-  //return introList
+
   container.appendChild(introList);
 }
-
-//export default CONTENT_ITEMS
-//export default loadContentElements

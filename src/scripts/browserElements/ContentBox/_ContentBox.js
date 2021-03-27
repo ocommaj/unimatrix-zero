@@ -28,6 +28,9 @@ export function switchContent(e) {
 function loadContent(key, contentBox) {
   return new Promise(resolve => {
       switch (key) {
+        case 'cv':
+          import ('./_cvContent').then(module => callback(module))
+          break;
         case 'intro':
           import('./_introContent').then(module => callback(module))
           break;

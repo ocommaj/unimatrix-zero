@@ -15,7 +15,7 @@ const CONTENT_ITEMS = [
           displayText: 'Tech Stack',
           items: [
             {
-              displayText: 'Mapbox GL JS'
+              displayText: 'Mapbox GL JS & GeoJSON'
             },
             {
               displayText: 'Firebase',
@@ -38,7 +38,7 @@ const CONTENT_ITEMS = [
       '../../../assets/img/xbot_preview.gif')
         .then(src => { element.src = src.default })
     },
-    title: 'Xavier HS Tech eLearning Portal',
+    title: 'Xavier HS, Chuuk Tech eLearning Portal',
     subsections: [
       {
         id: 'techStack',
@@ -100,7 +100,7 @@ const CONTENT_ITEMS = [
         ]
       }
     ],
-    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+    description: "School website, rebuilt on a short deadline to quickly publicize Board's plans for the 2021 school year in response to the pandemic."
   }
 ]
 
@@ -162,6 +162,7 @@ function infoSection(infoSection) {
   const { id, items } = infoSection;
   const fragment = document.createDocumentFragment();
   const element = document.createElement('ul');
+  element.classList.add('contentBoxItem--SectionList')
   element.classList.add('portfolioItemInfoSection--List');
 
 
@@ -175,7 +176,7 @@ function infoSection(infoSection) {
   function sectionLabel() {
     const { displayText } = infoSection;
     const element = document.createElement('strong');
-    element.classList.add('portfolioItemInfoSection--TopLabel');
+    element.classList.add('contentBoxItem--SubSectionLabel');
     element.innerHTML = displayText;
     return element;
   }
@@ -183,8 +184,8 @@ function infoSection(infoSection) {
   function infoItem(item) {
     const element = document.createElement('li');
     const label = document.createElement('p');
-    element.classList.add('infoSectionListEntry');
-    label.classList.add('infoSectionListEntry--topLabel');
+
+    label.classList.add('contentBoxItem--LineItem--topLabel');
     label.innerHTML = item.displayText;
 
     element.appendChild(label);
@@ -193,7 +194,7 @@ function infoSection(infoSection) {
 
     function subLabel() {
       const label = document.createElement('p');
-      label.classList.add('infoSectionListEntry--subLabel');
+      label.classList.add('contentBoxItem--LineItem--subLabel');
       label.innerHTML = item.subText;
       return label;
     }

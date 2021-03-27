@@ -7,3 +7,36 @@
       direction: ltr;
     }
 }
+
+.contentBoxItem--SectionList {
+  max-width: 95%;
+  margin-top: .25rem;
+  border-top: solid 2px #c6c6c6;
+  border-bottom: solid 2px #c6c6c6;
+}
+
+.contentBoxItem--SectionListItem {
+  margin: .5rem 0;
+}
+
+.contentBoxItem--SubSectionLabel {
+  color: #c6c6c6;
+  text-align: justify;
+}
+
+.contentBoxItem--SubSectionLabel,
+.contentBoxItem--LineItem--topLabel,
+.contentBoxItem--LineItem--subLabel {
+  margin: .5rem 0;
+}
+
+.contentBoxItem--LineItem--subLabel {
+  color: #a8a8a8;
+  margin-left: 1rem;
+}
+
+.highlightFirstLine {
+  &::first-line {
+    color: #8d8d8d;
+  }
+}
