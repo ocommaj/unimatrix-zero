@@ -28,7 +28,7 @@ const CONTENT_ITEMS = {
           displayText: 'Xavier High School,\<br>Chuuk, Micronesia'
         },
         {
-          displayText: 'Completed design & installation of campus network running entirely on FOSS, supporting 200+ users (including 24/7 resident faculty & boarding students), 40+ desktop workstations, ID based authentication, Moodle LMS, LAN accessible media server, network security cameras, and configured for remote management, automated error handling and failover connection. Required coordination with national telco, as well as fundraising efforts to secure significant grant and donor funding.'
+          displayText: 'Completed design & installation of campus network running entirely on FOSS, supporting 200+ users (including 24/7 resident faculty & boarding students), 40+ desktop workstations, LDAP based AAA services, Moodle LMS, LAN accessible media server, network security cameras, and configured for remote management, automated error handling and failover connection. Required coordination with national telco, as well as fundraising efforts to secure significant grant and donor funding.'
         },
         {
           displayText: 'Additional projects have included a rebuilt school website, GSuite and domain administration, and the development and delivery of a programming elective for 11th and 12th graders built around Python and the Shell run on a purpose-designed Raspberry Pi lab network.'
