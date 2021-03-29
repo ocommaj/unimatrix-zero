@@ -6,7 +6,7 @@ const CONTENT_ITEMS = [
     previewType: 'iframe',
     loadSrc: (element) => {
       element.src = 'https://hailstone.ocommaj.com/?lookup=smallPreview',
-      element.sandbox = 'allow-scripts '
+      element.sandbox = 'allow-scripts allow-same-origin'
     },
     title: 'Chuuk Wreck Map',
     subsections: [
