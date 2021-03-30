@@ -43,6 +43,7 @@ function loadContent(key, contentBox) {
 
       function callback(module) {
         module.loadContentElements(contentBox)
+        contentBox.scrollTop = 0;
         resolve()
       }
   })
