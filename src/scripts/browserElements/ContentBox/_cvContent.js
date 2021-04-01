@@ -5,10 +5,10 @@ const CONTENT_ITEMS = {
       displayText: 'Profile',
       items: [
         {
-          displayText: 'Full-Stack Web Developer, Network, and Linux Administrator with substantial experience as an educator and passionate curiosity for all facets of digital technology from the basics of hardware to the intangibles of speculative futures.'
+          displayText: 'Full-Stack Web Developer, Network, and Linux Administrator with substantial experience as an educator and passionate curiosity for all facets of digital technology from the basics of circuits and drivers to the intangibles of speculative futures.'
         },
         {
-          displayText: 'US citizen with long-term overseas experience both in developed and developing countries and sincere enthusiasm for rapidly adapting and connecting in unknown environments.'
+          displayText: 'US citizen with long-term overseas experience both in developed and developing countries and sincere enthusiasm for rapidly adapting and integrating within unfamiliar environments.'
         },
         /*{
           displayText: 'Wide-ranging academic background in the humanities and social sciences, and well-developed practical grounding in design thinking. PADI Scuba Instructor with over 500 divers certified.'
