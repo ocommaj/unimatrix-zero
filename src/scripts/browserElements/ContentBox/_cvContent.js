@@ -92,9 +92,29 @@ export function loadContentElements(container) {
   const contentSection = document.createElement('section');
   contentSection.id = "cvContentSection";
 
+  contentSection.appendChild( externalPDFLink() )
   subsections.forEach(sub => { contentSection.appendChild( infoSection(sub) ) })
 
+
   container.appendChild(contentSection)
+}
+
+function externalPDFLink()  {
+  const link = document.createElement('a');
+  const text = document.createTextNode('View Single Page PDF')
+  const faIcon = document.createElement('i')
+  faIcon.classList.add('fas')
+  faIcon.classList.add('fa-external-link-alt')
+  link.id = 'linkToExternalPDF';
+  link.appendChild(text);
+  link.appendChild(faIcon);
+
+
+  link.target = 'blank'
+  link.href = 'https://github.com/ocommaj/ocommaj/raw/main/assets/cv.pdf';
+
+
+  return link;
 }
 
 function infoSection(subsection) {
