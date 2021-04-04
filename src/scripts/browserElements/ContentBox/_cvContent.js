@@ -111,8 +111,9 @@ function externalPDFLink()  {
   link.appendChild(faIcon);
 
 
-  link.target = 'blank'
-  link.href = 'https://github.com/ocommaj/ocommaj/raw/main/assets/cv.pdf';
+  link.target = '_blank'
+  link.href = 'http://cv.ocommaj.com';
+
 
   span.appendChild(link)
   return span;
