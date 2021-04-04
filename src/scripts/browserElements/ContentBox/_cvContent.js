@@ -100,12 +100,13 @@ export function loadContentElements(container) {
 }
 
 function externalPDFLink()  {
+  const span = document.createElement('span')
   const link = document.createElement('a');
   const text = document.createTextNode('View Single Page PDF')
   const faIcon = document.createElement('i')
   faIcon.classList.add('fas')
   faIcon.classList.add('fa-external-link-alt')
-  link.id = 'linkToExternalPDF';
+  span.id = 'linkToExternalPDF';
   link.appendChild(text);
   link.appendChild(faIcon);
 
@@ -113,8 +114,8 @@ function externalPDFLink()  {
   link.target = 'blank'
   link.href = 'https://github.com/ocommaj/ocommaj/raw/main/assets/cv.pdf';
 
-
-  return link;
+  span.appendChild(link)
+  return span;
 }
 
 function infoSection(subsection) {

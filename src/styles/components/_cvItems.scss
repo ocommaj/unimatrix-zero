@@ -12,13 +12,24 @@
 #linkToExternalPDF {
   display: block;
   margin: 1rem 0;
-  padding: .25rem 0;
-  font-size: 1.25rem;
-  text-align: center;
+  height: 2.25rem;
   max-width: 95%;
-  outline: none;
+  position: relative;
+  overflow: hidden;
   @include gradient-button;
 
+  a {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    padding: .25rem 0;
+    font-size: 1.25rem;
+    text-align: center;
+    outline: none;
+  }
   i {
     margin-left: .5rem;
   }
