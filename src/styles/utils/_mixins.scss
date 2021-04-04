@@ -1,6 +1,7 @@
 @use '../thirdParty/includeMedia' as *;
 
 @mixin gradient-button {
+  position: relative;
   color: #c6c6c6;
   background: -webkit-linear-gradient(40deg, rgba(190, 149, 255, .2), rgba(255,131,137,.2));
   -webkit-backdrop-filter: blur(.5rem);
