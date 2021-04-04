@@ -4,27 +4,9 @@
   position: relative;
   margin: .125rem .25rem;
   padding: .25rem .75rem;
-  color: #c6c6c6;
-  background: -webkit-linear-gradient(40deg, rgba(190, 149, 255, .2), rgba(255,131,137,.2));
-  -webkit-backdrop-filter: blur(.5rem);
-  backdrop-filter: blur(.5rem);
-  transition: color, filter 0.4s ease;
-  overflow: hidden;
-  cursor: pointer;
 
+  @include gradient-button;
   @include responsive-nav-button;
-
-  &::before {
-    content: '';
-    display: block;
-    position: absolute;
-    background: rgba(#f4f4f4, .5);
-    width: 4rem;
-    height: 2rem;
-    top: 0;
-    filter: blur(2rem);
-    transform: translateX(-8rem) skewX(-15deg);
-  }
 
   .fas {
     margin-left: .5rem;
@@ -36,15 +18,5 @@
     bottom: 0;
     left: 0;
     right: 0;
-  }
-}
-
-.navButton:hover {
-  color: #f4f4f4;
-  background: -webkit-linear-gradient(40deg, rgba(255,131,137,.8)), rgba(190, 149, 255, .8);
-
-  &::before {
-    transform: translateX(18rem) skewX(-15deg);
-    transition: 1s;
   }
 }
