@@ -110,10 +110,8 @@ function externalPDFLink()  {
   link.appendChild(text);
   link.appendChild(faIcon);
 
-
   link.target = '_blank'
-  link.href = 'http://cv.ocommaj.com';
-
+  link.href = 'https://cv.ocommaj.com';
 
   span.appendChild(link)
   return span;
