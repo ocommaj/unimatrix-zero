@@ -37,6 +37,9 @@ function loadContent(key, contentBox) {
         case 'portfolio':
           import('./_portfolioContent').then(module => callback(module))
           break;
+        case 'contact':
+          import('./_contactContent').then(module => callback(module))
+          break;
         default:
           import('./_introContent').then(module => callback(module))
       }
