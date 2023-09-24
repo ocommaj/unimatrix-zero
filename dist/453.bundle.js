@@ -1,1 +1,0 @@
-(self.webpackChunkocommaj=self.webpackChunkocommaj||[]).push([[453],{453:(e,a,c)=>{"use strict";c.r(a),c.d(a,{default:()=>b});const b=c.p+"de91b002ba5848f9eea24ac752894eba.glb"}}]);
